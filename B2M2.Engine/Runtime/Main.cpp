@@ -14,7 +14,9 @@ int main() {
     window.Create({ 800, 600, "B2M2 Engine!" });
     
     cShader *shader = cShaderManager::CreateShader(
-        "Shaders/vertex.shader", "Shaders/fragment.shader");
+        "Shaders/vertex.shader", "Shaders/fragment.shader"
+    );
+
     cRenderer2D renderer;
     renderer.Initalize(shader);
 
@@ -23,7 +25,10 @@ int main() {
 
         glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
         renderer.Begin();
+        renderer.FillRectangle({ -0.5f, -0.5f }, 1.f, 1.f, { 1.0f, 0.f, 0.f, 1.f });
+
         renderer.End();
         renderer.Present();
 

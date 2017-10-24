@@ -6,6 +6,7 @@
 
 #include "../Common.hpp"
 #include "Shader.hpp"
+#include "OpenGL/OpenGLStructures.hpp"
 
 namespace b2m2 {
     struct cVertex
@@ -18,7 +19,9 @@ namespace b2m2 {
 
     class cRenderer2D {
     private:
-        GLuint m_vao, m_vbo, m_ebo;
+        cVertexArray m_vao;
+        cBuffer m_vbo, m_ibo;
+
         uint32 m_indices;
         cVertex *m_buffer;
         cShader *m_shader;
