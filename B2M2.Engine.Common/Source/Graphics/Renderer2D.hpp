@@ -27,7 +27,7 @@ namespace b2m2 {
         cShader *m_shader;
 
     public:
-        void Initalize(cShader *shader);
+        void Initalize(cShader *shader, mat4 projectionMatrix);
 
         void FillRectangle(vec2 pos, float width, float height, vec4 color);
         void Begin();

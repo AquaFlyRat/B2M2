@@ -18,16 +18,16 @@ int main() {
     );
 
     cRenderer2D renderer;
-    renderer.Initalize(shader);
+    renderer.Initalize(shader, glm::ortho(0.f, 800.f, 600.f, 0.f, 1.f, -1.f));
 
     while (window.IsRunning()) {
         window.PollEvents();
 
-        glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+        glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         renderer.Begin();
-        renderer.FillRectangle({ -0.5f, -0.5f }, 1.f, 1.f, { 1.0f, 0.f, 0.f, 1.f });
+        renderer.FillRectangle({ 100, 100 }, 100, 100, { .4f, .5f, .6f, 1.f });
 
         renderer.End();
         renderer.Present();

@@ -29,9 +29,10 @@ static void GenerateRectIndicesIntoBuffer(GLuint *buffer, int indicesNum)
     }
 }
 
-void cRenderer2D::Initalize(cShader *shader) {
+void cRenderer2D::Initalize(cShader *shader, mat4 projectionMatrix) {
     m_shader = shader;
     m_shader->Bind();
+    m_shader->SubmitUniformMat4("sys_Projection", projectionMatrix);
 
     m_vao.Generate();
     m_vao.Bind();

@@ -23,9 +23,12 @@ namespace b2m2 {
         void Compile();
         void Link();
 
-
         void Bind()   { glUseProgram(m_id); }
         void Unbind() { glUseProgram(0); }
+
+        void SubmitUniformMat4(const char *uniformName, const mat4& matrix) {
+            glUniformMatrix4fv(glGetUniformLocation(m_id, uniformName), 1, GL_FALSE, &matrix[0][0]);
+        }
     };
 
     struct cShaderManager {

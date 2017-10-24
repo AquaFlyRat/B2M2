@@ -9,8 +9,10 @@ out vec4 passColor;
 out vec2 passUv;
 out float passTexId;
 
+uniform mat4 sys_Projection;
+
 void main() {
-    gl_Position = vec4(position, 1.0);
+    gl_Position = sys_Projection * vec4(position, 1.0);
     
     passColor = color;
     passUv = uv;

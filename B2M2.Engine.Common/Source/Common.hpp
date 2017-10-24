@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <string>
 #include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 
 #include "Platform/OpenGL.hpp"
 
@@ -25,7 +26,7 @@ namespace b2m2 {
 
     typedef glm::vec4       vec4;
     typedef glm::tvec4<int> ivec4;
-
+    typedef glm::mat4       mat4;
 }
 
 #define ASSERT(x) assert(x)
