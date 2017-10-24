@@ -134,7 +134,6 @@
     <ClInclude Include="Source\Platform\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Platform\Runtime.cpp" />
     <ClCompile Include="Source\Platform\Window.cpp" />
     <ClCompile Include="ThirdParty\Sources\glfl.cpp" />

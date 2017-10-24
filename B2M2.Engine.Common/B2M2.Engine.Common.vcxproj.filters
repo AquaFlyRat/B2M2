@@ -35,9 +35,6 @@
     <ClCompile Include="Source\Platform\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ThirdParty\Sources\glfl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

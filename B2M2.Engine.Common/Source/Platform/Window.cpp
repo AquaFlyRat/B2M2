@@ -18,6 +18,14 @@ void cWindow::Create(const sWindowConfig& config) {
     ASSERT(m_handle);
 }
 
+void cWindow::PollEvents() {
+    static SDL_Event e;
+    while (SDL_PollEvent(&e) != 0) {
+        if (e.type == SDL_QUIT) m_bRunning = false;
+    }
+    SDL_UpdateWindowSurface(m_handle);
+}
+
 void cWindow::Destroy() {
     SDL_DestroyWindow(m_handle);
 }

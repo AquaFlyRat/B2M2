@@ -19,12 +19,15 @@ namespace b2m2 {
     private:
         SDL_Window      *m_handle;
         sWindowConfig    m_config;
+        bool             m_bRunning = true;
 
     public:
         
         void Create(const sWindowConfig& config);
         void Destroy();
+        void PollEvents();
 
         SDL_Window *Handle() const { return m_handle; }
+        bool        IsRunning() const { return m_bRunning; }
     };
 }
