@@ -1,3 +1,7 @@
+/*
+    @author Barney Wilks
+*/
+
 #pragma once
 
 #include "../Common.hpp"
@@ -13,10 +17,11 @@ namespace b2m2 {
 
     class cWindow {
     private:
-        SDL_Window *m_handle;
-        sWindowConfig m_config;
+        SDL_Window      *m_handle;
+        sWindowConfig    m_config;
 
     public:
+        
         void Create(const sWindowConfig& config);
         void Destroy();
 

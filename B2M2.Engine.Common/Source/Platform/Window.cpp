@@ -1,3 +1,7 @@
+/*
+    @author Barney Wilks
+*/
+
 #include "Window.hpp"
 
 using namespace b2m2;

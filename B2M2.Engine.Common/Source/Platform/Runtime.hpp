@@ -1,3 +1,7 @@
+/*
+    @author Barney Wilks
+*/
+
 #pragma once
 
 namespace b2m2 {

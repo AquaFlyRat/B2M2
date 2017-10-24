@@ -1,3 +1,7 @@
+/*
+    @author Barney Wilks
+*/
+
 #include "Runtime.hpp"
 
 #include <SDL2/SDL.h>
