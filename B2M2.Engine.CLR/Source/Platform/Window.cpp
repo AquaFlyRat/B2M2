@@ -37,6 +37,14 @@ namespace b2m2 {
             bool get() { return m_nativeHandle->IsRunning(); }
         }
 
+        property int GLMajor {
+            int get() { return m_nativeHandle->GetGLMajorVersion(); }
+        }
+
+        property int GLMinor {
+            int get() { return m_nativeHandle->GetGLMinorVersion(); }
+        }
+
         ~Window() {
             m_nativeHandle->Destroy();
             delete m_nativeHandle;

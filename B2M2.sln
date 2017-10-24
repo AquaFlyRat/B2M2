@@ -4,11 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "B2M2.Engine", "B2M2.Engine\B2M2.Engine.vcxproj", "{6BD192A6-5A73-4196-9359-65CFAE71FE47}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2M2.Editor", "B2M2.Editor\B2M2.Editor.csproj", "{CAF9A7E8-8DF3-4161-B3D3-C3F00182A03E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C0D8E1B6-59DB-4D81-8B72-5405C8FA2ED8} = {C0D8E1B6-59DB-4D81-8B72-5405C8FA2ED8}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2M2.Editor", "B2M2.Editor\B2M2.Editor.csproj", "{CAF9A7E8-8DF3-4161-B3D3-C3F00182A03E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "B2M2.Engine.Common", "B2M2.Engine.Common\B2M2.Engine.Common.vcxproj", "{C0D8E1B6-59DB-4D81-8B72-5405C8FA2ED8}"
 EndProject

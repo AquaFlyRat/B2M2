@@ -7,13 +7,15 @@ using b2m2;
 
 namespace B2M2.Editor.Source
 {
-    class cMain
+    class Entry
     {
         public static void Main(string [] args)
         {
-            WindowConfig config = new WindowConfig(800, 600, "Hello Dave, Feck off!");
+            WindowConfig config = new WindowConfig(800, 600, "B2M2 Engine!");
 
             Window window = new Window(config);
+            Console.WriteLine(window.GLMajor + ", " + window.GLMinor);
+
             while(window.IsRunning)
             {
                 window.PollEvents();
