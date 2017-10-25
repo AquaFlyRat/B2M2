@@ -31,6 +31,7 @@ namespace b2m2 {
         sVertex *m_buffer;
         cShader *m_shader;
         std::vector<cTexture2D*> m_textures;
+        std::vector<mat4> m_transforms;
 
     public:
         void Initalize(cShader *shader, mat4 projectionMatrix);
@@ -41,6 +42,9 @@ namespace b2m2 {
         void Begin();
         void End();
         void Present();
+
+        void PushTransform(const mat4& matrix, bool override = false);
+        void PopTransform();
 
     private:
         float GetTextureSlot(cTexture2D *texture);

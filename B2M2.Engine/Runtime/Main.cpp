@@ -3,6 +3,7 @@
 #include <Graphics/Shader.hpp>
 #include <Graphics/Renderer2D.hpp>
 #include <Graphics/Texture2D.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #undef main
 
@@ -30,13 +31,18 @@ int main() {
 
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
         xPos += 1.f;
+        
         renderer.Begin();
 
         renderer.DrawTexture(&texture2d, { 300, 300 });
+        
+        mat4 rotate = glm::translate(vec3(400, 300, 0)) * glm::rotate(glm::radians(xPos), glm::vec3(0, 0, 1)) * glm::translate(vec3(-400, -300, 0));
 
-        renderer.FillRectangle({ xPos, 100 }, 100, 100, { .4f, .5f, .6f, 1.f });
+        renderer.PushTransform(rotate);
+        renderer.FillRectangle({ 350, 250 }, 100, 100, { .4f, .5f, .6f, 1.f });
+        renderer.FillRectangle({ 350, 250 }, 100, 100, { 1.f, 0.f, 0.f, 1.f });
+        renderer.PopTransform();
 
         renderer.End();
         renderer.Present();

@@ -134,6 +134,10 @@
   <ItemGroup>
     <ClCompile Include="Source\Platform\Window.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Graphics\Shader2D.hpp" />
+    <ClInclude Include="Source\Math\Vector2.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

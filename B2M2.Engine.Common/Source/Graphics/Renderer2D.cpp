@@ -32,6 +32,7 @@ static void GenerateRectIndicesIntoBuffer(GLuint *buffer, int indicesNum)
 
 void cRenderer2D::Initalize(cShader *shader, mat4 projectionMatrix) {
     m_shader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
+    m_transforms.push_back(mat4(1.0f));
 
     m_shader->Bind();
     m_shader->SubmitUniformMat4("sys_Projection", projectionMatrix);
@@ -61,25 +62,32 @@ void cRenderer2D::Initalize(cShader *shader, mat4 projectionMatrix) {
     m_shader->Unbind();
     m_indices = 0;
 }
+#include <glm/glm.hpp>
 
 void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color) {
     
-    m_buffer->Position = vec3(pos.x, pos.y, 0.f);
+    mat4 back = m_transforms.back();
+
+    vec4 v = back * vec4(pos.x, pos.y, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
 
-    m_buffer->Position = vec3(pos.x + width, pos.y, 0.f);
+    v = back * vec4(pos.x + width, pos.y, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
 
-    m_buffer->Position = vec3(pos.x + width, pos.y + height, 0.f);
+    v = back * vec4(pos.x + width, pos.y+height, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
 
-    m_buffer->Position = vec3(pos.x, pos.y + height, 0.f);
+    v = back * vec4(pos.x, pos.y + height, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
@@ -94,23 +102,28 @@ void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos)
 
     float texSlot = GetTextureSlot(texture);
 
-    m_buffer->Position = vec3(pos.x, pos.y, 0.f);
+    mat4 back = m_transforms.back();
+
+    vec4 v = back * vec4(pos.x, pos.y, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->UV = vec2(0, 0);
     m_buffer->TextureId = texSlot;
     m_buffer++;
 
-    m_buffer->Position = vec3(pos.x + width, pos.y, 0.f);
+    v = back * vec4(pos.x + width, pos.y, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->UV = vec2(1, 0);
-
     m_buffer->TextureId = texSlot;
     m_buffer++;
 
-    m_buffer->Position = vec3(pos.x + width, pos.y + height, 0.f);
+    v = back * vec4(pos.x + width, pos.y + height, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->UV = vec2(1, 1);
     m_buffer->TextureId = texSlot;
     m_buffer++;
 
-    m_buffer->Position = vec3(pos.x, pos.y + height, 0.f);
+    v = back * vec4(pos.x, pos.y + height, 0.f, 1.f);
+    m_buffer->Position = vec3(v.x, v.y, 0.f);
     m_buffer->UV = vec2(0, 1);
     m_buffer->TextureId = texSlot;
     m_buffer++;
@@ -147,6 +160,22 @@ void cRenderer2D::Present() {
         m_textures[i]->UnBind(i);
 
     m_shader->Unbind();
+    m_transforms.clear();
+    m_transforms.push_back(mat4(1.0f));
+}
+
+void cRenderer2D::PushTransform(const mat4 & matrix, bool override)
+{
+    if (override)
+        m_transforms.push_back(matrix);
+    else
+        m_transforms.push_back(m_transforms.back() * matrix);
+}
+
+void cRenderer2D::PopTransform()
+{
+    if(m_transforms.size() > 1)
+        m_transforms.pop_back();
 }
 
 float cRenderer2D::GetTextureSlot(cTexture2D * texture)
