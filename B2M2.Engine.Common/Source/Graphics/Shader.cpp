@@ -12,10 +12,23 @@ using namespace b2m2;
 
 std::vector<cShader*> cShaderManager::m_shaders = std::vector<cShader*>();
 
-cShader *cShaderManager::CreateShader(const char* vertexPath, const char *fragmentPath) {
+cShader *cShaderManager::CreateShaderFromFile(const char* vertexPath, const char *fragmentPath) {
     cShader *shader = new cShader;
     
     shader->SetFiles(vertexPath, fragmentPath);
+    shader->Compile();
+    shader->Link();
+
+    m_shaders.push_back(shader);
+
+    return shader;
+}
+
+cShader * cShaderManager::CreateShaderFromText(const char * vertex, const char * fragment)
+{
+    cShader *shader = new cShader;
+
+    shader->SetText(vertex, fragment);
     shader->Compile();
     shader->Link();
 
@@ -55,17 +68,20 @@ GLuint cShader::GenShader(const std::string & text, GLenum type)
 
 void cShader::SetFiles(const char * vertexPath, const char * fragmentPath)
 {
-    m_vertexPath = vertexPath;
-    m_fragmentPath = fragmentPath;
+    m_vertexShader = GetText(vertexPath);
+    m_fragmentShader = GetText(fragmentPath);
+}
+
+void cShader::SetText(const char * vertexShader, const char * fragmentShader)
+{
+    m_vertexShader = vertexShader;
+    m_fragmentShader = fragmentShader;
 }
 
 void cShader::Compile()
 {
-    std::string vertexText = GetText(m_vertexPath);
-    std::string fragmentText = GetText(m_fragmentPath);
-
-    GLuint vertexShader   = GenShader(vertexText, GL_VERTEX_SHADER);
-    GLuint fragmentShader = GenShader(fragmentText, GL_FRAGMENT_SHADER);
+    GLuint vertexShader   = GenShader(m_vertexShader, GL_VERTEX_SHADER);
+    GLuint fragmentShader = GenShader(m_fragmentShader, GL_FRAGMENT_SHADER);
     m_id = glCreateProgram();
     
     glAttachShader(m_id, vertexShader);

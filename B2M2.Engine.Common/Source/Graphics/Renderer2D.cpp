@@ -5,10 +5,11 @@
 #pragma once
 
 #include "Renderer2D.hpp"
+#include "Texture2D.hpp"
 
 using namespace b2m2;
 
-static const int RenderableSize    = sizeof(cVertex) * 4;
+static const int RenderableSize    = sizeof(sVertex) * 4;
 static const int MaxRenderables    = 100;
 static const int RendererBatchSize = RenderableSize * MaxRenderables;
 static const int RendererIndexNum  = MaxRenderables * 6;
@@ -30,9 +31,13 @@ static void GenerateRectIndicesIntoBuffer(GLuint *buffer, int indicesNum)
 }
 
 void cRenderer2D::Initalize(cShader *shader, mat4 projectionMatrix) {
-    m_shader = shader;
+    m_shader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
+
     m_shader->Bind();
     m_shader->SubmitUniformMat4("sys_Projection", projectionMatrix);
+    int textureValues[] = { 0,1,2,3,4,5,6,7,8,9 };
+
+    m_shader->SubmitUniform1iv("sys_Textures", 9, textureValues);
 
     m_vao.Generate();
     m_vao.Bind();
@@ -40,12 +45,12 @@ void cRenderer2D::Initalize(cShader *shader, mat4 projectionMatrix) {
     m_vbo.Generate(GL_ARRAY_BUFFER, RendererBatchSize, NULL, GL_DYNAMIC_DRAW);
     m_vbo.Bind();
 
-    size_t stride = sizeof(cVertex);
+    size_t stride = sizeof(sVertex);
 
-    m_vbo.AddAttribute({ 0, 3, GL_FLOAT, stride, offsetof(cVertex, Position) });
-    m_vbo.AddAttribute({ 1, 4, GL_FLOAT, stride, offsetof(cVertex, Color) });
-    m_vbo.AddAttribute({ 2, 2, GL_FLOAT, stride, offsetof(cVertex, UV) });
-    m_vbo.AddAttribute({ 3, 1, GL_FLOAT, stride, offsetof(cVertex, TextureId) });
+    m_vbo.AddAttribute({ 0, 3, GL_FLOAT, stride, offsetof(sVertex, Position) });
+    m_vbo.AddAttribute({ 1, 4, GL_FLOAT, stride, offsetof(sVertex, Color) });
+    m_vbo.AddAttribute({ 2, 2, GL_FLOAT, stride, offsetof(sVertex, UV) });
+    m_vbo.AddAttribute({ 3, 1, GL_FLOAT, stride, offsetof(sVertex, TextureId) });
 
     GLuint *indices = new GLuint[RendererIndexNum];
     GenerateRectIndicesIntoBuffer(indices, RendererIndexNum);
@@ -82,9 +87,40 @@ void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color)
     m_indices += 6;
 }
 
+void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos)
+{
+    float width = texture->GetWidth();
+    float height = texture->GetHeight();
+
+    float texSlot = GetTextureSlot(texture);
+
+    m_buffer->Position = vec3(pos.x, pos.y, 0.f);
+    m_buffer->UV = vec2(0, 0);
+    m_buffer->TextureId = texSlot;
+    m_buffer++;
+
+    m_buffer->Position = vec3(pos.x + width, pos.y, 0.f);
+    m_buffer->UV = vec2(1, 0);
+
+    m_buffer->TextureId = texSlot;
+    m_buffer++;
+
+    m_buffer->Position = vec3(pos.x + width, pos.y + height, 0.f);
+    m_buffer->UV = vec2(1, 1);
+    m_buffer->TextureId = texSlot;
+    m_buffer++;
+
+    m_buffer->Position = vec3(pos.x, pos.y + height, 0.f);
+    m_buffer->UV = vec2(0, 1);
+    m_buffer->TextureId = texSlot;
+    m_buffer++;
+
+    m_indices += 6;
+}
+
 void cRenderer2D::Begin() {
     m_vao.Bind();
-    m_buffer = m_vbo.Map<cVertex>();
+    m_buffer = m_vbo.Map<sVertex>();
 }
 
 void cRenderer2D::End() {
@@ -95,6 +131,9 @@ void cRenderer2D::End() {
 void cRenderer2D::Present() {
     m_shader->Bind();
 
+    for (int i = 0; i < m_textures.size(); i++)
+        m_textures[i]->Bind(i);
+
     m_vao.Bind();
     m_ibo.Bind();
     
@@ -104,5 +143,21 @@ void cRenderer2D::Present() {
     m_ibo.Bind();
     m_vao.UnBind();
 
+    for (int i = 0; i < m_textures.size(); i++)
+        m_textures[i]->UnBind(i);
+
     m_shader->Unbind();
+}
+
+float cRenderer2D::GetTextureSlot(cTexture2D * texture)
+{
+    for (int i = 0; i < m_textures.size(); i++) {
+        if (m_textures[i] == texture) {
+            return static_cast<float>(i);
+        }
+    }
+
+    float size = static_cast<float>(m_textures.size());
+    m_textures.push_back(texture);
+    return size;
 }

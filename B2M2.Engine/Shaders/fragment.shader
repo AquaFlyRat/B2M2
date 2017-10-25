@@ -6,6 +6,14 @@ in float passTexId;
 
 out vec4 outColor;
 
+uniform sampler2D sys_Textures[32];
+
 void main() {
-    outColor = passColor;
+    if (passTexId < 0) {
+        outColor = passColor;
+    }
+    else {
+        int index = int(passTexId);
+        outColor = texture(sys_Textures[index], passUv);
+    }
 }

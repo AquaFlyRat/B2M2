@@ -13,13 +13,16 @@ namespace b2m2 {
     class cShader {
     private:
         GLuint m_id;
-        const char *m_vertexPath, *m_fragmentPath;
+        std::string m_vertexShader, m_fragmentShader;
+
     private:
         std::string GetText(const char *filename);
         GLuint GenShader(const std::string& text, GLenum type);
 
     public:
         void SetFiles(const char *vertexPath, const char *fragmentPath);
+        void SetText(const char *vertexShader, const char *fragmentShader);
+
         void Compile();
         void Link();
 
@@ -29,6 +32,10 @@ namespace b2m2 {
         void SubmitUniformMat4(const char *uniformName, const mat4& matrix) {
             glUniformMatrix4fv(glGetUniformLocation(m_id, uniformName), 1, GL_FALSE, &matrix[0][0]);
         }
+
+        void SubmitUniform1iv(const char *uniformname, int num, int *data) {
+            glUniform1iv(glGetUniformLocation(m_id, uniformname), num, data);
+        }
     };
 
     struct cShaderManager {
@@ -36,6 +43,7 @@ namespace b2m2 {
         static std::vector<cShader*> m_shaders;
 
     public:
-        static cShader *CreateShader(const char* vertexPath, const char *fragmentPath);
+        static cShader *CreateShaderFromFile(const char* vertexPath, const char *fragmentPath);
+        static cShader *CreateShaderFromText(const char *vertex, const char *fragment);
     };
 }
