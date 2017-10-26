@@ -15,6 +15,27 @@ enum class AnimationState {
     Running, Idle
 };
 
+std::string text = "Type your text here...";
+
+void onKeyDown(SDL_Event evt) {
+    char c = evt.key.keysym.sym;
+    
+    if (evt.key.keysym.scancode == SDL_SCANCODE_LEFT) return;
+    if (evt.key.keysym.scancode == SDL_SCANCODE_RIGHT) return;
+    if (evt.key.keysym.scancode == SDL_SCANCODE_CAPSLOCK) return;
+
+    if (c > -1 && c <= 255) {
+        if (isalnum(c) || c == ' ') {
+            if (evt.key.keysym.mod & KMOD_SHIFT || evt.key.keysym.mod & KMOD_CAPS) {
+                c = toupper(c);
+            }
+            text += c;
+        }
+    }
+
+    if (evt.key.keysym.scancode == SDL_SCANCODE_BACKSPACE) text.pop_back();
+}
+
 int main() {
     using namespace b2m2;
 
@@ -23,6 +44,7 @@ int main() {
     cWindow window;
     window.Create({ 800, 600, "B2M2 Engine!" });
     window.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+    window.SetKeyDownCallback(onKeyDown);
 
     cRenderer2D renderer;
     renderer.Initalize(glm::ortho(0.f, 800.f, 600.f, 0.f, 1.f, -1.f));
@@ -48,8 +70,10 @@ int main() {
         
         renderer.Begin();
 
+        renderer.DrawString("Use <RIGHT> & <LEFT> to move", &font, { (400 - ((16 * 4) / 2)) - 300, 60 }, vec4(.5f, .6f, .7f, 1.f));
+        
         renderer.PushTransform(glm::scale(vec3(4, 4, 0)));   
-        renderer.DrawTexture(&basicFallTexture, { 0, 0 });
+        renderer.DrawTexture(&basicFallTexture, { 30, 300/4-16/2 });
 
         if (cKeyboard::IsKeyDown(SDL_SCANCODE_RIGHT)) {
             if (state != AnimationState::Running) {
@@ -87,9 +111,10 @@ int main() {
         
         std::string txt = "Hello World (Bob)!\nThis is a new line";
         vec2 sizes = font.MeasureString(txt);
+        
         renderer.DrawString(txt, &font,
             { 400 - (sizes.x / 2), (300 - (sizes.y / 2)) + 200 }, vec4(.5f, .6f, 0.7f, 1.f));
-          
+        renderer.DrawString(text, &font, { 50, 150 }, { 1.f, 1.f, 0.f, 1.f });
         renderer.End();
         renderer.Present();
 

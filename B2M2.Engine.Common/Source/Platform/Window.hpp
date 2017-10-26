@@ -25,6 +25,7 @@ namespace b2m2 {
 
         int32           m_glMajorVersion;
         int32           m_glMinorVersion;
+        void(*m_keyboardInputCallback)(SDL_Event);
 
     public:
         
@@ -35,6 +36,8 @@ namespace b2m2 {
 
         void SetClearColor(float r, float g, float b, float a);
         void Clear();
+
+        void SetKeyDownCallback(void(*callback)(SDL_Event));
 
         SDL_Window *Handle() const { return m_handle; }
         bool        IsRunning() const { return m_bRunning; }

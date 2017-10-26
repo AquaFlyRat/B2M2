@@ -10,6 +10,7 @@ using namespace b2m2;
 
 void cWindow::Create(const sWindowConfig& config) {
     m_config = config;
+    m_keyboardInputCallback = NULL;
     
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -41,7 +42,13 @@ void cWindow::Create(const sWindowConfig& config) {
 void cWindow::PollEvents() {
     static SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
-        if (e.type == SDL_QUIT) m_bRunning = false;
+        if (e.type == SDL_QUIT) 
+            m_bRunning = false;
+        if (e.type == SDL_KEYDOWN) {
+            if (m_keyboardInputCallback) {
+                m_keyboardInputCallback(e);
+            }
+        }
     }
 }
 
@@ -57,6 +64,11 @@ void cWindow::SetClearColor(float r, float g, float b, float a)
 void cWindow::Clear()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void cWindow::SetKeyDownCallback(void(*callback)(SDL_Event))
+{
+    m_keyboardInputCallback = callback;
 }
 
 void cWindow::Destroy() {
