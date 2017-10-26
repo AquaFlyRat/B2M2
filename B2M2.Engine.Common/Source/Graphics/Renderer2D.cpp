@@ -36,7 +36,7 @@ static vec3 MultiplyVec2ByMat4(float x, float y, const mat4& matrix) {
     return vec3(vecOut.x, vecOut.y, 0.f);
 }
 
-void cRenderer2D::Initalize(cShader *shader, mat4 projectionMatrix) {
+void cRenderer2D::Initalize(mat4 projectionMatrix) {
     m_shader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
     m_transforms.push_back(mat4(1.0f));
 

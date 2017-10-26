@@ -36,7 +36,7 @@ namespace b2m2 {
         std::vector<mat4> m_transforms;
 
     public:
-        void Initalize(cShader *shader, mat4 projectionMatrix);
+        void Initalize(mat4 projectionMatrix);
 
         void FillRectangle(vec2 pos, float width, float height, vec4 color);
         void DrawTexture(cTexture2D *texture, vec2 pos);

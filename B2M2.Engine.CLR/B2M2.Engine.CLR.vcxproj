@@ -132,11 +132,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\ManagedClass.h" />
+    <ClCompile Include="Source\Math\Vector2.cpp" />
     <ClCompile Include="Source\Platform\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Graphics\Shader2D.hpp" />
+    <ClInclude Include="Source\Graphics\Font.h" />
+    <ClInclude Include="Source\Graphics\Renderer2D.hpp" />
+    <ClInclude Include="Source\Graphics\Texture2D.h" />
+    <ClInclude Include="Source\Math\Matrix4.hpp" />
+    <ClInclude Include="Source\Math\Rectangle.h" />
     <ClInclude Include="Source\Math\Vector2.hpp" />
+    <ClInclude Include="Source\Math\Vector4.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

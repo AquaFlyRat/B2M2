@@ -1,6 +1,8 @@
 #using <mscorlib.dll>
 #include <Platform/Window.hpp>
 
+#include "../ManagedClass.h"
+
 namespace b2m2 {
 
     public ref class WindowConfig {
@@ -16,39 +18,34 @@ namespace b2m2 {
         }
     };
 
-    public ref class Window {
-    private:
-        b2m2::cWindow *m_nativeHandle;
-
+    public ref class Window : ManagedClass<cWindow> {
     public:
         Window(WindowConfig^ config) {
             const char * title = (const char*) 
                 System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(config->Title).ToPointer();
 
-            m_nativeHandle = new cWindow();
-            m_nativeHandle->Create({ config->Width, config->Height, title });
+            m_handle = new cWindow();
+            m_handle->Create({ config->Width, config->Height, title });
         }
 
         void PollEvents() {
-            m_nativeHandle->PollEvents();
+            m_handle->PollEvents();
         }
 
         property bool IsRunning {
-            bool get() { return m_nativeHandle->IsRunning(); }
+            bool get() { return m_handle->IsRunning(); }
         }
 
         property int GLMajor {
-            int get() { return m_nativeHandle->GetGLMajorVersion(); }
+            int get() { return m_handle->GetGLMajorVersion(); }
         }
 
         property int GLMinor {
-            int get() { return m_nativeHandle->GetGLMinorVersion(); }
+            int get() { return m_handle->GetGLMinorVersion(); }
         }
 
         ~Window() {
-            m_nativeHandle->Destroy();
-            delete m_nativeHandle;
-            m_nativeHandle = nullptr;
+            m_handle->Destroy();
         }
     };
 };

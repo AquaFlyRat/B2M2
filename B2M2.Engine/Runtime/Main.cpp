@@ -15,12 +15,8 @@ int main() {
     cWindow window;
     window.Create({ 800, 600, "B2M2 Engine!" });
     
-    cShader *shader = cShaderManager::CreateShaderFromFile(
-        "Shaders/vertex.shader", "Shaders/fragment.shader"
-    );
-
     cRenderer2D renderer;
-    renderer.Initalize(shader, glm::ortho(0.f, 800.f, 600.f, 0.f, 1.f, -1.f));
+    renderer.Initalize(glm::ortho(0.f, 800.f, 600.f, 0.f, 1.f, -1.f));
 
     cTexture2D basicFallTexture;
     basicFallTexture.Create("Assets/spr_basicfall.png", cTexture2D::eFiltering::Nearest);
