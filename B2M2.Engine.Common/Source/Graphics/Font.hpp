@@ -5,12 +5,14 @@
 #pragma once
 
 #include <SDL2/SDL_ttf.h>
+
 #include "Texture2D.hpp"
+#include "../Common.hpp"
 
 namespace b2m2 {
     class cFont {
     public:
-        void Create(const char *font, float size);
+        void Create(const char *font, int32 size);
         void Release();
 
         TTF_Font *GetTTF() const { return m_sdlFont; }

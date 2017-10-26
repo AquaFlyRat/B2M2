@@ -76,9 +76,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)Binaries\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)Binaries\$(Configuration)\ObjectFiles</IntDir>
+    <IntDir>$(ProjectDir)Binaries\$(Configuration)\ObjectFiles\</IntDir>
     <IncludePath>$(SolutionDir)B2M2.Engine.Common\Source;$(SolutionDir)B2M2.Engine.Common\ThirdParty\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)B2M2.Engine.Common\Binaries\$(Configuration);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)B2M2.Engine.Common\Binaries\$(Configuration);$(SolutionDir)B2M2.Engine.Common\ThirdParty\Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -86,9 +86,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)Binaries\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)Binaries\$(Configuration)\ObjectFiles</IntDir>
+    <IntDir>$(ProjectDir)Binaries\$(Configuration)\ObjectFiles\</IntDir>
     <IncludePath>$(SolutionDir)B2M2.Engine.Common\Source;$(SolutionDir)B2M2.Engine.Common\ThirdParty\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)B2M2.Engine.Common\Binaries\$(Configuration);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)B2M2.Engine.Common\Binaries\$(Configuration);$(SolutionDir)B2M2.Engine.Common\ThirdParty\Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -100,7 +100,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>B2M2.Engine.Common.lib;</AdditionalDependencies>
+      <AdditionalDependencies>B2M2.Engine.Common.lib;SDL2.lib;opengl32.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,7 +119,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>B2M2.Engine.Common.lib;</AdditionalDependencies>
+      <AdditionalDependencies>B2M2.Engine.Common.lib;SDL2.lib;opengl32.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

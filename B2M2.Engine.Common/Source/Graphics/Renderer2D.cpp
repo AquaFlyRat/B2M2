@@ -15,7 +15,7 @@ static const int MaxRenderables    = 10000;
 static const int RendererBatchSize = RenderableSize * MaxRenderables;
 static const int RendererIndexNum  = MaxRenderables * 6;
 
-static void GenerateRectIndicesIntoBuffer(GLuint *buffer, int indicesNum)
+static void GenerateRectIndicesIntoBuffer(GLuint *buffer, uint32 indicesNum)
 {
     GLuint offset = 0;
     for (GLuint i = 0; i < indicesNum; i += 6)
@@ -99,12 +99,12 @@ void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color)
 
 void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos)
 {
-    DrawTextureClip(texture, pos, sRectangle(0, 0, texture->GetWidth(), texture->GetHeight()));
+    DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())));
 }
 
 void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos, vec4 color)
 {
-    DrawTextureClip(texture, pos, sRectangle(0, 0, texture->GetWidth(), texture->GetHeight()), color);
+    DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())), color);
 }
 
 void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip)
@@ -114,8 +114,8 @@ void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle cli
 
 void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color)
 {
-    float textureWidth = texture->GetWidth();
-    float textureHeight = texture->GetHeight();
+    uint32 textureWidth = texture->GetWidth();
+    uint32 textureHeight = texture->GetHeight();
 
     float uvBoundX = clip.Size.x / textureWidth;
     float uvBoundY = clip.Size.y / textureHeight;
@@ -183,7 +183,7 @@ void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, v
         int minx, maxx, miny, maxy, advance;
         TTF_GlyphMetrics(sdlfont, c, &minx, &maxx, &miny, &maxy, &advance);
         
-        DrawTextureClip(texture, { xPos, yPos }, sRectangle(xoffset, 0, advance, texture->GetHeight()), color);
+        DrawTextureClip(texture, { xPos, yPos }, sRectangle(xoffset, 0, static_cast<float>(advance), static_cast<float>(texture->GetHeight())), color);
 
         xPos += advance;
     }
@@ -202,7 +202,7 @@ void cRenderer2D::End() {
 void cRenderer2D::Present() {
     m_shader->Bind();
 
-    for (int i = 0; i < m_textures.size(); i++)
+    for (size_t i = 0; i < m_textures.size(); i++)
         m_textures[i]->Bind(i);
 
     m_vao.Bind();
@@ -214,7 +214,7 @@ void cRenderer2D::Present() {
     m_ibo.Bind();
     m_vao.UnBind();
 
-    for (int i = 0; i < m_textures.size(); i++)
+    for (size_t i = 0; i < m_textures.size(); i++)
         m_textures[i]->UnBind(i);
 
     m_shader->Unbind();
@@ -238,7 +238,7 @@ void cRenderer2D::PopTransform()
 
 float cRenderer2D::GetTextureSlot(cTexture2D * texture)
 {
-    for (int i = 0; i < m_textures.size(); i++) {
+    for (size_t i = 0; i < m_textures.size(); i++) {
         if (m_textures[i] == texture) {
             return static_cast<float>(i);
         }

@@ -14,7 +14,7 @@
 
 using namespace b2m2;
 
-void cFont::Create(const char* font, float size)
+void cFont::Create(const char* font, int32 size)
 {
     m_sdlFont = TTF_OpenFont(font, size);
     std::string ascii;
@@ -49,10 +49,10 @@ vec2 cFont::MeasureString(const std::string & text)
         TTF_SizeText(m_sdlFont, str.c_str(), &w, &h);
         
         if (w > width) {
-            width = w; 
+            width = static_cast<float>(w); 
         }
 
-        height += h;
+        height += (float)h;
     }
 
     return { width, height };
