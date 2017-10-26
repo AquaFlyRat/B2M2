@@ -4,6 +4,9 @@
 #include <Graphics/Renderer2D.hpp>
 #include <Graphics/Texture2D.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <Graphics/Transform.hpp>
+
+#include <Runtime/Animation/Spritesheet.hpp>
 
 #undef main
 
@@ -21,33 +24,33 @@ int main() {
     cTexture2D basicFallTexture;
     basicFallTexture.Create("Assets/spr_basicfall.png", cTexture2D::eFiltering::Nearest);
 
-    cTexture2D spritesheetTexture;
-    spritesheetTexture.Create("Assets/spr_basicidle_strip5.png", cTexture2D::eFiltering::Nearest);
-
     cFont font;
     font.Create("Assets/WendyOne-Regular.ttf", 48);
     
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    cSpritesheet spritesheet;
+    spritesheet.Create("Assets/spr_basicrun_strip8.png", 16, 16);
+
+    float rectangleAngle = 0.f;
     
-    float xPos = 0.f;
     while (window.IsRunning()) {
         window.PollEvents();
 
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        xPos += 1.f;
+
+        rectangleAngle += 1.f;
         
         renderer.Begin();
 
         renderer.PushTransform(glm::scale(vec3(4, 4, 0)));
         
         renderer.DrawTexture(&basicFallTexture, { 0, 0 });
-        renderer.DrawTextureClip(&spritesheetTexture, { basicFallTexture.GetWidth() + 32, 0 }, sRectangle(0, 0, 47, 16));
-        
-        renderer.PopTransform();
-        mat4 rotate = glm::translate(vec3(400, 300, 0)) * glm::rotate(glm::radians(xPos), glm::vec3(0, 0, 1)) * glm::translate(vec3(-400, -300, 0));
+        spritesheet.AnimateRow(&renderer, 0, { (400 - ((16 * 4) / 2)) / 4, 50 / 4 }, 125.f);
 
-        renderer.PushTransform(rotate);
+        renderer.PopTransform();
+        
+        renderer.PushTransform(cTransform::RotateAroundPoint(vec3(400, 300, 0.f), rectangleAngle));
+
         renderer.FillRectangle({ 350, 250 }, 100, 100, { .4f, .5f, .6f, 1.f });
         renderer.PopTransform();
         renderer.FillRectangle({ 350, 250 }, 100, 100, { 1.f, 0.f, 0.f, 1.f });
