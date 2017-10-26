@@ -5,10 +5,15 @@
 #include <Graphics/Texture2D.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <Graphics/Transform.hpp>
+#include <Input/Keyboard.hpp>
 
 #include <Runtime/Animation/Spritesheet.hpp>
 
 #undef main
+
+enum class AnimationState {
+    Running, Idle
+};
 
 int main() {
     using namespace b2m2;
@@ -29,10 +34,12 @@ int main() {
     font.Create("Assets/WendyOne-Regular.ttf", 48);
     
     cSpritesheet spritesheet;
-    spritesheet.Create("Assets/spr_basicrun_strip8.png", 16, 16);
+    spritesheet.Create("Assets/player.png", 16, 16);
+    cKeyboard::Initalize();
 
     float rectangleAngle = 0.f;
-    
+    float spriteX = (400 - ((16 * 4) / 2)) / 4;
+    AnimationState state = AnimationState::Idle;
     while (window.IsRunning()) {
         window.PollEvents();
         window.Clear();
@@ -43,7 +50,33 @@ int main() {
 
         renderer.PushTransform(glm::scale(vec3(4, 4, 0)));   
         renderer.DrawTexture(&basicFallTexture, { 0, 0 });
-        spritesheet.AnimateRow(&renderer, 0, { (400 - ((16 * 4) / 2)) / 4, 50 / 4 }, 125.f);
+
+        if (cKeyboard::IsKeyDown(SDL_SCANCODE_RIGHT)) {
+            if (state != AnimationState::Running) {
+                state = AnimationState::Running;
+                spritesheet.ResetAnimations();
+            }
+            spriteX += 1.f;
+            spritesheet.AnimateRow(&renderer, 0, { spriteX, 50 / 4 }, 125.f);
+        }
+        else if (cKeyboard::IsKeyDown(SDL_SCANCODE_LEFT)) {
+            if (state != AnimationState::Running) {
+                state = AnimationState::Running;
+                spritesheet.ResetAnimations();
+            }
+            spriteX -= 1.f;
+            renderer.PushTransform(cTransform::FlipHorizontal({ spriteX, 50 / 4, 0.f }, 16));
+            spritesheet.AnimateRow(&renderer, 0, { spriteX, 50 / 4 }, 125.f);
+            renderer.PopTransform();
+        }
+        else {
+            if (state != AnimationState::Idle) {
+                state = AnimationState::Idle;
+                spritesheet.ResetAnimations();
+            }
+            spritesheet.AnimateRow(&renderer, 1, { spriteX, 50 / 4 }, 125.f, 5);
+        }
+
         renderer.PopTransform();
         
         renderer.PushTransform(cTransform::RotateAroundPoint(vec3(400, 300, 0.f), rectangleAngle));

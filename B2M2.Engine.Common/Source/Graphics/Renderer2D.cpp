@@ -107,12 +107,12 @@ void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos, vec4 color)
     DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())), color);
 }
 
-void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip)
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, bool flipX)
 {
-    DrawTextureClip(texture, pos, clip, vec4(1.f, 1.f, 1.f, 1.f));
+    DrawTextureClip(texture, pos, clip, vec4(1.f, 1.f, 1.f, 1.f), flipX);
 }
 
-void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color)
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color, bool flipX)
 {
     uint32 textureWidth = texture->GetWidth();
     uint32 textureHeight = texture->GetHeight();

@@ -6,6 +6,10 @@
 
 using namespace b2m2;
 
+cSpritesheet::cSpritesheet(): m_animationIndex(0)
+{
+}
+
 void cSpritesheet::Create(const char *spritesheetPath, float spriteWidth, float spriteHeight)
 {
     m_texture = new cTexture2D;
@@ -18,28 +22,34 @@ void cSpritesheet::Create(const char *spritesheetPath, float spriteWidth, float 
     m_columns = m_texture->GetWidth() / m_spriteWidth;
 }
 
-void cSpritesheet::DrawSprite(cRenderer2D * renderer, int xIndex, int yIndex, vec2 pos)
+void cSpritesheet::DrawSprite(cRenderer2D * renderer, int xIndex, int yIndex, vec2 pos, bool flip)
 {
     float rectX = xIndex * m_spriteWidth;
     float rectY = yIndex * m_spriteHeight;
 
-    renderer->DrawTextureClip(m_texture, pos, sRectangle(rectX, rectY, m_spriteWidth, m_spriteHeight));
+    renderer->DrawTextureClip(m_texture, pos, sRectangle(rectX, rectY, m_spriteWidth, m_spriteHeight), flip);
 }
 
-void cSpritesheet::AnimateRow(cRenderer2D * renderer, int row, vec2 pos, float period)
+void cSpritesheet::AnimateRow(cRenderer2D * renderer, int row, vec2 pos, float period, int cap, bool flip)
 {
-    static uint32 lastTime = SDL_GetTicks();
-    static int spriteIndex = 0;
+    cap = cap < 0 ? m_columns : cap;
 
+    static uint32 lastTime = SDL_GetTicks();
+    
     uint32 currenttime = SDL_GetTicks();
     if (currenttime > lastTime + period) {
-        spriteIndex++;
-        if (spriteIndex >= m_columns) 
-            spriteIndex = 0;
+        m_animationIndex++;
+        if (m_animationIndex >= cap)
+            m_animationIndex = 0;
         lastTime = currenttime;
     }
 
-    DrawSprite(renderer, spriteIndex, row, pos);
+    DrawSprite(renderer, m_animationIndex, row, pos, flip);
+}
+
+void cSpritesheet::ResetAnimations()
+{
+    m_animationIndex = 0;
 }
 
 void cSpritesheet::Release()

@@ -6,6 +6,8 @@
 
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
+
+#include "../Input/Keyboard.hpp"
 #include "../Common.hpp"
 
 void b2m2::cRuntime::Initalize() {

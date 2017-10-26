@@ -13,12 +13,16 @@ namespace b2m2 {
         float m_spriteWidth, m_spriteHeight;
         cTexture2D *m_texture;
         int m_rows, m_columns;
+        int m_animationIndex;
 
     public:
+        cSpritesheet();
+        
         void Create(const char *spritesheetPath, float spriteWidth, float spriteHeight);
 
-        void DrawSprite(cRenderer2D *renderer, int xIndex, int yIndex, vec2 pos);
-        void AnimateRow(cRenderer2D *renderer, int row, vec2 pos, float period);
+        void DrawSprite(cRenderer2D *renderer, int xIndex, int yIndex, vec2 pos, bool flip=false);
+        void AnimateRow(cRenderer2D *renderer, int row, vec2 pos, float period, int cap = -1, bool flip=false);
+        void ResetAnimations();
 
         void Release();
     };

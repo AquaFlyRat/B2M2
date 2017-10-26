@@ -139,6 +139,7 @@
     <ClInclude Include="Source\Graphics\Shader.hpp" />
     <ClInclude Include="Source\Graphics\Texture2D.hpp" />
     <ClInclude Include="Source\Graphics\Transform.hpp" />
+    <ClInclude Include="Source\Input\Keyboard.hpp" />
     <ClInclude Include="Source\Platform\OpenGL.hpp" />
     <ClInclude Include="Source\Platform\Runtime.hpp" />
     <ClInclude Include="Source\Platform\Window.hpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Texture2D.cpp" />
     <ClCompile Include="Source\Graphics\Transform.cpp" />
+    <ClCompile Include="Source\Input\Keyboard.cpp" />
     <ClCompile Include="Source\Platform\Runtime.cpp" />
     <ClCompile Include="Source\Platform\Window.cpp" />
     <ClCompile Include="Source\Runtime\Animation\Spritesheet.cpp" />
