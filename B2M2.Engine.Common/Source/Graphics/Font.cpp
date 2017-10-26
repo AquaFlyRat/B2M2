@@ -4,15 +4,29 @@
 
 #include "Font.hpp"
 
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iterator>
+#include <algorithm>
+
+#include "../Containers/String.hpp"
+
 using namespace b2m2;
 
-void cFont::Create(const char * font, float size)
+void cFont::Create(const char* font, float size)
 {
     m_sdlFont = TTF_OpenFont(font, size);
-    std::string t;
-    for (char c = 32; c <= 126; c++) t += c;
-    m_ascii = t;
-    SDL_Surface *surface = TTF_RenderText_Blended(m_sdlFont, t.c_str(), { 255,255,255,255 });
+    std::string ascii;
+    
+    for (char c = 32; c <= 126; c++) {
+        ascii += c;
+    }
+
+    m_ascii = ascii;
+
+    SDL_Surface *surface = TTF_RenderText_Blended(m_sdlFont, ascii.c_str(), { 255,255,255,255 });
+    
     m_texture = new cTexture2D;
     m_texture->Create(surface, cTexture2D::eFiltering::Linear);
 }
@@ -25,7 +39,21 @@ void cFont::Release()
 
 vec2 cFont::MeasureString(const std::string & text)
 {
-    int w, h;
-    TTF_SizeText(m_sdlFont, text.c_str(), &w, &h);
-    return { w, h };
+    std::vector<std::string> strs = SplitString(text, '\n');
+
+    float width = 0.f;
+    float height = 0.f;
+
+    for (const std::string& str : strs) {
+        int w, h;
+        TTF_SizeText(m_sdlFont, str.c_str(), &w, &h);
+        
+        if (w > width) {
+            width = w; 
+        }
+
+        height += h;
+    }
+
+    return { width, height };
 }

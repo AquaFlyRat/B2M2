@@ -11,7 +11,7 @@
 using namespace b2m2;
 
 static const int RenderableSize    = sizeof(sVertex) * 4;
-static const int MaxRenderables    = 100;
+static const int MaxRenderables    = 10000;
 static const int RendererBatchSize = RenderableSize * MaxRenderables;
 static const int RendererIndexNum  = MaxRenderables * 6;
 
@@ -93,7 +93,7 @@ void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color)
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
-
+    
     m_indices += 6;
 }
 
@@ -162,8 +162,16 @@ void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, v
     TTF_Font *sdlfont = font->GetTTF();
     const std::string& ascii = font->GetAsciiData();
     cTexture2D *texture = font->GetTexture();
+    
     float xPos = pos.x;
+    float yPos = pos.y;
+
     for (char c : text) {
+        if (c == '\n' || c == '\r\n' || c == '\r') {
+            yPos += texture->GetHeight();
+            xPos = pos.x;
+            continue;
+        }
 
         float xoffset = 0.f;
         for (char _c = ascii[0]; _c != c; _c++) {
@@ -171,11 +179,11 @@ void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, v
             TTF_GlyphMetrics(sdlfont, _c, &minx, &maxx, &miny, &maxy, &_advance);
             xoffset += _advance;
         }
-
+        
         int minx, maxx, miny, maxy, advance;
         TTF_GlyphMetrics(sdlfont, c, &minx, &maxx, &miny, &maxy, &advance);
         
-        DrawTextureClip(texture, { xPos, pos.y }, sRectangle(xoffset, 0, advance, texture->GetHeight()), color);
+        DrawTextureClip(texture, { xPos, yPos }, sRectangle(xoffset, 0, advance, texture->GetHeight()), color);
 
         xPos += advance;
     }

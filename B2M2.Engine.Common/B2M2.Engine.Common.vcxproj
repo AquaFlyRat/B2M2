@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Common.hpp" />
+    <ClInclude Include="Source\Containers\String.hpp" />
     <ClInclude Include="Source\Graphics\Font.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\Buffer.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\OpenGLStructures.hpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Source\Platform\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Containers\String.cpp" />
     <ClCompile Include="Source\Graphics\Font.cpp" />
     <ClCompile Include="Source\Graphics\Renderer2D.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
