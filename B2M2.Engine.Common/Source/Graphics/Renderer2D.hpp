@@ -10,6 +10,7 @@
 
 #include "Shader.hpp"
 #include "Texture2D.hpp"
+#include "Rectangle.hpp"
 
 #include <vector>
 
@@ -38,6 +39,7 @@ namespace b2m2 {
 
         void FillRectangle(vec2 pos, float width, float height, vec4 color);
         void DrawTexture(cTexture2D *texture, vec2 pos);
+        void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip);
 
         void Begin();
         void End();

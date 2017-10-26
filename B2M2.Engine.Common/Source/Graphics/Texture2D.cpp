@@ -30,11 +30,13 @@ void cTexture2D::CreateGLTexture() {
 }
 
 void cTexture2D::Bind(uint32 slot) {
+    m_bIsBound = true;
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, m_id);
 }
 
 void cTexture2D::UnBind(uint32 slot) {
+    m_bIsBound = false;
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, 0);
 }

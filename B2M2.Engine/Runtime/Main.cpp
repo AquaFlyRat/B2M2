@@ -22,8 +22,11 @@ int main() {
     cRenderer2D renderer;
     renderer.Initalize(shader, glm::ortho(0.f, 800.f, 600.f, 0.f, 1.f, -1.f));
 
-    cTexture2D texture2d;
-    texture2d.Create("Assets/spr_basicfall.png", cTexture2D::eFiltering::Nearest);
+    cTexture2D basicFallTexture;
+    basicFallTexture.Create("Assets/spr_basicfall.png", cTexture2D::eFiltering::Nearest);
+
+    cTexture2D spritesheetTexture;
+    spritesheetTexture.Create("Assets/spr_basicidle_strip5.png", cTexture2D::eFiltering::Nearest);
 
     float xPos = 0.f;
     while (window.IsRunning()) {
@@ -35,14 +38,18 @@ int main() {
         
         renderer.Begin();
 
-        renderer.DrawTexture(&texture2d, { 300, 300 });
-        
+        renderer.PushTransform(glm::scale(vec3(4, 4, 0)));
+
+        renderer.DrawTexture(&basicFallTexture, { 0, 0 });
+        renderer.DrawTextureClip(&spritesheetTexture, { basicFallTexture.GetWidth() + 32, 0 }, sRectangle(0, 0, 47, 16));
+
+        renderer.PopTransform();
         mat4 rotate = glm::translate(vec3(400, 300, 0)) * glm::rotate(glm::radians(xPos), glm::vec3(0, 0, 1)) * glm::translate(vec3(-400, -300, 0));
 
         renderer.PushTransform(rotate);
         renderer.FillRectangle({ 350, 250 }, 100, 100, { .4f, .5f, .6f, 1.f });
-        renderer.FillRectangle({ 350, 250 }, 100, 100, { 1.f, 0.f, 0.f, 1.f });
         renderer.PopTransform();
+        renderer.FillRectangle({ 350, 250 }, 100, 100, { 1.f, 0.f, 0.f, 1.f });
 
         renderer.End();
         renderer.Present();

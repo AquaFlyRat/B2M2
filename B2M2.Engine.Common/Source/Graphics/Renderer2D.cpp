@@ -97,8 +97,19 @@ void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color)
 
 void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos)
 {
+    DrawTextureClip(texture, pos, sRectangle(0, 0, texture->GetWidth(), texture->GetHeight()));
+}
+
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip)
+{
     float width = texture->GetWidth();
     float height = texture->GetHeight();
+
+    float uvBoundX = clip.Size.x / width;
+    float uvBoundY = clip.Size.y / height;
+
+    float uvPosX = clip.Position.x / width;
+    float uvPosY = clip.Position.y / height;
 
     float texSlot = GetTextureSlot(texture);
 
@@ -106,25 +117,25 @@ void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos)
 
     vec4 v = back * vec4(pos.x, pos.y, 0.f, 1.f);
     m_buffer->Position = vec3(v.x, v.y, 0.f);
-    m_buffer->UV = vec2(0, 0);
+    m_buffer->UV = vec2(uvPosX, uvPosY);
     m_buffer->TextureId = texSlot;
     m_buffer++;
 
-    v = back * vec4(pos.x + width, pos.y, 0.f, 1.f);
+    v = back * vec4(pos.x + clip.Size.x, pos.y, 0.f, 1.f);
     m_buffer->Position = vec3(v.x, v.y, 0.f);
-    m_buffer->UV = vec2(1, 0);
+    m_buffer->UV = vec2(uvPosX + uvBoundX, uvPosY);
     m_buffer->TextureId = texSlot;
     m_buffer++;
 
-    v = back * vec4(pos.x + width, pos.y + height, 0.f, 1.f);
+    v = back * vec4(pos.x + clip.Size.x, pos.y + clip.Size.y, 0.f, 1.f);
     m_buffer->Position = vec3(v.x, v.y, 0.f);
-    m_buffer->UV = vec2(1, 1);
+    m_buffer->UV = vec2(uvPosX + uvBoundX, uvPosY + uvBoundY);
     m_buffer->TextureId = texSlot;
     m_buffer++;
 
-    v = back * vec4(pos.x, pos.y + height, 0.f, 1.f);
+    v = back * vec4(pos.x, pos.y + clip.Size.y, 0.f, 1.f);
     m_buffer->Position = vec3(v.x, v.y, 0.f);
-    m_buffer->UV = vec2(0, 1);
+    m_buffer->UV = vec2(uvPosX, uvPosY + uvBoundY);
     m_buffer->TextureId = texSlot;
     m_buffer++;
 

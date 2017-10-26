@@ -33,6 +33,9 @@ void cWindow::Create(const sWindowConfig& config) {
 
     glGetIntegerv(GL_MAJOR_VERSION, &m_glMajorVersion);
     glGetIntegerv(GL_MINOR_VERSION, &m_glMinorVersion);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void cWindow::PollEvents() {

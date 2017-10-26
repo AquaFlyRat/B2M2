@@ -23,6 +23,7 @@ namespace b2m2 {
 
         void Bind(uint32 slot);
         void UnBind(uint32 slot);
+        bool IsBound() { return m_bIsBound; }
 
     private:
         void CreateGLTexture();
@@ -30,7 +31,7 @@ namespace b2m2 {
     private:
         GLuint m_id;
         eFiltering m_filtering;
-
+        bool m_bIsBound;
         SDL_Surface *m_surface;
     };
 }
