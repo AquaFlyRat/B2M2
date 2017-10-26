@@ -5,14 +5,16 @@
 #pragma once
 
 #include <vector>
+#include <sstream>
+#include <iostream>
 
 namespace b2m2 {
     template<typename T>
     void SplitString(const std::string &string, char delim, T result) {
-        std::stringstream stringstream(string);
+        std::stringstream _stringstream(string);
 
         std::string item;
-        while (std::getline(stringstream, item, delim)) {
+        while (std::getline(_stringstream, item, delim)) {
             *(result++) = item;
         }
     }
