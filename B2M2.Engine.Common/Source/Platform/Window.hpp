@@ -33,6 +33,9 @@ namespace b2m2 {
         void PollEvents();
         void SwapBuffers();
 
+        void SetClearColor(float r, float g, float b, float a);
+        void Clear();
+
         SDL_Window *Handle() const { return m_handle; }
         bool        IsRunning() const { return m_bRunning; }
 

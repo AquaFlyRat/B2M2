@@ -49,6 +49,16 @@ void cWindow::SwapBuffers() {
     SDL_GL_SwapWindow(m_handle);
 }
 
+void cWindow::SetClearColor(float r, float g, float b, float a)
+{
+    glClearColor(r, g, b, a);
+}
+
+void cWindow::Clear()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void cWindow::Destroy() {
     SDL_DestroyWindow(m_handle);
 }

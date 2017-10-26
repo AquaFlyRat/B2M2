@@ -17,7 +17,8 @@ int main() {
 
     cWindow window;
     window.Create({ 800, 600, "B2M2 Engine!" });
-    
+    window.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+
     cRenderer2D renderer;
     renderer.Initalize(glm::ortho(0.f, 800.f, 600.f, 0.f, 1.f, -1.f));
 
@@ -34,31 +35,28 @@ int main() {
     
     while (window.IsRunning()) {
         window.PollEvents();
-
-        glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        window.Clear();
 
         rectangleAngle += 1.f;
         
         renderer.Begin();
 
-        renderer.PushTransform(glm::scale(vec3(4, 4, 0)));
-        
+        renderer.PushTransform(glm::scale(vec3(4, 4, 0)));   
         renderer.DrawTexture(&basicFallTexture, { 0, 0 });
         spritesheet.AnimateRow(&renderer, 0, { (400 - ((16 * 4) / 2)) / 4, 50 / 4 }, 125.f);
-
         renderer.PopTransform();
         
         renderer.PushTransform(cTransform::RotateAroundPoint(vec3(400, 300, 0.f), rectangleAngle));
-
         renderer.FillRectangle({ 350, 250 }, 100, 100, { .4f, .5f, .6f, 1.f });
         renderer.PopTransform();
+
         renderer.FillRectangle({ 350, 250 }, 100, 100, { 1.f, 0.f, 0.f, 1.f });
         
         std::string txt = "Hello World (Bob)!\nThis is a new line";
         vec2 sizes = font.MeasureString(txt);
-        renderer.DrawString(txt, &font, { 400-(sizes.x/2), (300-(sizes.y/2))+200 }, vec4(.5f, .6f, 0.7f, 1.f));
-        
+        renderer.DrawString(txt, &font,
+            { 400 - (sizes.x / 2), (300 - (sizes.y / 2)) + 200 }, vec4(.5f, .6f, 0.7f, 1.f));
+          
         renderer.End();
         renderer.Present();
 
