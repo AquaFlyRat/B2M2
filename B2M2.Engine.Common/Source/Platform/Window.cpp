@@ -23,7 +23,7 @@ void cWindow::Create(const sWindowConfig& config) {
     );
 
     ASSERT(m_handle);
-
+    
     m_glContext = SDL_GL_CreateContext(m_handle);
 
     ASSERT(m_glContext);
@@ -35,7 +35,7 @@ void cWindow::Create(const sWindowConfig& config) {
     glGetIntegerv(GL_MINOR_VERSION, &m_glMinorVersion);
 
     glEnable(GL_BLEND);
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void cWindow::PollEvents() {

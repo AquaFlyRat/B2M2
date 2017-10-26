@@ -28,6 +28,9 @@ int main() {
     cTexture2D spritesheetTexture;
     spritesheetTexture.Create("Assets/spr_basicidle_strip5.png", cTexture2D::eFiltering::Nearest);
 
+    cFont font;
+    font.Create("Assets/WendyOne-Regular.ttf", 48);
+
     float xPos = 0.f;
     while (window.IsRunning()) {
         window.PollEvents();
@@ -50,6 +53,12 @@ int main() {
         renderer.FillRectangle({ 350, 250 }, 100, 100, { .4f, .5f, .6f, 1.f });
         renderer.PopTransform();
         renderer.FillRectangle({ 350, 250 }, 100, 100, { 1.f, 0.f, 0.f, 1.f });
+        
+        std::string txt = "Hello World! (Bob)";
+
+        vec2 sizes = font.MeasureString(txt);
+        
+        renderer.DrawString(txt, &font, { 400-(sizes.x/2), (300-(sizes.y/2))+200 }, vec4(.5f, .6f, 0.7f, 1.f));
 
         renderer.End();
         renderer.Present();

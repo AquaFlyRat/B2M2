@@ -16,6 +16,7 @@ namespace b2m2 {
         };
 
         void Create(const char *filepath, eFiltering format);
+        void Create(SDL_Surface *surface, eFiltering filtering);
         void Release();
 
         uint32 GetWidth() const { return m_surface->w;  }

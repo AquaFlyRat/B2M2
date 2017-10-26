@@ -14,6 +14,6 @@ void main() {
     }
     else {
         int index = int(passTexId);
-        outColor = texture(sys_Textures[index], passUv);
+        outColor = passColor * texture(sys_Textures[index], passUv);
     }
 }

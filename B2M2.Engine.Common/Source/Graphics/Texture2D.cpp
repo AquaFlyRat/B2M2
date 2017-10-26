@@ -15,6 +15,13 @@ void cTexture2D::Create(const char *filePath, eFiltering format){
     CreateGLTexture();
 }
 
+void cTexture2D::Create(SDL_Surface * surface, eFiltering filtering)
+{
+    m_filtering = filtering;
+    m_surface = surface;
+    CreateGLTexture();
+}
+
 void cTexture2D::CreateGLTexture() {
     glGenTextures(1, &m_id);
     glBindTexture(GL_TEXTURE_2D, m_id);
