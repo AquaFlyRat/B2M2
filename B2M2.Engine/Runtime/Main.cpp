@@ -6,10 +6,12 @@
 #include <glm/gtx/quaternion.hpp>
 #include <Graphics/Transform.hpp>
 #include <Input/Keyboard.hpp>
-
+#include <Windows.h>
 #include <Runtime/Animation/Spritesheet.hpp>
 
 #undef main
+
+#define ISRELEASE
 
 enum class AnimationState {
     Running, Idle
@@ -17,26 +19,48 @@ enum class AnimationState {
 
 std::string text = "Type your text here...";
 
-void onKeyDown(SDL_Event evt) {
-    char c = evt.key.keysym.sym;
-    
-    if (evt.key.keysym.scancode == SDL_SCANCODE_LEFT) return;
-    if (evt.key.keysym.scancode == SDL_SCANCODE_RIGHT) return;
-    if (evt.key.keysym.scancode == SDL_SCANCODE_CAPSLOCK) return;
+bool _isWireframe = false;
 
-    if (c > -1 && c <= 255) {
-        if (isalnum(c) || c == ' ') {
-            if (evt.key.keysym.mod & KMOD_SHIFT || evt.key.keysym.mod & KMOD_CAPS) {
-                c = toupper(c);
-            }
-            text += c;
+void onKeyDown(SDL_Event evt) {
+    if (evt.key.keysym.scancode == SDL_SCANCODE_F5) {
+        _isWireframe = !_isWireframe;
+        if (_isWireframe) {
+            glDisable(GL_BLEND);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        }
+        else {
+            glEnable(GL_BLEND);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
     }
 
-    if (evt.key.keysym.scancode == SDL_SCANCODE_BACKSPACE) text.pop_back();
+    if (evt.key.keysym.scancode == SDL_SCANCODE_BACKSPACE) {
+        if(text.length() > 0)
+            text.pop_back();
+        return;
+    }
+
+    if (evt.key.keysym.scancode == SDL_SCANCODE_RETURN) {
+        text.push_back('\n');
+        return;
+    }
+
+    char c = b2m2::cKeyboard::GetASCIIChar(evt.key);
+    if (c > 0) {
+        text += c;
+    }
 }
 
-int main() {
+#if defined(ISRELEASE)
+int WINAPI WinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine,
+    int nCmdShow)
+#else
+    int main()
+#endif
+{
     using namespace b2m2;
 
     cRuntime::Initalize();

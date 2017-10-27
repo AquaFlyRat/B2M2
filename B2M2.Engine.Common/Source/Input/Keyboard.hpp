@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../Common.hpp"
+#include <SDL2/SDL.h>
 
 namespace b2m2 {
     class cKeyboard {
@@ -17,6 +18,8 @@ namespace b2m2 {
         static void Initalize();
 
         static bool IsKeyDown(int key);
+
+        static char GetASCIIChar(SDL_KeyboardEvent evt);
 
         static cKeyboard *Get() { static cKeyboard key; return &key; }
     };
