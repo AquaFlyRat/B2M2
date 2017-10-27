@@ -61,8 +61,8 @@ int WINAPI WinMain(
 #endif
 {
     using namespace b2m2;
-
-    cRuntime::Initalize();
+    cRuntime runtime;
+    runtime.Initalize();
     
     cWindow window;
     window.Create({ 800, 600, "B2M2 Engine!" });
@@ -147,6 +147,8 @@ int WINAPI WinMain(
     }
 
     window.Destroy();
-    cRuntime::Shutdown();
+    
+    runtime.Shutdown();
+
     return 0;
 }

@@ -6,6 +6,8 @@
 
 #include "Renderer2D.hpp"
 #include "Texture2D.hpp"
+#include "../Debug/Log.hpp"
+
 #include <SDL2/SDL_ttf.h>
 
 using namespace b2m2;
@@ -15,8 +17,7 @@ static const int MaxRenderables    = 10000;
 static const int RendererBatchSize = RenderableSize * MaxRenderables;
 static const int RendererIndexNum  = MaxRenderables * 6;
 
-static void GenerateRectIndicesIntoBuffer(GLuint *buffer, uint32 indicesNum)
-{
+static void GenerateRectIndicesIntoBuffer(GLuint *buffer, uint32 indicesNum) {
     GLuint offset = 0;
     for (GLuint i = 0; i < indicesNum; i += 6)
     {
@@ -43,6 +44,7 @@ void cRenderer2D::Initalize(mat4 projectionMatrix) {
 
     m_shader->Bind();
     m_shader->SubmitUniformMat4("sys_Projection", projectionMatrix);
+
     int textureValues[] = { 0,1,2,3,4,5,6,7,8,9 };
 
     m_shader->SubmitUniform1iv("sys_Textures", 9, textureValues);
@@ -75,7 +77,7 @@ void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color)
     mat4 back = m_transforms.back();
 
     vec4 v = back * vec4(pos.x, pos.y, 0.f, 1.f);
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x, pos.y, back); //vec3(v.x, v.y, 0.f);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.x, pos.y, back);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
@@ -99,23 +101,19 @@ void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color)
     m_tmpQuadCount++;
 }
 
-void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos)
-{
+void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos) {
     DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())));
 }
 
-void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos, vec4 color)
-{
+void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos, vec4 color) {
     DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())), color);
 }
 
-void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, bool flipX)
-{
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, bool flipX) {
     DrawTextureClip(texture, pos, clip, vec4(1.f, 1.f, 1.f, 1.f), flipX);
 }
 
-void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color, bool flipX)
-{
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color, bool flipX) {
     uint32 textureWidth = texture->GetWidth();
     uint32 textureHeight = texture->GetHeight();
 
@@ -161,8 +159,7 @@ void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle cli
     m_tmpQuadCount++;
 }
 
-void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, vec4 color)
-{
+void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, vec4 color) {
     TTF_Font *sdlfont = font->GetTTF();
     const std::string& ascii = font->GetAsciiData();
     cTexture2D *texture = font->GetTexture();
@@ -171,7 +168,7 @@ void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, v
     float yPos = pos.y;
 
     for (char c : text) {
-        if (c == '\n' || c == '\r\n' || c == '\r') {
+        if (c == '\n') {
             yPos += texture->GetHeight();
             xPos = pos.x;
             continue;
@@ -229,26 +226,27 @@ void cRenderer2D::Present() {
     m_transforms.push_back(mat4(1.0f));
 }
 
-void cRenderer2D::PushTransform(const mat4 & matrix, bool override)
-{
+void cRenderer2D::PushTransform(const mat4 & matrix, bool override) {
     if (override)
         m_transforms.push_back(matrix);
     else
         m_transforms.push_back(m_transforms.back() * matrix);
 }
 
-void cRenderer2D::PopTransform()
-{
+void cRenderer2D::PopTransform() {
     if(m_transforms.size() > 1)
         m_transforms.pop_back();
 }
 
-float cRenderer2D::GetTextureSlot(cTexture2D * texture)
-{
+float cRenderer2D::GetTextureSlot(cTexture2D * texture) {
     for (size_t i = 0; i < m_textures.size(); i++) {
         if (m_textures[i] == texture) {
             return static_cast<float>(i);
         }
+    }
+    
+    if (m_textures.size() == 32) {
+        B2M2_LOG(cLogger::eLevel::Warning, "Already drawing 32 texture units with buffer. Flushing renderer now.");
     }
 
     float size = static_cast<float>(m_textures.size());

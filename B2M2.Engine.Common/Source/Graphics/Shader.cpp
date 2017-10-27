@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 
+#include "../Debug/Log.hpp"
 
 using namespace b2m2;
 
@@ -59,7 +60,8 @@ GLuint cShader::GenShader(const std::string & text, GLenum type)
     if (!success)
     {
         glGetShaderInfoLog(shader, 512, NULL, log);
-        printf("Shader Error: [%s] -> %s\n", type == GL_VERTEX_SHADER ? "Vertex Shader" : "Fragment Shader", log);
+        const char * shaderType = type == GL_VERTEX_SHADER ? "Vertex Shader" : "Fragment Shader";
+        B2M2_LOG(cLogger::eLevel::Fatal, std::string("Shader Compiler error (") + shaderType + ") " + log);
         abort();
     }
 

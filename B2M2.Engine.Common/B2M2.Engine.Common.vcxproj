@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Common.hpp" />
     <ClInclude Include="Source\Containers\String.hpp" />
+    <ClInclude Include="Source\Debug\Log.hpp" />
     <ClInclude Include="Source\Graphics\Font.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\Buffer.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\OpenGLStructures.hpp" />
@@ -144,10 +145,13 @@
     <ClInclude Include="Source\Platform\Runtime.hpp" />
     <ClInclude Include="Source\Platform\Window.hpp" />
     <ClInclude Include="Source\Runtime\Animation\Spritesheet.hpp" />
+    <ClInclude Include="Source\Runtime\Scene\GameObject.hpp" />
     <ClInclude Include="Source\Runtime\Scene\Scene.hpp" />
+    <ClInclude Include="Source\Runtime\Systems\System.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Containers\String.cpp" />
+    <ClCompile Include="Source\Debug\Log.cpp" />
     <ClCompile Include="Source\Graphics\Font.cpp" />
     <ClCompile Include="Source\Graphics\Renderer2D.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />

@@ -11,12 +11,18 @@
 #include <algorithm>
 
 #include "../Containers/String.hpp"
+#include "../Debug/Log.hpp"
 
 using namespace b2m2;
 
-void cFont::Create(const char* font, int32 size)
-{
+void cFont::Create(const char* font, int32 size) {
     m_sdlFont = TTF_OpenFont(font, size);
+
+    if (!m_sdlFont) {
+        B2M2_LOG(cLogger::eLevel::Fatal, "Cannot load font" + std::string(font));
+        ASSERT(false);
+    }
+
     std::string ascii;
     
     for (char c = 32; c <= 126; c++) {
@@ -31,14 +37,12 @@ void cFont::Create(const char* font, int32 size)
     m_texture->Create(surface, cTexture2D::eFiltering::Linear);
 }
 
-void cFont::Release()
-{
+void cFont::Release() {
     delete m_texture;
     TTF_CloseFont(m_sdlFont);
 }
 
-vec2 cFont::MeasureString(const std::string & text)
-{
+vec2 cFont::MeasureString(const std::string & text) {
     std::vector<std::string> strs = SplitString(text, '\n');
 
     float width = 0.f;

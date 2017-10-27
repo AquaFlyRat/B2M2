@@ -3,13 +3,19 @@
 */
 
 #include "Texture2D.hpp"
-
+#include "../Debug/Log.hpp"
 
 using namespace b2m2;
 
 void cTexture2D::Create(const char *filePath, eFiltering format){
     m_filtering = format;
     SDL_Surface *surface = IMG_Load(filePath);
+
+    if (!surface) {
+        B2M2_LOG(cLogger::eLevel::Fatal, "Cannot load texture file: " + std::string(filePath));
+        ASSERT(false);
+    }
+
     m_surface = surface;
     
     CreateGLTexture();
