@@ -11,8 +11,6 @@
 
 #undef main
 
-#define ISRELEASE
-
 enum class AnimationState {
     Running, Idle
 };
