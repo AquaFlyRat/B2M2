@@ -34,6 +34,8 @@ namespace b2m2 {
         cShader *m_shader;
         std::vector<cTexture2D*> m_textures;
         std::vector<mat4> m_transforms;
+        uint32 m_quadCount;
+        uint32 m_tmpQuadCount = 0;
 
     public:
         void Initalize(mat4 projectionMatrix);
@@ -54,7 +56,10 @@ namespace b2m2 {
         void PushTransform(const mat4& matrix, bool override = false);
         void PopTransform();
 
+        uint32 GetQuadCount() const { return m_quadCount; }
+
     private:
         float GetTextureSlot(cTexture2D *texture);
+
     };
 }

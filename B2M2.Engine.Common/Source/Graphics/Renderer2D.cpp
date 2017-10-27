@@ -39,6 +39,7 @@ static vec3 MultiplyVec2ByMat4(float x, float y, const mat4& matrix) {
 void cRenderer2D::Initalize(mat4 projectionMatrix) {
     m_shader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
     m_transforms.push_back(mat4(1.0f));
+    m_quadCount = 0;
 
     m_shader->Bind();
     m_shader->SubmitUniformMat4("sys_Projection", projectionMatrix);
@@ -95,6 +96,7 @@ void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color)
     m_buffer++;
     
     m_indices += 6;
+    m_tmpQuadCount++;
 }
 
 void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos)
@@ -155,6 +157,8 @@ void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle cli
     m_buffer++;
 
     m_indices += 6;
+    
+    m_tmpQuadCount++;
 }
 
 void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, vec4 color)
@@ -195,6 +199,9 @@ void cRenderer2D::Begin() {
 }
 
 void cRenderer2D::End() {
+    m_quadCount = m_tmpQuadCount;
+    m_tmpQuadCount = 0;
+
     m_vao.UnBind();
     m_vbo.ReleaseMapping();
 }

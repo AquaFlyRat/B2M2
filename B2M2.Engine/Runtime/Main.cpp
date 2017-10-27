@@ -51,7 +51,7 @@ void onKeyDown(SDL_Event evt) {
     }
 }
 
-#if defined(ISRELEASE)
+#if !defined(_DEBUG)
 int WINAPI WinMain(
     HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
@@ -85,6 +85,7 @@ int WINAPI WinMain(
 
     float rectangleAngle = 0.f;
     float spriteX = (400 - ((16 * 4) / 2)) / 4;
+
     AnimationState state = AnimationState::Idle;
     while (window.IsRunning()) {
         window.PollEvents();
@@ -95,7 +96,8 @@ int WINAPI WinMain(
         renderer.Begin();
 
         renderer.DrawString("Use <RIGHT> & <LEFT> to move", &font, { (400 - ((16 * 4) / 2)) - 300, 60 }, vec4(.5f, .6f, .7f, 1.f));
-        
+        renderer.DrawString("Quads: " + std::to_string(renderer.GetQuadCount()), &font, { 5, 5 }, { .2f,.3f,.5f,1.f });
+
         renderer.PushTransform(glm::scale(vec3(4, 4, 0)));   
         renderer.DrawTexture(&basicFallTexture, { 30, 300/4-16/2 });
 
