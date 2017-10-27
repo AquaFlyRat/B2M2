@@ -8,6 +8,7 @@
 #include <Input/Keyboard.hpp>
 #include <Windows.h>
 #include <Runtime/Animation/Spritesheet.hpp>
+#include <Box2D/Box2D.h>
 
 #undef main
 
@@ -62,7 +63,7 @@ int WINAPI WinMain(
     using namespace b2m2;
 
     cRuntime::Initalize();
-
+    
     cWindow window;
     window.Create({ 800, 600, "B2M2 Engine!" });
     window.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
