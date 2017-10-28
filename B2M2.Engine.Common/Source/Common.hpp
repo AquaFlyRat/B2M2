@@ -8,6 +8,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <float.h>
 
 #include "Platform/OpenGL.hpp"
 
@@ -27,6 +28,10 @@ namespace b2m2 {
     typedef glm::vec4       vec4;
     typedef glm::tvec4<int> ivec4;
     typedef glm::mat4       mat4;
+
+    inline bool ApproxEqual(float a1, float b1) {
+        return( fabs(a1 - b1) <= FLT_EPSILON);
+    }
 }
 
 #define ASSERT(x) assert(x)

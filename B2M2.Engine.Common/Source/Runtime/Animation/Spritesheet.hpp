@@ -20,8 +20,8 @@ namespace b2m2 {
         
         void Create(const char *spritesheetPath, float spriteWidth, float spriteHeight);
 
-        void DrawSprite(cRenderer2D *renderer, int xIndex, int yIndex, vec2 pos, bool flip=false);
-        void AnimateRow(cRenderer2D *renderer, int row, vec2 pos, float period, int cap = -1, bool flip=false);
+        void DrawSprite(cRenderer2D *renderer, int xIndex, int yIndex, vec2 pos, vec2 scale = {1, 1});
+        void AnimateRow(cRenderer2D *renderer, int row, vec2 pos, float period, int cap = -1, vec2 scale = { 1, 1 });
         void ResetAnimations();
 
         void Release();

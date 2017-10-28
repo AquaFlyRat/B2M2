@@ -9,45 +9,36 @@
 #include <Windows.h>
 #include <Runtime/Animation/Spritesheet.hpp>
 #include <Box2D/Box2D.h>
+#include <Runtime/Scene/Scene.hpp>
+#include <Runtime/CoreComponents/PhysicsComponent.hpp>
 
 #undef main
 
 enum class AnimationState {
-    Running, Idle
+    Running, Idle, Falling
 };
 
-std::string text = "Type your text here...";
+static void AddGameObjects(b2m2::cGameObject *ground, b2m2::cGameObject *player, b2m2::cScene *scene) {
+    using namespace b2m2;
+    
+    player->Position = { 0.f, 0.f };
+    player->Size = { 1.f, 1.f };
 
-bool _isWireframe = false;
+    cPhysicsComponent *playerPhysics = new cPhysicsComponent(false, 1.f);
+    playerPhysics->SetDensity(1.f);
+    playerPhysics->SetFriction(0.3f);
+    player->AddComponent(playerPhysics);
 
-void onKeyDown(SDL_Event evt) {
-    if (evt.key.keysym.scancode == SDL_SCANCODE_F5) {
-        _isWireframe = !_isWireframe;
-        if (_isWireframe) {
-            glDisable(GL_BLEND);
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        }
-        else {
-            glEnable(GL_BLEND);
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        }
-    }
+    ground->Position = { -16.f, -7.f };
+    ground->Size = { 32.f, 1.f };
 
-    if (evt.key.keysym.scancode == SDL_SCANCODE_BACKSPACE) {
-        if(text.length() > 0)
-            text.pop_back();
-        return;
-    }
+    cPhysicsComponent *groundPhysics = new cPhysicsComponent(true, 0.f);
+    groundPhysics->SetDensity(0.f);
+    groundPhysics->SetFriction(0.0f);
+    ground->AddComponent(groundPhysics);
 
-    if (evt.key.keysym.scancode == SDL_SCANCODE_RETURN) {
-        text.push_back('\n');
-        return;
-    }
-
-    char c = b2m2::cKeyboard::GetASCIIChar(evt.key);
-    if (c > 0) {
-        text += c;
-    }
+    scene->AddObject(player);
+    scene->AddObject(ground);
 }
 
 #if !defined(_DEBUG)
@@ -63,87 +54,110 @@ int WINAPI WinMain(
     using namespace b2m2;
     cRuntime runtime;
     runtime.Initalize();
+    cKeyboard::Initalize();
     
     cWindow window;
-    window.Create({ 800, 600, "B2M2 Engine!" });
+    window.Create({ 1280, 720, "B2M2 Engine!" });
     window.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-    window.SetKeyDownCallback(onKeyDown);
-
-    cRenderer2D renderer;
-    renderer.Initalize(glm::ortho(0.f, 800.f, 600.f, 0.f, 1.f, -1.f));
-
-    cTexture2D basicFallTexture;
-    basicFallTexture.Create("Assets/spr_basicfall.png", cTexture2D::eFiltering::Nearest);
-
-    cFont font;
-    font.Create("Assets/WendyOne-Regular.ttf", 48);
     
-    cSpritesheet spritesheet;
-    spritesheet.Create("Assets/player.png", 16, 16);
-    cKeyboard::Initalize();
+    cRenderer2D renderer;
+    renderer.Initalize(glm::ortho(-16.f, 16.f, 9.f, -9.f, 1.f, -1.f));
 
-    float rectangleAngle = 0.f;
-    float spriteX = (400 - ((16 * 4) / 2)) / 4;
+    cScene scene;
+    scene.Create({ 0, -10.f });
+
+    cGameObject *player = new cGameObject();
+    cGameObject *ground = new cGameObject();
+    AddGameObjects(ground, player, &scene);
+
+    cSpritesheet playerSpritesheet;
+    playerSpritesheet.Create("Assets/player.png", 16, 16);
+    float playerX = 0.f;
 
     AnimationState state = AnimationState::Idle;
+    double t = 0.0;
+    double dt = 1 / 60.0;
+    double frameTime = 0.f;
+    double currentTime = SDL_GetTicks()/1000;
     while (window.IsRunning()) {
         window.PollEvents();
+        
+        scene.Update();
         window.Clear();
-
-        rectangleAngle += 1.f;
         
+        if (cKeyboard::IsKeyDown(SDL_SCANCODE_SPACE)) {
+            cPhysicsComponent *component = player->GetComponent<cPhysicsComponent>();
+            if (component) {
+                if (component->IsOnGround())
+                {
+                    b2Body *body = component->GetBody();
+                    float impulse = body->GetMass()*10;
+                    body->ApplyLinearImpulse(b2Vec2(0, impulse), body->GetWorldCenter(), true);
+                }
+            }
+        }
+
         renderer.Begin();
-
-        renderer.DrawString("Use <RIGHT> & <LEFT> to move", &font, { (400 - ((16 * 4) / 2)) - 300, 60 }, vec4(.5f, .6f, .7f, 1.f));
-        renderer.DrawString("Quads: " + std::to_string(renderer.GetQuadCount()), &font, { 5, 5 }, { .2f,.3f,.5f,1.f });
-
-        renderer.PushTransform(glm::scale(vec3(4, 4, 0)));   
-        renderer.DrawTexture(&basicFallTexture, { 30, 300/4-16/2 });
-
-        if (cKeyboard::IsKeyDown(SDL_SCANCODE_RIGHT)) {
-            if (state != AnimationState::Running) {
-                state = AnimationState::Running;
-                spritesheet.ResetAnimations();
+        {           
+            renderer.FillRectangle({ ground->Position.x, -ground->Position.y }, ground->Size.x, ground->Size.y, { 1.f, 0.f, 0.f, 1.f });
+            cPhysicsComponent *component = player->GetComponent<cPhysicsComponent>();
+            
+            if (cKeyboard::IsKeyDown(SDL_SCANCODE_RIGHT)) {
+                if (state != AnimationState::Running) {
+                    state = AnimationState::Running;
+                    playerSpritesheet.ResetAnimations();
+                }
+                playerX += .1f;
+                cPhysicsComponent *component = player->GetComponent<cPhysicsComponent>();
+                if (component) {
+                    if (component->IsOnGround()) {
+                        playerSpritesheet.AnimateRow(&renderer, 0, { playerX, -(player->Position.y + 1) }, 125.f, 8, { .125f, .125f });
+                    }
+                    else {
+                        playerSpritesheet.DrawSprite(&renderer, 0, 2, { playerX, -(player->Position.y + 1) }, { .125f, .125f });
+                    }
+                }
             }
-            spriteX += 1.f;
-            spritesheet.AnimateRow(&renderer, 0, { spriteX, 50 / 4 }, 125.f);
-        }
-        else if (cKeyboard::IsKeyDown(SDL_SCANCODE_LEFT)) {
-            if (state != AnimationState::Running) {
-                state = AnimationState::Running;
-                spritesheet.ResetAnimations();
+            else if (cKeyboard::IsKeyDown(SDL_SCANCODE_LEFT)) {
+                if (state != AnimationState::Running) {
+                    state = AnimationState::Running;
+                    playerSpritesheet.ResetAnimations();
+                }
+                playerX -= .1f;
+                renderer.PushTransform(cTransform::FlipHorizontal({ playerX, -(player->Position.y + 1), 0.f }, 2));
+                cPhysicsComponent *component = player->GetComponent<cPhysicsComponent>();
+                if (component) {
+                    if (component->IsOnGround()) {
+                        playerSpritesheet.AnimateRow(&renderer, 0, { playerX, -(player->Position.y + 1) }, 125.f, 8, { .125f, .125f });
+                    }
+                    else {
+                        playerSpritesheet.DrawSprite(&renderer, 0, 2, { playerX, -(player->Position.y + 1) }, { .125f, .125f });
+                    }
+                }
+                renderer.PopTransform();
             }
-            spriteX -= 1.f;
-            renderer.PushTransform(cTransform::FlipHorizontal({ spriteX, 50 / 4, 0.f }, 16));
-            spritesheet.AnimateRow(&renderer, 0, { spriteX, 50 / 4 }, 125.f);
-            renderer.PopTransform();
-        }
-        else {
-            if (state != AnimationState::Idle) {
-                state = AnimationState::Idle;
-                spritesheet.ResetAnimations();
+            else {
+                if (state != AnimationState::Idle) {
+                    state = AnimationState::Idle;
+                    playerSpritesheet.ResetAnimations();
+                }
+                cPhysicsComponent *component = player->GetComponent<cPhysicsComponent>();
+                if (component) {
+                    if (component->IsOnGround()) {
+                        playerSpritesheet.AnimateRow(&renderer, 1, { playerX, -(player->Position.y + 1) }, 125.f, 5, { .125f, .125f });
+                    }
+                    else {
+                        playerSpritesheet.DrawSprite(&renderer, 1, 2, { playerX, -(player->Position.y + 1) }, { .125f, .125f });
+                    }
+                }
             }
-            spritesheet.AnimateRow(&renderer, 1, { spriteX, 50 / 4 }, 125.f, 5);
         }
 
-        renderer.PopTransform();
-        
-        renderer.PushTransform(cTransform::RotateAroundPoint(vec3(400, 300, 0.f), rectangleAngle));
-        renderer.FillRectangle({ 350, 250 }, 100, 100, { .4f, .5f, .6f, 1.f });
-        renderer.PopTransform();
-
-        renderer.FillRectangle({ 350, 250 }, 100, 100, { 1.f, 0.f, 0.f, 1.f });
-        
-        std::string txt = "Hello World (Bob)!\nThis is a new line";
-        vec2 sizes = font.MeasureString(txt);
-        
-        renderer.DrawString(txt, &font,
-            { 400 - (sizes.x / 2), (300 - (sizes.y / 2)) + 200 }, vec4(.5f, .6f, 0.7f, 1.f));
-        renderer.DrawString(text, &font, { 50, 150 }, { 1.f, 1.f, 0.f, 1.f });
         renderer.End();
         renderer.Present();
-
+        
         window.SwapBuffers();
+        SDL_Delay(1000 / 60);
     }
 
     window.Destroy();

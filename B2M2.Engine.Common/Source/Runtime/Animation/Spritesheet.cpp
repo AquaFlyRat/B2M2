@@ -22,15 +22,15 @@ void cSpritesheet::Create(const char *spritesheetPath, float spriteWidth, float 
     m_columns = m_texture->GetWidth() / m_spriteWidth;
 }
 
-void cSpritesheet::DrawSprite(cRenderer2D * renderer, int xIndex, int yIndex, vec2 pos, bool flip)
+void cSpritesheet::DrawSprite(cRenderer2D * renderer, int xIndex, int yIndex, vec2 pos, vec2 scale)
 {
     float rectX = xIndex * m_spriteWidth;
     float rectY = yIndex * m_spriteHeight;
 
-    renderer->DrawTextureClip(m_texture, pos, sRectangle(rectX, rectY, m_spriteWidth, m_spriteHeight), flip);
+    renderer->DrawTextureClip(m_texture, pos, sRectangle(rectX, rectY, m_spriteWidth, m_spriteHeight), scale);
 }
 
-void cSpritesheet::AnimateRow(cRenderer2D * renderer, int row, vec2 pos, float period, int cap, bool flip)
+void cSpritesheet::AnimateRow(cRenderer2D * renderer, int row, vec2 pos, float period, int cap, vec2 scale)
 {
     cap = cap < 0 ? m_columns : cap;
 
@@ -44,7 +44,7 @@ void cSpritesheet::AnimateRow(cRenderer2D * renderer, int row, vec2 pos, float p
         lastTime = currenttime;
     }
 
-    DrawSprite(renderer, m_animationIndex, row, pos, flip);
+    DrawSprite(renderer, m_animationIndex, row, pos, scale);
 }
 
 void cSpritesheet::ResetAnimations()

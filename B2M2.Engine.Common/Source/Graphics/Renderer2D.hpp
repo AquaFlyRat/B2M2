@@ -44,8 +44,8 @@ namespace b2m2 {
         void DrawTexture(cTexture2D *texture, vec2 pos);
         void DrawTexture(cTexture2D *texture, vec2 pos, vec4 color);
 
-        void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, bool flipX=false);
-        void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, vec4 color, bool flipX=false);
+        void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, vec2 scale = { 1.f, 1.f });
+        void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, vec4 color, vec2 scale = { 1.f, 1.f });
 
         void DrawString(const std::string& text, cFont *font, vec2 pos, vec4 color);
 

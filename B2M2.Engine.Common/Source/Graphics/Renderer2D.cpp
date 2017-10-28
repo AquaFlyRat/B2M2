@@ -109,11 +109,11 @@ void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos, vec4 color) {
     DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())), color);
 }
 
-void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, bool flipX) {
-    DrawTextureClip(texture, pos, clip, vec4(1.f, 1.f, 1.f, 1.f), flipX);
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec2 scale) {
+    DrawTextureClip(texture, pos, clip, vec4(1.f, 1.f, 1.f, 1.f), scale);
 }
 
-void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color, bool flipX) {
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color, vec2 scale) {
     uint32 textureWidth = texture->GetWidth();
     uint32 textureHeight = texture->GetHeight();
 
@@ -125,8 +125,8 @@ void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle cli
 
     float texSlot = GetTextureSlot(texture);
 
-    float clipWidth = clip.Size.x;
-    float clipHeight = clip.Size.y;
+    float clipWidth = clip.Size.x*scale.x;
+    float clipHeight = clip.Size.y*scale.y;
 
     mat4 back = m_transforms.back();
 
