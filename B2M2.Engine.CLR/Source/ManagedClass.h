@@ -9,6 +9,12 @@ namespace b2m2 {
     public:
         T *GetHandle() { return m_handle; }
 
+        ManagedClass(T *ptr) {
+            m_handle = ptr;
+        }
+
+        ManagedClass() {}
+
         virtual ~ManagedClass()
         {
             if (m_handle != nullptr)

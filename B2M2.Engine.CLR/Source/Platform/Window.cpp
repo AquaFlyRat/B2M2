@@ -2,6 +2,7 @@
 #include <Platform/Window.hpp>
 
 #include "../ManagedClass.h"
+#include <Platform/Runtime.hpp>
 
 namespace b2m2 {
 
@@ -23,7 +24,8 @@ namespace b2m2 {
         Window(WindowConfig^ config) {
             const char * title = (const char*) 
                 System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(config->Title).ToPointer();
-
+            cRuntime runtime;
+            runtime.Initalize();
             m_handle = new cWindow();
             m_handle->Create({ config->Width, config->Height, title });
         }
@@ -31,6 +33,18 @@ namespace b2m2 {
         void PollEvents() {
             m_handle->PollEvents();
         }
+        /*
+        void SwapBuffers() {
+            m_handle->SwapBuffers();
+        }
+
+        void SetClearColor(float r, float g, float b, float a) {
+            m_handle->SetClearColor(r, g, b, a);
+        }
+
+        void Clear() {
+            m_handle->Clear();
+        }*/
 
         property bool IsRunning {
             bool get() { return m_handle->IsRunning(); }

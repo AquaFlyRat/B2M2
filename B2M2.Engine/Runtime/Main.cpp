@@ -14,42 +14,7 @@
 
 #undef main
 
-enum class AnimationState {
-    Running, Idle, Falling
-};
-
-static void AddGameObjects(b2m2::cGameObject *ground, b2m2::cGameObject *player, b2m2::cScene *scene) {
-    using namespace b2m2;
-    
-    player->Position = { 0.f, 0.f };
-    player->Size = { 1.f, 1.f };
-
-    cPhysicsComponent *playerPhysics = new cPhysicsComponent(false, 1.f);
-    playerPhysics->SetDensity(1.f);
-    playerPhysics->SetFriction(0.3f);
-    player->AddComponent(playerPhysics);
-
-    ground->Position = { -16.f, -7.f };
-    ground->Size = { 32.f, 1.f };
-
-    cPhysicsComponent *groundPhysics = new cPhysicsComponent(true, 0.f);
-    groundPhysics->SetDensity(0.f);
-    groundPhysics->SetFriction(0.0f);
-    ground->AddComponent(groundPhysics);
-
-    scene->AddObject(player);
-    scene->AddObject(ground);
-}
-
-#if !defined(_DEBUG)
-int WINAPI WinMain(
-    HINSTANCE hInstance,
-    HINSTANCE hPrevInstance,
-    LPSTR lpCmdLine,
-    int nCmdShow)
-#else
-    int main()
-#endif
+int main()
 {
     using namespace b2m2;
     cRuntime runtime;
@@ -61,7 +26,10 @@ int WINAPI WinMain(
     window.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
     
     cRenderer2D renderer;
-    renderer.Initalize(cMatrix4::Orthographic(16.f, -16.f, -9.f, 9.f, -1.f, 1.f));
+    renderer.Initalize(cMatrix4::Orthographic(1280, 0, 0, 720, 1.f, -1.f));
+
+    cFont font;
+    font.Create("Assets/WendyOne-Regular.ttf", 48);
 
     cSpritesheet playerSpritesheet;
     
@@ -70,12 +38,7 @@ int WINAPI WinMain(
         
         window.Clear();
         renderer.Begin();
-        
-        renderer.PushTransform(cMatrix4::Scale(2.f));
-
-        renderer.FillRectangle({ 0, 0 }, 1, 1, { 1.f, 0.f, 1.f, 1.f });
-        renderer.PopTransform();
-
+        renderer.DrawString("Hello World!", &font, { 100, 100 }, { 0.f,1.f,1.f,1.f });
         renderer.End();
         renderer.Present();
         

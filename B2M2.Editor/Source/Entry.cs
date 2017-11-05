@@ -15,8 +15,8 @@ namespace B2M2.Editor.Source
 
             Window window = new Window(config);
             Console.WriteLine(window.GLMajor + ", " + window.GLMinor);
-
-            while(window.IsRunning)
+            
+            while (window.IsRunning)
             {
                 window.PollEvents();
             }
