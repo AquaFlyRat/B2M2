@@ -12,6 +12,7 @@
 #include "Texture2D.hpp"
 #include "Rectangle.hpp"
 #include "Font.hpp"
+#include "Color.hpp"
 
 #include <vector>
 
@@ -19,7 +20,7 @@ namespace b2m2 {
     struct sVertex
     {
         vec3        Position;
-        vec4        Color;
+        cColor      Color;
         vec2        UV;
         float       TextureId;
     };
@@ -40,14 +41,14 @@ namespace b2m2 {
     public:
         void Initalize(mat4 projectionMatrix);
 
-        void FillRectangle(vec2 pos, float width, float height, vec4 color);
+        void FillRectangle(vec2 pos, float width, float height, cColor color);
         void DrawTexture(cTexture2D *texture, vec2 pos);
-        void DrawTexture(cTexture2D *texture, vec2 pos, vec4 color);
+        void DrawTexture(cTexture2D *texture, vec2 pos, cColor color);
 
         void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, vec2 scale = { 1.f, 1.f });
-        void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, vec4 color, vec2 scale = { 1.f, 1.f });
+        void DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, cColor color, vec2 scale = { 1.f, 1.f });
 
-        void DrawString(const std::string& text, cFont *font, vec2 pos, vec4 color);
+        void DrawString(const std::string& text, cFont *font, vec2 pos, cColor color);
 
         void Begin();
         void End();

@@ -132,6 +132,7 @@
     <ClInclude Include="Source\Common.hpp" />
     <ClInclude Include="Source\Containers\String.hpp" />
     <ClInclude Include="Source\Debug\Log.hpp" />
+    <ClInclude Include="Source\Graphics\Color.hpp" />
     <ClInclude Include="Source\Graphics\Font.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\Buffer.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\OpenGLStructures.hpp" />
@@ -142,6 +143,10 @@
     <ClInclude Include="Source\Graphics\Texture2D.hpp" />
     <ClInclude Include="Source\Graphics\Transform.hpp" />
     <ClInclude Include="Source\Input\Keyboard.hpp" />
+    <ClInclude Include="Source\Math\Maths.hpp" />
+    <ClInclude Include="Source\Math\Matrix4.hpp" />
+    <ClInclude Include="Source\Math\Vector2.hpp" />
+    <ClInclude Include="Source\Math\Vector3.hpp" />
     <ClInclude Include="Source\Platform\OpenGL.hpp" />
     <ClInclude Include="Source\Platform\Runtime.hpp" />
     <ClInclude Include="Source\Platform\Window.hpp" />
@@ -159,6 +164,7 @@
     <ClCompile Include="Source\Graphics\Texture2D.cpp" />
     <ClCompile Include="Source\Graphics\Transform.cpp" />
     <ClCompile Include="Source\Input\Keyboard.cpp" />
+    <ClCompile Include="Source\Math\Matrix4.cpp" />
     <ClCompile Include="Source\Platform\Runtime.cpp" />
     <ClCompile Include="Source\Platform\Window.cpp" />
     <ClCompile Include="Source\Runtime\Animation\Spritesheet.cpp" />

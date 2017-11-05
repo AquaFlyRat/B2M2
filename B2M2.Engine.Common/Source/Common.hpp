@@ -10,6 +10,10 @@
 #include <glm/gtx/transform.hpp>
 #include <float.h>
 
+#include "Math/Matrix4.hpp"
+#include "Math/Vector2.hpp"
+#include "Math/Vector3.hpp"
+
 #include "Platform/OpenGL.hpp"
 
 namespace b2m2 {
@@ -18,7 +22,11 @@ namespace b2m2 {
     
     typedef unsigned char uint8;
     typedef char          int8;
-
+    
+    typedef cVector2 vec2;
+    typedef cVector3 vec3;
+    typedef cMatrix4 mat4;
+    /*
     typedef glm::vec2       vec2;
     typedef glm::tvec2<int> ivec2;
     
@@ -27,7 +35,7 @@ namespace b2m2 {
 
     typedef glm::vec4       vec4;
     typedef glm::tvec4<int> ivec4;
-    typedef glm::mat4       mat4;
+    typedef glm::mat4       mat4;*/
 
     inline bool ApproxEqual(float a1, float b1) {
         return( fabs(a1 - b1) <= FLT_EPSILON);

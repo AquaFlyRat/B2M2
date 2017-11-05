@@ -30,7 +30,7 @@ namespace b2m2 {
         void Unbind() { glUseProgram(0); }
 
         void SubmitUniformMat4(const char *uniformName, const mat4& matrix) {
-            glUniformMatrix4fv(glGetUniformLocation(m_id, uniformName), 1, GL_FALSE, &matrix[0][0]);
+            glUniformMatrix4fv(glGetUniformLocation(m_id, uniformName), 1, GL_TRUE, matrix.Elements);
         }
 
         void SubmitUniform1iv(const char *uniformname, int num, int *data) {

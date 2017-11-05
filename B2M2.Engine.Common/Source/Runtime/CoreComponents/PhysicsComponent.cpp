@@ -6,9 +6,9 @@ using namespace b2m2;
 
 void cPhysicsComponent::Update(cGameObject *obj) {
     const b2Vec2& vec = m_body->GetPosition();
-    m_bOnGround = ApproxEqual(vec.y, obj->Position.y);
-    obj->Position.x = vec.x;
-    obj->Position.y = vec.y;
+    m_bOnGround = ApproxEqual(vec.y, obj->Position.Y);
+    obj->Position.X = vec.x;
+    obj->Position.Y = vec.y;
 }
 
 void cPhysicsComponent::Create(cGameObject * obj) {
@@ -21,11 +21,11 @@ void cPhysicsComponent::Create(cGameObject * obj) {
     if (!m_bStatic) {
         bodyDef.type = b2_dynamicBody;
     }
-    bodyDef.position.Set(pos.x, pos.y);
+    bodyDef.position.Set(pos.X, pos.Y);
     m_body = world->CreateBody(&bodyDef);
 
     b2PolygonShape box;
-    box.SetAsBox(obj->Size.x / 2, obj->Size.y / 2);
+    box.SetAsBox(obj->Size.X / 2, obj->Size.Y / 2);
     m_body->CreateFixture(&box, m_fricton);
     m_body->SetFixedRotation(true);
 }

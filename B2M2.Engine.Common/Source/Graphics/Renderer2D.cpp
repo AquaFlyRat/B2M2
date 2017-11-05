@@ -32,9 +32,12 @@ static void GenerateRectIndicesIntoBuffer(GLuint *buffer, uint32 indicesNum) {
     }
 }
 
-static vec3 MultiplyVec2ByMat4(float x, float y, const mat4& matrix) {
-    vec4 vecOut = matrix * vec4(x, y, 0.f, 1.f);
-    return vec3(vecOut.x, vecOut.y, 0.f);
+static vec3 MultiplyVec2ByMat4(float x, float y, const cMatrix4& matrix) {
+    cVector3 _vec3(x, y, 0.f);
+    cMatrix4 cpy = matrix;
+    cVector3 vecOut = cpy * _vec3;
+
+    return vec3(vecOut.X, vecOut.Y, 0.f);
 }
 
 void cRenderer2D::Initalize(mat4 projectionMatrix) {
@@ -72,27 +75,27 @@ void cRenderer2D::Initalize(mat4 projectionMatrix) {
     m_indices = 0;
 }
 
-void cRenderer2D::FillRectangle(vec2 pos, float width, float height, vec4 color) {
+void cRenderer2D::FillRectangle(vec2 pos, float width, float height, cColor color) {
     
     mat4 back = m_transforms.back();
 
-    vec4 v = back * vec4(pos.x, pos.y, 0.f, 1.f);
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x, pos.y, back);
+    vec3 v = back * cVector3(pos.X, pos.Y, 0.f);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X, pos.Y, back);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
 
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x + width, pos.y, back);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X + width, pos.Y, back);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
 
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x + width, pos.y + height, back); 
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X + width, pos.Y + height, back); 
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
 
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x, pos.y + height, back);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X, pos.Y + height, back);
     m_buffer->Color = color;
     m_buffer->TextureId = -1;
     m_buffer++;
@@ -105,50 +108,50 @@ void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos) {
     DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())));
 }
 
-void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos, vec4 color) {
+void cRenderer2D::DrawTexture(cTexture2D * texture, vec2 pos, cColor color) {
     DrawTextureClip(texture, pos, sRectangle(0, 0, static_cast<float>(texture->GetWidth()), static_cast<float>(texture->GetHeight())), color);
 }
 
 void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec2 scale) {
-    DrawTextureClip(texture, pos, clip, vec4(1.f, 1.f, 1.f, 1.f), scale);
+    DrawTextureClip(texture, pos, clip, { 255, 255, 255,255 }, scale);
 }
 
-void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, vec4 color, vec2 scale) {
+void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle clip, cColor color, vec2 scale) {
     uint32 textureWidth = texture->GetWidth();
     uint32 textureHeight = texture->GetHeight();
 
-    float uvBoundX = clip.Size.x / textureWidth;
-    float uvBoundY = clip.Size.y / textureHeight;
+    float uvBoundX = clip.Size.X / textureWidth;
+    float uvBoundY = clip.Size.Y / textureHeight;
 
-    float uvPosX = clip.Position.x / textureWidth;
-    float uvPosY = clip.Position.y / textureHeight;
+    float uvPosX = clip.Position.X / textureWidth;
+    float uvPosY = clip.Position.Y / textureHeight;
 
     float texSlot = GetTextureSlot(texture);
 
-    float clipWidth = clip.Size.x*scale.x;
-    float clipHeight = clip.Size.y*scale.y;
+    float clipWidth = clip.Size.X * scale.X;
+    float clipHeight = clip.Size.Y * scale.Y;
 
     mat4 back = m_transforms.back();
 
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x, pos.y, back);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X, pos.Y, back);
     m_buffer->UV = vec2(uvPosX, uvPosY);
     m_buffer->TextureId = texSlot;
     m_buffer->Color = color;
     m_buffer++;
 
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x + clipWidth, pos.y, back);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X + clipWidth, pos.Y, back);
     m_buffer->UV = vec2(uvPosX + uvBoundX, uvPosY);
     m_buffer->TextureId = texSlot;
     m_buffer->Color = color;
     m_buffer++;
 
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x + clipWidth, pos.y + clipHeight, back);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X + clipWidth, pos.Y + clipHeight, back);
     m_buffer->UV = vec2(uvPosX + uvBoundX, uvPosY + uvBoundY);
     m_buffer->TextureId = texSlot;
     m_buffer->Color = color;
     m_buffer++;
 
-    m_buffer->Position = MultiplyVec2ByMat4(pos.x, pos.y + clipHeight, back);
+    m_buffer->Position = MultiplyVec2ByMat4(pos.X, pos.Y + clipHeight, back);
     m_buffer->UV = vec2(uvPosX, uvPosY + uvBoundY);
     m_buffer->TextureId = texSlot;
     m_buffer->Color = color;
@@ -159,18 +162,18 @@ void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle cli
     m_tmpQuadCount++;
 }
 
-void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, vec4 color) {
+void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, cColor color) {
     TTF_Font *sdlfont = font->GetTTF();
     const std::string& ascii = font->GetAsciiData();
     cTexture2D *texture = font->GetTexture();
     
-    float xPos = pos.x;
-    float yPos = pos.y;
+    float xPos = pos.X;
+    float yPos = pos.Y;
 
     for (char c : text) {
         if (c == '\n') {
             yPos += texture->GetHeight();
-            xPos = pos.x;
+            xPos = pos.X;
             continue;
         }
 

@@ -8,7 +8,7 @@
 using namespace b2m2;
 
 void cScene::Create(vec2 gravity) {
-    m_b2World = new b2World({ gravity.x, gravity.y });
+    m_b2World = new b2World({ gravity.X, gravity.Y });
 }
 
 void cScene::Release() {
