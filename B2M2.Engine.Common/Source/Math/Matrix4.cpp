@@ -8,8 +8,8 @@
 using namespace b2m2;
 
 const     int   cMatrix4::ElementCount;
-cMatrix4::cMatrix4(float diag)
-{
+
+cMatrix4::cMatrix4(float diag) {
     for (int i = 0; i < cMatrix4::ElementCount; ++i)
     {
         Elements[i] = 0.f;
@@ -21,16 +21,12 @@ cMatrix4::cMatrix4(float diag)
     Elements[3 + 3 * 4] = diag;
 }
 
-cMatrix4 cMatrix4::Multiply(const cMatrix4& other)
-{
+cMatrix4 cMatrix4::Multiply(const cMatrix4& other) {
     float data[cMatrix4::ElementCount];
-    for (int row = 0; row < 4; row++)
-    {
-        for (int col = 0; col < 4; col++)
-        {
+    for (int row = 0; row < 4; row++) {
+        for (int col = 0; col < 4; col++) {
             float sum = 0.0f;
-            for (int e = 0; e < 4; e++)
-            {
+            for (int e = 0; e < 4; e++) {
                 sum += Elements[e + row * 4] * other.Elements[col + e * 4];
             }
             data[col + row * 4] = sum;
@@ -40,13 +36,11 @@ cMatrix4 cMatrix4::Multiply(const cMatrix4& other)
     return *this;
 }
 
-cMatrix4::cMatrix4(float elements[ElementCount])
-{
+cMatrix4::cMatrix4(float elements[ElementCount]) {
     memcpy(Elements, elements, ElementCount * 4);
 }
 
-cVector3 cMatrix4::Multiply(const cVector3& other)
-{
+cVector3 cMatrix4::Multiply(const cVector3& other) {
     float x = 0.f,
         y = 0.f,
         z = 0.f,
@@ -57,23 +51,19 @@ cVector3 cMatrix4::Multiply(const cVector3& other)
     return cVector3(x, y, z);
 }
 
-cMatrix4 cMatrix4::operator*(const cMatrix4 & other)
-{
+cMatrix4 cMatrix4::operator*(const cMatrix4 & other) {
     return Multiply(other);
 }
 
-cVector3 cMatrix4::operator*(const cVector3 & other)
-{
+cVector3 cMatrix4::operator*(const cVector3 & other) {
     return Multiply(other);
 }
 
-cVector3 operator*(cMatrix4 a, const cVector3& b)
-{
+cVector3 operator*(cMatrix4 a, const cVector3& b) {
     return a.Multiply(b);
 }
 
-cMatrix4 cMatrix4::Translate(const cVector3& vector)
-{
+cMatrix4 cMatrix4::Translate(const cVector3& vector) {
     cMatrix4 out;
     
     out.Elements[3 + 0 * 4] = vector.X;
@@ -83,8 +73,7 @@ cMatrix4 cMatrix4::Translate(const cVector3& vector)
     return out;
 }
 
-cMatrix4 cMatrix4::Translate(const cVector2& vector)
-{
+cMatrix4 cMatrix4::Translate(const cVector2& vector) {
     cMatrix4 out;
 
     out.Elements[3 + 0 * 4] = vector.X;
@@ -93,8 +82,7 @@ cMatrix4 cMatrix4::Translate(const cVector2& vector)
 
 }
 
-cMatrix4 cMatrix4::Scale(const cVector3& vector)
-{
+cMatrix4 cMatrix4::Scale(const cVector3& vector) {
     cMatrix4 out;
 
     out.Elements[0] = vector.X;
@@ -104,8 +92,7 @@ cMatrix4 cMatrix4::Scale(const cVector3& vector)
 
 }
 
-cMatrix4 cMatrix4::Scale(const cVector2& vector)
-{
+cMatrix4 cMatrix4::Scale(const cVector2& vector) {
     cMatrix4 out;
 
     out.Elements[0] = vector.X;
@@ -114,8 +101,7 @@ cMatrix4 cMatrix4::Scale(const cVector2& vector)
 
 }
 
-cMatrix4 cMatrix4::Scale(float scaleFactor)
-{
+cMatrix4 cMatrix4::Scale(float scaleFactor) {
     cMatrix4 out;
 
     out.Elements[0] = scaleFactor;
@@ -125,8 +111,7 @@ cMatrix4 cMatrix4::Scale(float scaleFactor)
 
 }
 
-cMatrix4 cMatrix4::RotateX(float theta)
-{
+cMatrix4 cMatrix4::RotateX(float theta) {
     cMatrix4 out;
 
     float radians = sMaths::ToRadians(theta);
@@ -138,8 +123,7 @@ cMatrix4 cMatrix4::RotateX(float theta)
 
 }
 
-cMatrix4 cMatrix4::RotateY(float theta)
-{
+cMatrix4 cMatrix4::RotateY(float theta) {
     cMatrix4 out;
 
     float radians = sMaths::ToRadians(theta);
@@ -151,8 +135,7 @@ cMatrix4 cMatrix4::RotateY(float theta)
 
 }
 
-cMatrix4 cMatrix4::RotateZ(float theta)
-{
+cMatrix4 cMatrix4::RotateZ(float theta) {
     cMatrix4 out;
     float radians = sMaths::ToRadians(theta);
     out.Elements[0] = ::cos(radians);
@@ -162,28 +145,30 @@ cMatrix4 cMatrix4::RotateZ(float theta)
     return out;
 }
 
-cMatrix4 cMatrix4::Identity(float diag)
-{
+cMatrix4 cMatrix4::Identity(float diag) {
     return cMatrix4(diag);
 }
 
-cVector3 cMatrix4::ScreenToWorld(cMatrix4 projection, cMatrix4 view, const cVector2& screenPos, int viewWidth, int viewHeight)
-{
-    assert(false);
+cVector3 cMatrix4::ScreenToWorld(cMatrix4 projection, cMatrix4 view, const cVector2& screenPos, int viewWidth, int viewHeight) {
+    assert(false); // Not implemented yet
+
     cVector3 pos;
-/*    pos.X = 2.f * screenPos.X / static_cast<float>(viewWidth - 1);
+
+    /*    
+    pos.X = 2.f * screenPos.X / static_cast<float>(viewWidth - 1);
     pos.Y = -(2.f * screenPos.Y / static_cast<float>(viewHeight - 1));
     pos.Z = 0;
 
     view.Invert();
     projection.Invert();
     view.Translate(pos);
-    projection.Translate(pos);*/
+    projection.Translate(pos);
+    */
+
     return pos;
 }
 
-cMatrix4 cMatrix4::Perpective(float aspectRatio, float foV, float near, float far)
-{
+cMatrix4 cMatrix4::Perpective(float aspectRatio, float foV, float near, float far) {
     cMatrix4 matrix = cMatrix4::Identity();
     matrix.Elements[0] = (1.0f / ::tan(sMaths::ToRadians(0.5f * foV))) / aspectRatio;
     matrix.Elements[1 + 1 * 4] = 1.0f / ::tan(sMaths::ToRadians(0.5f * foV));
@@ -194,21 +179,19 @@ cMatrix4 cMatrix4::Perpective(float aspectRatio, float foV, float near, float fa
     return matrix;
 }
 
-cMatrix4 cMatrix4::Orthographic(float right, float left, float top, float bottom, float far, float near)
-{
+cMatrix4 cMatrix4::Orthographic(float right, float left, float top, float bottom, float far, float near) {
     cMatrix4 matrix = cMatrix4::Identity();
     matrix.Elements[0] = 2.f / (right - left);
     matrix.Elements[1 + 1 * 4] = 2.f / (top - bottom);
     matrix.Elements[2 + 2 * 4] = -2 / (far - near);
     matrix.Elements[3 + 3 * 4] = 1.0f;
-    matrix.Elements[3 + 0 * 4] = (left + right) / (left - right); //-((right + left) / (right - left));
-    matrix.Elements[3 + 1 * 4] = (bottom + top) / (bottom - top); //-((top + bottom) / (top - bottom));
-    matrix.Elements[3 + 2 * 4] = (far + near) / (far - near); //-((far + near) / (far - near));
+    matrix.Elements[3 + 0 * 4] = (left + right) / (left - right); 
+    matrix.Elements[3 + 1 * 4] = (bottom + top) / (bottom - top); 
+    matrix.Elements[3 + 2 * 4] = (far + near) / (far - near);
     return matrix;
 }
 
-cMatrix4 cMatrix4::LookAt(const cVector3 & eyePosition, const cVector3 & lookAtPos, const cVector3 & upVector)
-{
+cMatrix4 cMatrix4::LookAt(const cVector3 & eyePosition, const cVector3 & lookAtPos, const cVector3 & upVector) {
     cMatrix4 result;
     cVector3 f = cVector3(lookAtPos.X - eyePosition.X, lookAtPos.Y - eyePosition.Y, lookAtPos.Z - eyePosition.Z);
     f = cVector3::Normalize(f);
@@ -235,8 +218,7 @@ cMatrix4 cMatrix4::LookAt(const cVector3 & eyePosition, const cVector3 & lookAtP
 /*
 Copied from Sparky maths - mat4.cpp
 */
-void cMatrix4::Invert()
-{
+void cMatrix4::Invert() {
     float temp[16];
 
     temp[0] = Elements[5] * Elements[10] * Elements[15] -
