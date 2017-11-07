@@ -28,6 +28,11 @@ namespace b2m2 {
         /// Title/Caption of the window
         /// </summary>
         const char * Title;
+
+        /// <summary>
+        /// Should the window be shown as soon as its created or only show when, Window::Show() is called?
+        /// </summary>
+        bool ShowOnCreate;
     };
 
     /// <summary>
@@ -40,6 +45,8 @@ namespace b2m2 {
         /// </summary>
         /// <param name="config">The configuration of the window (width, height, title) etc...</param>
         void Create(const sWindowConfig& config);
+
+        void Show();
 
         /// <summary>
         /// Destroys the window and frees any resources directly allocated by this object

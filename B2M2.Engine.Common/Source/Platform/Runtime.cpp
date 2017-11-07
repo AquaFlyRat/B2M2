@@ -11,7 +11,7 @@
 #include "../Common.hpp"
 
 void b2m2::cRuntime::Initalize() {
-    SDL_Init(SDL_INIT_EVERYTHING);
+    int x = SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
 }
 

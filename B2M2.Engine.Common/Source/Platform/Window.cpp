@@ -16,11 +16,16 @@ void cWindow::Create(const sWindowConfig& config) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     
+    Uint32 windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_OPENGL;
+    /*if (config.ShowOnCreate) {
+        windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+    }*/
+
     m_handle = SDL_CreateWindow(
         config.Title, 
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+        0, 0, 
         config.Width, config.Height, 
-        SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
+        windowFlags
     );
 
     ASSERT(m_handle);
@@ -37,6 +42,12 @@ void cWindow::Create(const sWindowConfig& config) {
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void cWindow::Show() {
+    if (!m_config.ShowOnCreate) {
+        SDL_ShowWindow(m_handle);
+    }
 }
 
 void cWindow::PollEvents() {

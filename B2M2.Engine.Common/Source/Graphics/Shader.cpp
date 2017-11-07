@@ -41,6 +41,7 @@ cShader * cShaderManager::CreateShaderFromText(const char * vertex, const char *
 std::string cShader::GetText(const char * filename)
 {
     std::ifstream fileStream(filename);
+    ASSERT(fileStream.is_open());
     std::ostringstream buffer;
     buffer << fileStream.rdbuf();
     std::string str = buffer.str();
@@ -49,6 +50,8 @@ std::string cShader::GetText(const char * filename)
 
 GLuint cShader::GenShader(const std::string & text, GLenum type)
 {
+    ASSERT(!text.empty());
+
     const char *src = text.c_str();
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &src, NULL);
