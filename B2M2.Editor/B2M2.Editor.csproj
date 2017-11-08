@@ -71,12 +71,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Native\Win32.cs" />
+    <Compile Include="Forms\Native\RenderPanelWrapper.cs" />
+    <Compile Include="Forms\Native\Win32.cs" />
     <Compile Include="Forms\RenderWindow.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RenderWindow.Designer.cs">
-      <DependentUpon>RenderWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\Editor.cs">
@@ -110,6 +108,9 @@
       <Project>{292e805b-fbb1-4ab3-a2b9-a506620d00b6}</Project>
       <Name>B2M2.Engine.CLR</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
