@@ -8,6 +8,8 @@
 
 #include "../Math/Vector2.hpp"
 #include "../Math/Matrix4.hpp"
+#include "Texture2D.hpp"
+#include "Font.hpp"
 
 namespace b2m2 {
 
@@ -23,6 +25,18 @@ namespace b2m2 {
         }
     };
 
+    public ref class Rectangle {
+    public:
+        float X, Y, Width, Height;
+
+        Rectangle(float x, float y, float width, float height) {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+        }
+    };
+
     public ref class Renderer2D : ManagedClass<cRenderer2D> {
     public:
         Renderer2D();
@@ -31,13 +45,13 @@ namespace b2m2 {
 
         void FillRectangle(Vector2^ pos, float width, float height, Color^ color);
 
-        /*void DrawTexture(Texture2D ^texture, Vector2 ^pos);
-        void DrawTexture(Texture2D ^texture, Vector2 ^pos, vec4 color);
+        void DrawTexture(Texture2D ^texture, Vector2 ^pos);
+        void DrawTexture(Texture2D ^texture, Vector2 ^pos, Color^ color);
 
         void DrawTextureClip(Texture2D ^texture, Vector2 ^pos, Rectangle^ clip);
-        void DrawTextureClip(Texture2D ^texture, Vector2 ^pos, Rectangle^ clip, Vector4 ^color);
+        void DrawTextureClip(Texture2D ^texture, Vector2 ^pos, Rectangle^ clip, Color^ color);
 
-        void DrawString(System::String^ text, Font ^font, Vector2 pos, Vector2 ^color);*/
+        void DrawString(System::String^ text, Font ^font, Vector2^ pos, Color ^color);
 
         void Begin();
         void End();

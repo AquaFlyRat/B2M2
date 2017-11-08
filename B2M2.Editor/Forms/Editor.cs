@@ -6,25 +6,29 @@ using System.Threading.Tasks;
 using b2m2;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Drawing;
+
 using WeifenLuo.WinFormsUI.Docking;
 
 using B2M2.Editor.Classes.Native;
 
 namespace B2M2.Editor.Forms
 {
+    using WinForms = System.Drawing;
+
     class GameWindow : DockContent {
         Timer _timer = new Timer();
         public Window _window;
         Renderer2D _renderer;
         Panel _viewport;
+        Texture2D _texture;
+        Font _font;
 
         public GameWindow()
         {
-            Size = new Size(800, 600);
+            Size = new WinForms.Size(800, 600);
             Text = "Render Window";
             _viewport = new Panel();
-            _viewport.Location = new Point(0, 0);
+            _viewport.Location = new WinForms.Point(0, 0);
             _viewport.Dock = DockStyle.Fill;
             Controls.Add(_viewport);
 
@@ -36,8 +40,10 @@ namespace B2M2.Editor.Forms
             _window.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
             _renderer = new Renderer2D();
             _renderer.Initalize(Matrix4.Orthographic(800, 0, 0, 600, 1.0f, -1.0f));
-            
-            MaximumSize = new Size(800, 600);
+
+            _texture = new Texture2D("Assets/spr_basicfall.png", TextureFiltering.Nearest);
+            _font = new Font("Assets/WendyOne-Regular.ttf", 32);
+            MaximumSize = new WinForms.Size(800, 600);
             IntPtr hwnd = _window.GetHWND();
             Win32.SetWindowPos(
             hwnd,
@@ -61,7 +67,12 @@ namespace B2M2.Editor.Forms
         {
             _window.Clear();
             _renderer.Begin();
-            _renderer.FillRectangle(new Vector2(100, 100), 100, 100, new b2m2.Color(1.0f, 0.0f, 1.0f, 1.0f));
+            _renderer.FillRectangle(new Vector2(500, 200), 100, 100, new b2m2.Color(1.0f, 0.0f, 1.0f, 1.0f));
+            _renderer.PushTransform(Matrix4.Scale(4f));
+            _renderer.DrawTexture(_texture, new Vector2(10, 10));
+            _renderer.PopTransform();
+            _renderer.DrawString("Hello World!", _font, new Vector2(100, 300), new Color(0.3f, 0.4f, 0.5f, 1.0f));
+
             _renderer.End();
             _renderer.Present();
 
@@ -80,7 +91,7 @@ namespace B2M2.Editor.Forms
         public Editor()
         {
             IsMdiContainer = true;
-            Size = new Size(1280, 720);
+            Size = new WinForms.Size(1280, 720);
             _window = new GameWindow();
             _window.MdiParent = this;
             _window.Show();

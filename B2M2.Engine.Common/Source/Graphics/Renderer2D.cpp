@@ -232,12 +232,14 @@ void cRenderer2D::Present() {
 void cRenderer2D::PushTransform(const mat4 & matrix, bool override) {
     if (override)
         m_transforms.push_back(matrix);
-    else
-        m_transforms.push_back(m_transforms.back() * matrix);
+    else {
+        mat4 back = m_transforms.back();
+        m_transforms.push_back(back * matrix);
+    }
 }
 
 void cRenderer2D::PopTransform() {
-    if(m_transforms.size() > 1)
+    if(m_transforms.size() >= 1)
         m_transforms.pop_back();
 }
 
