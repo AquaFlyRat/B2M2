@@ -46,6 +46,11 @@ namespace b2m2 {
         /// <param name="config">The configuration of the window (width, height, title) etc...</param>
         void Create(const sWindowConfig& config);
 
+        // (TODO: This doc will need to be changed when `ShowOnCreate` is changed to `IsEmbedded`
+        /// <summary>
+        /// Shows the window (if it has not already been shown by the 'cWindow::Create' call.
+        /// This has no effect if sWindowConfig::ShowOnCreate was set to true on create. 
+        /// </summary>
         void Show();
 
         /// <summary>

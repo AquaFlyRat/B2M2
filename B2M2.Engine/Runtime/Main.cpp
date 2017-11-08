@@ -17,38 +17,34 @@
 int main()
 {
     using namespace b2m2;
-    cKeyboard::Initalize();
-    
-    cWindow window;
     cRuntime runtime;
+
+    cKeyboard::Initalize();
     runtime.Initalize();
-    window.Create({ 800, 600, "B2M2 Engine!" });
+
+    cWindow window;
+    window.Create({ 800, 600, "B2M2 Engine!", true });
     window.SetClearColor(1.0f, 1.0f, 0.0f, 1.0f);
     
     cRenderer2D renderer;
     renderer.Initalize(cMatrix4::Orthographic(800, 0, 0, 600, 1.f, -1.f));
-    /*
-    cFont font;
-    font.Create("Assets/WendyOne-Regular.ttf", 48);
 
-    cSpritesheet playerSpritesheet;
-    */
     while (window.IsRunning()) {
         window.PollEvents();
         
         window.Clear();
         renderer.Begin();
-        renderer.FillRectangle({ 100,100 }, 100, 100, { 1.0f, 0.0f, 0.0f, 1.0f });
-
+        {
+            renderer.FillRectangle({ 100,100 }, 100, 100, { 1.0f, 0.0f, 0.0f, 1.0f });
+        }
         renderer.End();
         renderer.Present();
         
         window.SwapBuffers();
     }
-    /*
-    window.Destroy();
     
+    window.Destroy();   
     runtime.Shutdown();
-    */
+    
     return 0;
 }

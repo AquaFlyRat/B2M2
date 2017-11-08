@@ -16,14 +16,24 @@ void cWindow::Create(const sWindowConfig& config) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     
-    Uint32 windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_OPENGL;
-    /*if (config.ShowOnCreate) {
-        windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-    }*/
+    Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+
+    int winPosX = SDL_WINDOWPOS_CENTERED;
+    int winPosY = SDL_WINDOWPOS_CENTERED;
+
+    // Change some configs for embedded window (e.g. to be embedded in other Win32 widnow - e.g. WinForms).
+    // TODO: Change this to something other than `ShowOnCreate` - for example `IsEmbedded` would be better
+    if (!config.ShowOnCreate) {
+        windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS;
+
+        // This logic will make more sense when the above TODO is completed
+        // E.g. it is designed to accomodate for an embedded window
+        winPosX = winPosY = 0;
+    }
 
     m_handle = SDL_CreateWindow(
         config.Title, 
-        0, 0, 
+        winPosX, winPosY,
         config.Width, config.Height, 
         windowFlags
     );
