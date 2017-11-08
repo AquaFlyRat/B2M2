@@ -140,12 +140,9 @@
     <ClCompile Include="Source\Platform\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Graphics\Color.h" />
-    <ClInclude Include="Source\Graphics\Font.h" />
     <ClInclude Include="Source\Graphics\Renderer2D.hpp" />
-    <ClInclude Include="Source\Graphics\Texture2D.h" />
     <ClInclude Include="Source\Math\Matrix4.hpp" />
-    <ClInclude Include="Source\Math\Rectangle.h" />
+    <ClInclude Include="Source\Math\Rectangle.hpp" />
     <ClInclude Include="Source\Math\Vector2.hpp" />
     <ClInclude Include="Source\Math\Vector3.hpp" />
   </ItemGroup>
