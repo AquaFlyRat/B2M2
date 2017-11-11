@@ -1,37 +1,36 @@
-﻿using b2m2;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using b2m2;
+using B2M2.Editor.Forms.Native;
+using System.Drawing;
 
-namespace B2M2.Editor.Forms.Native
+namespace B2M2.Editor.Forms
 {
-    class RenderPanelWrapper
+
+    public partial class GraphicsWindow
     {
-        public Panel Panel { get; private set; }
         public Window NativeWindow { get; private set; }
 
         private Timer _timer;
-
-        public RenderPanelWrapper(int width, int height, Action<Window> onTick, int refreshRate)
+        
+        public GraphicsWindow(Size size, Action<Window> onTick, int refreshRate)
         {
-            Panel = new Panel();
-            Panel.Width = width;
-            Panel.Height = height;
-            Panel.Dock = DockStyle.Fill;
-            Panel.Location = new System.Drawing.Point(0, 0);
-
             WindowConfig config = new WindowConfig(
-                width, height, 
+                size.Width, size.Height,
                 string.Empty, WindowFlags.PositionOrigin
             );
 
             NativeWindow = new Window(config);
             NativeWindow.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
 
-            RegisterNativeFunctions();
+            Win32.SetWindowPos(NativeWindow.GetHWND(), IntPtr.Zero, 300, 100, 0, 0, Win32.SWP_NOSIZE);
 
             _timer = new Timer();
 
@@ -39,16 +38,21 @@ namespace B2M2.Editor.Forms.Native
             _timer.Interval = refreshRate;
 
             _timer.Tick += (object o, EventArgs e) => {
-                if(onTick != null)
+                if (onTick != null)
                     onTick(NativeWindow);
             };
 
             _timer.Start();
         }
 
-        private void RegisterNativeFunctions()
+        public void SetParent(Form form)
         {
-            Win32.SetWindowPos(NativeWindow.GetHWND(), IntPtr.Zero, 300, 100, 0, 0, Win32.SWP_NOSIZE);
+            Win32.SetParent(NativeWindow.GetHWND(), form.Handle);
+        }
+
+        public void Show()
+        {
+            Win32.ShowWindow(NativeWindow.GetHWND(), 1);
         }
     }
 }
