@@ -16,7 +16,7 @@ namespace B2M2.Editor.Forms
     {
         private RenderPanelWrapper _renderPanel;
         private Renderer2D _renderer;
-
+        private Font _wendyOne;
         // tmp
         private Vector2 _rectPosition = new Vector2(100, 100);
         private Color _rectColor = new Color(1.0f, 0.0f, 1.0f, 1.0f);
@@ -24,19 +24,22 @@ namespace B2M2.Editor.Forms
         public RenderWindow()
         {
             System.Drawing.Size renderWindowSize = new System.Drawing.Size(800, 600);
-            int refreshRateMs                    = 1000 / 60;
+            int refreshRateMs                    = 1000 / 1000;
 
             MaximumSize                          = renderWindowSize;
             Size                                 = renderWindowSize;
             Text                                 = "Render Window";
+            FormBorderStyle                      = FormBorderStyle.FixedToolWindow;
 
             _renderPanel = new RenderPanelWrapper(
                 renderWindowSize.Width, renderWindowSize.Height,
                 GameWindowTick, refreshRateMs
             );
+            
             Controls.Add(_renderPanel.Panel);
 
             _renderer = new Renderer2D();
+            _wendyOne = new Font("Assets/WendyOne-Regular.ttf", 48);
 
             Matrix4 rendererProjection = Matrix4.Orthographic(
                 renderWindowSize.Width, 0, 
@@ -44,9 +47,27 @@ namespace B2M2.Editor.Forms
                 1, -1
             );
             _renderer.Initalize(rendererProjection);
-            
+
             FormClosing += RenderWindow_FormClosing;
             Load        += RenderWindow_Load;
+            KeyPress += RenderWindow_KeyPress;
+        }
+
+        public IntPtr GetNativeHandle()
+        {
+            return _renderPanel.NativeWindow.GetHWND();
+        }
+
+        public Window GetNativeWindow()
+        {
+            return _renderPanel.NativeWindow;
+        } 
+
+        string _text = "";
+
+        private void RenderWindow_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            _text += e.KeyChar;
         }
 
         private void RenderWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -61,7 +82,10 @@ namespace B2M2.Editor.Forms
 
             _renderer.Begin();
             {
-                _renderer.FillRectangle(_rectPosition, 100, 100, _rectColor);
+                System.Drawing.Point cursorPos = Cursor.Position;
+                cursorPos = PointToClient(cursorPos);
+                _renderer.DrawString(cursorPos.X + ", " + cursorPos.Y, _wendyOne, new Vector2(100, 100), new Color(1.0f, 0.5f, 1.0f, 1.0f));
+                _renderer.DrawString(_text, _wendyOne, new Vector2(100, 300), new Color(1.0f, 0.5f, 1.0f, 1.0f));
             }
             _renderer.End();
             _renderer.Present();

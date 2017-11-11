@@ -28,6 +28,18 @@ namespace B2M2.Editor.Forms.Native
         [DllImport("user32.dll")]
         public static extern IntPtr ShowWindow(IntPtr handle, int command);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetActiveWindow();
+
+        [DllImport("user32.dll")]
+        public static extern int UpdateWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        public static extern long GetWindowLong(IntPtr hwnd, int index);
+
+        [DllImport("user32.dll")]
+        public static extern int SetWindowLong(IntPtr hwnd, int index, uint newLong);
+
 
         // Win32 constants
 
@@ -35,5 +47,20 @@ namespace B2M2.Editor.Forms.Native
 
         public const int SWP_SHOWWINDOW = 0x0040;
         public const int SWP_NOSIZE = 0x0001;
+
+        public const int GWL_STYLE = -16;
+        public const int GWL_EXSTYLE = -20;
+
+
+        public const long WS_CAPTION = 0x00800000L;
+        public const long WS_THICKFRAME = 0x00040000L;
+        public const long WS_MINIMIZE = 0x20000000L;
+        public const long WS_MAXIMIZE = 0x01000000L;
+        public const long WS_SYSMENU = 0x00080000L;
+        public const long WS_POPUP = 0x80000000L;
+        public const long WS_EX_DLGMODALFRAME = 0x00000001L;
+        public const long WS_EX_CLIENTEDGE = 0x00000200L;
+        public const long WS_EX_STATICEDGE = 0x00020000L;
+        public const long WS_CHILD = 0x40000000L;
     }
 }

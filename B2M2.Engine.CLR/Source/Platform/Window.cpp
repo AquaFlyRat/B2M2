@@ -9,18 +9,26 @@
 
 namespace b2m2 {
 
+    public enum class WindowFlags {
+        ShowOnCreate = eWindowFlags::ShowOnCreate,
+        Borderless = eWindowFlags::Borderless,
+        None = eWindowFlags::None,
+        PositionCentre = eWindowFlags::PositionCentre,
+        PositionOrigin = eWindowFlags::PositionOrigin
+    };
+
     public ref class WindowConfig {
     public:
         System::UInt32 Width;
         System::UInt32 Height;
         System::String ^Title;
-        bool            ShowOnCreate;
+        WindowFlags     Flags;
 
-        WindowConfig(int width, int height, System::String ^title, bool showOnCreate) {
+        WindowConfig(int width, int height, System::String ^title, WindowFlags flags) {
             Width = width;
             Height = height;
             Title = title;
-            ShowOnCreate = showOnCreate;
+            Flags = flags;
         }
     };
 
@@ -32,7 +40,7 @@ namespace b2m2 {
             cRuntime runtime;
             runtime.Initalize();
             m_handle = new cWindow();
-            m_handle->Create({ config->Width, config->Height, title, config->ShowOnCreate });
+            m_handle->Create({ config->Width, config->Height, title, static_cast<eWindowFlags>(config->Flags) });
         }
 
         void Delay(int ms) {

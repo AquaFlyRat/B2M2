@@ -23,7 +23,7 @@ int main()
     runtime.Initalize();
 
     cWindow window;
-    window.Create({ 800, 600, "B2M2 Engine!", true });
+    window.Create({ 800, 600, "B2M2 Engine!", eWindowFlags::None });
     window.SetClearColor(1.0f, 1.0f, 0.0f, 1.0f);
     
     cRenderer2D renderer;

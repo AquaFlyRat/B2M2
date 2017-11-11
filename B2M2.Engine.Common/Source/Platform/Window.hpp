@@ -10,6 +10,14 @@
 
 namespace b2m2 {
 
+    enum eWindowFlags {
+        ShowOnCreate,
+        Borderless,
+        None,
+        PositionCentre,
+        PositionOrigin
+    };
+
     /// <summary>
     /// SDL Window properties 
     /// </summary>
@@ -29,10 +37,7 @@ namespace b2m2 {
         /// </summary>
         const char * Title;
 
-        /// <summary>
-        /// Should the window be shown as soon as its created or only show when, Window::Show() is called?
-        /// </summary>
-        bool ShowOnCreate;
+        eWindowFlags Flags;
     };
 
     /// <summary>
@@ -104,6 +109,8 @@ namespace b2m2 {
         /// <return>If the window is currently open/running.</return>
         bool        IsRunning() const { return m_bRunning; }
 
+        bool        HasFocus() const { return m_bHasKeyFocus && m_bHasMouseFocus; }
+
         /// <summary>
         /// The major OpenGL version (e.g the 4 of 4.3)
         /// </summary>
@@ -118,13 +125,14 @@ namespace b2m2 {
 
     private:
         SDL_Window      *m_handle;
-        SDL_GLContext   m_glContext;
+        SDL_GLContext    m_glContext;
 
         sWindowConfig    m_config;
         bool             m_bRunning = true;
-
-        int32           m_glMajorVersion;
-        int32           m_glMinorVersion;
+        bool             m_bHasKeyFocus = false;
+        bool             m_bHasMouseFocus = false;
+        int32            m_glMajorVersion;
+        int32            m_glMinorVersion;
         void(*m_keyboardInputCallback)(SDL_Event);
     };
 }

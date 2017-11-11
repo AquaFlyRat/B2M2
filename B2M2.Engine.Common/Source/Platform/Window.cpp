@@ -3,6 +3,7 @@
 */
 
 #include "Window.hpp"
+#include <SDL2/SDL.h>
 
 #include "OpenGL.hpp"
 
@@ -16,20 +17,39 @@ void cWindow::Create(const sWindowConfig& config) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     
-    Uint32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+    Uint32 windowFlags = SDL_WINDOW_OPENGL;
 
-    int winPosX = SDL_WINDOWPOS_CENTERED;
-    int winPosY = SDL_WINDOWPOS_CENTERED;
+    int winPosX = SDL_WINDOWPOS_UNDEFINED;
+    int winPosY = SDL_WINDOWPOS_UNDEFINED;
 
+    if (config.Flags & eWindowFlags::PositionCentre) {
+        winPosX = winPosY = SDL_WINDOWPOS_CENTERED;
+    }
+    else if (config.Flags & eWindowFlags::PositionOrigin) {
+        winPosX = winPosY = 0;
+    }
+
+    if (config.Flags & eWindowFlags::Borderless) {
+        windowFlags |= SDL_WINDOW_BORDERLESS;
+    }
+
+    if (config.Flags & eWindowFlags::ShowOnCreate) {
+        windowFlags |= SDL_WINDOW_SHOWN;
+    }
+    else {
+        windowFlags |= SDL_WINDOW_HIDDEN;
+    }
+
+    /*
     // Change some configs for embedded window (e.g. to be embedded in other Win32 widnow - e.g. WinForms).
     // TODO: Change this to something other than `ShowOnCreate` - for example `IsEmbedded` would be better
     if (!config.ShowOnCreate) {
-        windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS;
+        windowFlags = SDL_WINDOW_OPENGL;// | SDL_WINDOW_BORDERLESS;
 
         // This logic will make more sense when the above TODO is completed
         // E.g. it is designed to accomodate for an embedded window
-        winPosX = winPosY = 0;
-    }
+        winPosX = winPosY = 10;
+    }*/
 
     m_handle = SDL_CreateWindow(
         config.Title, 
@@ -55,7 +75,7 @@ void cWindow::Create(const sWindowConfig& config) {
 }
 
 void cWindow::Show() {
-    if (!m_config.ShowOnCreate) {
+    if (!(m_config.Flags & eWindowFlags::ShowOnCreate)) {
         SDL_ShowWindow(m_handle);
     }
 }

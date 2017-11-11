@@ -25,7 +25,7 @@ namespace B2M2.Editor.Forms.Native
 
             WindowConfig config = new WindowConfig(
                 width, height, 
-                string.Empty, false
+                string.Empty, WindowFlags.PositionOrigin
             );
 
             NativeWindow = new Window(config);
@@ -39,7 +39,8 @@ namespace B2M2.Editor.Forms.Native
             _timer.Interval = refreshRate;
 
             _timer.Tick += (object o, EventArgs e) => {
-                onTick(NativeWindow);
+                if(onTick != null)
+                    onTick(NativeWindow);
             };
 
             _timer.Start();
@@ -47,15 +48,7 @@ namespace B2M2.Editor.Forms.Native
 
         private void RegisterNativeFunctions()
         {
-            IntPtr nativeSDLWindowHwnd = NativeWindow.GetHWND();
-            Win32.SetWindowPos(
-                nativeSDLWindowHwnd,
-                Panel.Handle,
-                0, 0, 0, 0,
-                Win32.SWP_SHOWWINDOW | Win32.SWP_NOSIZE
-            );
-
-            Win32.SetParent(nativeSDLWindowHwnd, Panel.Handle);
+            Win32.SetWindowPos(NativeWindow.GetHWND(), IntPtr.Zero, 300, 100, 0, 0, Win32.SWP_NOSIZE);
         }
     }
 }
