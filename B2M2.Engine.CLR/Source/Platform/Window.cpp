@@ -8,14 +8,14 @@
 #include <Windows.h>
 
 namespace CharlieEngine {
-    using namespace b2m2;
+    //using namespace b2m2;
 
     public enum class WindowFlags {
-        ShowOnCreate = eWindowFlags::ShowOnCreate,
-        Borderless = eWindowFlags::Borderless,
-        None = eWindowFlags::None,
-        PositionCentre = eWindowFlags::PositionCentre,
-        PositionOrigin = eWindowFlags::PositionOrigin
+        ShowOnCreate = b2m2::eWindowFlags::ShowOnCreate,
+        Borderless = b2m2::eWindowFlags::Borderless,
+        None = b2m2::eWindowFlags::None,
+        PositionCentre = b2m2::eWindowFlags::PositionCentre,
+        PositionOrigin = b2m2::eWindowFlags::PositionOrigin
     };
 
     public ref class WindowConfig {
@@ -33,27 +33,19 @@ namespace CharlieEngine {
         }
     };
 
-    public ref class Window : ManagedClass<cWindow> {
-    private:
-        System::Action^ m_onclickaction;
-        HWND            m_focusTo;
-        
+    public ref class Window : ManagedClass<b2m2::cWindow> {
     public:
         Window(WindowConfig^ config) {
             const char * title = (const char*) 
                 System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(config->Title).ToPointer();
-            cRuntime runtime;
+            b2m2::cRuntime runtime;
             runtime.Initalize();
-            m_handle = new cWindow();
-            m_handle->Create({ config->Width, config->Height, title, static_cast<eWindowFlags>(config->Flags) });
+            m_handle = new b2m2::cWindow();
+            m_handle->Create({ config->Width, config->Height, title, static_cast<b2m2::eWindowFlags>(config->Flags) });
         }
 
         void Delay(int ms) {
             SDL_Delay(ms);
-        }
-
-        void SetFocusToOnActive(System::IntPtr^ ptr) {
-            m_handle->FocusToOnClick = static_cast<void*>(ptr->ToPointer());
         }
 
         void PollEvents() {
@@ -62,10 +54,6 @@ namespace CharlieEngine {
         
         void SwapBuffers() {
             m_handle->SwapBuffers();
-        }
-
-        void SetClick(System::Action^ onclick) {
-            m_onclickaction = onclick;            
         }
 
         void SetClearColor(float r, float g, float b, float a) {
@@ -109,7 +97,7 @@ namespace CharlieEngine {
         ~Window() {
             m_handle->Destroy();
 
-            cRuntime runtime;
+            b2m2::cRuntime runtime;
             runtime.Shutdown();
         }
     };

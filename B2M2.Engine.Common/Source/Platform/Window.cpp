@@ -11,13 +11,6 @@
 
 using namespace b2m2;
 
-int _isMouseEvent(void* userdata, SDL_Event* event)
-{
-    if (event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONUP)
-        return 0;
-    return 1;
-}
-
 void cWindow::Create(const sWindowConfig& config) {
     m_config = config;
     m_keyboardInputCallback = NULL;
@@ -70,8 +63,6 @@ void cWindow::Create(const sWindowConfig& config) {
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    //SDL_SetEventFilter(_isMouseEvent, NULL);
 }
 
 void cWindow::Show() {
@@ -88,11 +79,6 @@ void cWindow::PollEvents() {
         if (e.type == SDL_KEYDOWN) {
             if (m_keyboardInputCallback) {
                 m_keyboardInputCallback(e);
-            }
-        }
-        if (e.type == SDL_MOUSEBUTTONDOWN) {
-            if (FocusToOnClick) {
-                SetForegroundWindow((HWND)FocusToOnClick);
             }
         }
     }
@@ -115,11 +101,6 @@ void cWindow::Clear()
 void cWindow::SetKeyDownCallback(void(*callback)(SDL_Event))
 {
     m_keyboardInputCallback = callback;
-}
-
-void b2m2::cWindow::SetClickCallback(const std::function<void()>& functor)
-{
-    m_clickCallback = functor;
 }
 
 void cWindow::Destroy() {
