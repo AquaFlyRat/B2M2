@@ -22,7 +22,10 @@ namespace B2M2.Editor.Forms.Controls
             Native.CharlieWindow window = new Native.CharlieWindow();
             window.Show();
 
+            // Apparantly we need both for this to work correctly...
+            // Please don't touch or all hell starts to break loose.
             Win32.SetParent(window.NativeWindow.GetHWND(), Handle);
+            Controls.Add(window.Panel);
         }
     }
 }
