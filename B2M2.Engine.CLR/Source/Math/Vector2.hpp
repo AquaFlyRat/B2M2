@@ -5,9 +5,9 @@
 
 #include "../ManagedClass.h"
 
-namespace b2m2 {
+namespace CharlieEngine {
 
-    public ref class Vector2 : ManagedClass<cVector2> {
+    public ref class Vector2 : ManagedClass<b2m2::cVector2> {
     public:
         Vector2(float x, float y);
         Vector2();

@@ -7,7 +7,8 @@
 #include <SDL2/SDL_syswm.h>
 #include <Windows.h>
 
-namespace b2m2 {
+namespace CharlieEngine {
+    using namespace b2m2;
 
     public enum class WindowFlags {
         ShowOnCreate = eWindowFlags::ShowOnCreate,
@@ -33,6 +34,10 @@ namespace b2m2 {
     };
 
     public ref class Window : ManagedClass<cWindow> {
+    private:
+        System::Action^ m_onclickaction;
+        HWND            m_focusTo;
+        
     public:
         Window(WindowConfig^ config) {
             const char * title = (const char*) 
@@ -47,12 +52,20 @@ namespace b2m2 {
             SDL_Delay(ms);
         }
 
+        void SetFocusToOnActive(System::IntPtr^ ptr) {
+            m_handle->FocusToOnClick = static_cast<void*>(ptr->ToPointer());
+        }
+
         void PollEvents() {
             m_handle->PollEvents();
         }
         
         void SwapBuffers() {
             m_handle->SwapBuffers();
+        }
+
+        void SetClick(System::Action^ onclick) {
+            m_onclickaction = onclick;            
         }
 
         void SetClearColor(float r, float g, float b, float a) {

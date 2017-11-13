@@ -6,13 +6,13 @@
 
 #include "../ManagedClass.h"
 
-namespace b2m2 {
+namespace CharlieEngine {
     public enum class TextureFiltering {
-        Linear = cTexture2D::eFiltering::Linear,
-        Nearest = cTexture2D::eFiltering::Nearest
+        Linear = b2m2::cTexture2D::eFiltering::Linear,
+        Nearest = b2m2::cTexture2D::eFiltering::Nearest
     };
 
-    public ref class Texture2D : ManagedClass<cTexture2D> {
+    public ref class Texture2D : ManagedClass<b2m2::cTexture2D> {
     public:
         Texture2D(System::String^ filepath, TextureFiltering format);
 

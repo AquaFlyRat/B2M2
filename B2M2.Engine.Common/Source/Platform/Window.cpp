@@ -4,10 +4,19 @@
 
 #include "Window.hpp"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_syswm.h>
+#include <Windows.h>
 
 #include "OpenGL.hpp"
 
 using namespace b2m2;
+
+int _isMouseEvent(void* userdata, SDL_Event* event)
+{
+    if (event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONUP)
+        return 0;
+    return 1;
+}
 
 void cWindow::Create(const sWindowConfig& config) {
     m_config = config;
@@ -40,17 +49,6 @@ void cWindow::Create(const sWindowConfig& config) {
         windowFlags |= SDL_WINDOW_HIDDEN;
     }
 
-    /*
-    // Change some configs for embedded window (e.g. to be embedded in other Win32 widnow - e.g. WinForms).
-    // TODO: Change this to something other than `ShowOnCreate` - for example `IsEmbedded` would be better
-    if (!config.ShowOnCreate) {
-        windowFlags = SDL_WINDOW_OPENGL;// | SDL_WINDOW_BORDERLESS;
-
-        // This logic will make more sense when the above TODO is completed
-        // E.g. it is designed to accomodate for an embedded window
-        winPosX = winPosY = 10;
-    }*/
-
     m_handle = SDL_CreateWindow(
         config.Title, 
         winPosX, winPosY,
@@ -69,9 +67,11 @@ void cWindow::Create(const sWindowConfig& config) {
 
     glGetIntegerv(GL_MAJOR_VERSION, &m_glMajorVersion);
     glGetIntegerv(GL_MINOR_VERSION, &m_glMinorVersion);
-
+    
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    //SDL_SetEventFilter(_isMouseEvent, NULL);
 }
 
 void cWindow::Show() {
@@ -88,6 +88,11 @@ void cWindow::PollEvents() {
         if (e.type == SDL_KEYDOWN) {
             if (m_keyboardInputCallback) {
                 m_keyboardInputCallback(e);
+            }
+        }
+        if (e.type == SDL_MOUSEBUTTONDOWN) {
+            if (FocusToOnClick) {
+                SetForegroundWindow((HWND)FocusToOnClick);
             }
         }
     }
@@ -110,6 +115,11 @@ void cWindow::Clear()
 void cWindow::SetKeyDownCallback(void(*callback)(SDL_Event))
 {
     m_keyboardInputCallback = callback;
+}
+
+void b2m2::cWindow::SetClickCallback(const std::function<void()>& functor)
+{
+    m_clickCallback = functor;
 }
 
 void cWindow::Destroy() {

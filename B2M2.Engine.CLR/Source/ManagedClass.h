@@ -1,6 +1,6 @@
 #pragma once
 
-namespace b2m2 {
+namespace CharlieEngine {
     template <typename T>
     public ref class ManagedClass {
     protected:

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace B2M2.Editor.Forms.Native
+namespace B2M2.Editor.Forms.Controls.Native
 {
     class Win32
     {
@@ -51,6 +51,11 @@ namespace B2M2.Editor.Forms.Native
         public const int GWL_STYLE = -16;
         public const int GWL_EXSTYLE = -20;
 
+        [DllImport("user32.dll")]
+        public static extern int SetWindowRgn(IntPtr hWnd, IntPtr hRgn, bool bRedraw);
+        [DllImport("gdi32.dll")]
+
+        public static extern IntPtr CreateRoundRectRgn(int x1, int y1, int x2, int y2, int cx, int cy);
 
         public const long WS_CAPTION = 0x00800000L;
         public const long WS_THICKFRAME = 0x00040000L;

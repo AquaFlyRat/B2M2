@@ -7,6 +7,7 @@
 #include "../Common.hpp"
 
 #include <SDL2/SDL.h>
+#include <functional>
 
 namespace b2m2 {
 
@@ -97,6 +98,8 @@ namespace b2m2 {
         /// <param name="callback">Called when a SDL_KEYDOWN event is polled -> the SDL_Event parameter of the callback is the one that has been polled). NULL is a valid parameter.</param>
         void SetKeyDownCallback(void(*callback)(SDL_Event));
 
+        void SetClickCallback(const std::function<void()>& functor);
+
         /// <summary>
         /// Returns the SDL_Window* created during the <code> Create(...) </code> call
         /// </summary>
@@ -123,6 +126,7 @@ namespace b2m2 {
         /// <return>Returns the minor OpenGL version - provided by <code>glGetIntegerv(GL_MINOR_VERSION)</code></return>
         uint32      GetGLMinorVersion() const { return m_glMinorVersion; }
 
+        void*           FocusToOnClick = NULL;
     private:
         SDL_Window      *m_handle;
         SDL_GLContext    m_glContext;
@@ -134,5 +138,7 @@ namespace b2m2 {
         int32            m_glMajorVersion;
         int32            m_glMinorVersion;
         void(*m_keyboardInputCallback)(SDL_Event);
+
+        std::function<void()> m_clickCallback;
     };
 }

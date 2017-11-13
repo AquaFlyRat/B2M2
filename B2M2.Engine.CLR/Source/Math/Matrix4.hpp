@@ -9,11 +9,11 @@
 #include "Vector3.hpp"
 #include "Vector2.hpp"
 
-namespace b2m2 {
+namespace CharlieEngine {
 
-    public ref class Matrix4 : ManagedClass<cMatrix4> {
+    public ref class Matrix4 : ManagedClass<b2m2::cMatrix4> {
     private:
-        Matrix4(cMatrix4 *matrix);
+        Matrix4(b2m2::cMatrix4 *matrix);
 
     public:
         Matrix4(float diag);

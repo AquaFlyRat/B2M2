@@ -11,8 +11,7 @@
 #include "Texture2D.hpp"
 #include "Font.hpp"
 
-namespace b2m2 {
-
+namespace CharlieEngine {
     public ref class Color {
     public:
         float R, G, B, A;
@@ -37,7 +36,7 @@ namespace b2m2 {
         }
     };
 
-    public ref class Renderer2D : ManagedClass<cRenderer2D> {
+    public ref class Renderer2D : ManagedClass<b2m2::cRenderer2D> {
     public:
         Renderer2D();
 

@@ -5,10 +5,11 @@
 
 #include "../ManagedClass.h"
 
-namespace b2m2 {
-    public ref class Vector3 : ManagedClass<cVector3> {
+namespace CharlieEngine {
+    
+    public ref class Vector3 : ManagedClass<b2m2::cVector3> {
     private:
-        Vector3(cVector3* vecptr);
+        Vector3(b2m2::cVector3* vecptr);
     public:
         Vector3();
         Vector3(float x, float y, float z);
