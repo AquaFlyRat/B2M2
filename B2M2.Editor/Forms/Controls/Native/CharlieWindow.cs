@@ -22,7 +22,6 @@ namespace B2M2.Editor.Forms.Controls.Native
             Panel.Dock     = DockStyle.Fill;
             Panel.Location = new System.Drawing.Point(0, 0);
             Panel.Click    += (object o, EventArgs e) => { Panel.Parent.Select(); };
-
             WindowConfig config = new WindowConfig(800, 600, "", WindowFlags.Borderless | WindowFlags.PositionOrigin); 
 
             NativeWindow = new Window(config);
@@ -31,11 +30,20 @@ namespace B2M2.Editor.Forms.Controls.Native
             Timer timer = new Timer();
             timer.Interval = 1000 / 60;
 
+            Renderer2D renderer = new Renderer2D();
+            renderer.Initalize(Matrix4.Orthographic(800, 0, 0, 600, 1, -1));
+
             timer.Tick += (object o, EventArgs e) => {
                 NativeWindow.PollEvents();
                 NativeWindow.Clear();
+                renderer.Begin();
+                renderer.FillRectangle(new Vector2(100, 100), 100, 100, new Color(0.1f, 0.7f, 0.3f, 1.0f));
+                renderer.End();
+                renderer.Present();
                 NativeWindow.SwapBuffers();
             };
+
+            Panel.Disposed += (object o, EventArgs e) => { renderer.Dispose(); };
 
             timer.Start();
             
