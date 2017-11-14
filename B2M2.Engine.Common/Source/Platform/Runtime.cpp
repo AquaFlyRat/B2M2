@@ -6,7 +6,7 @@
 
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
-
+#include "../Graphics/Renderer2D.hpp"
 #include "../Input/Keyboard.hpp"
 #include "../Common.hpp"
 

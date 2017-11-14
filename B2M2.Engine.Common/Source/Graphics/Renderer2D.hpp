@@ -59,8 +59,13 @@ namespace b2m2 {
 
         uint32 GetQuadCount() const { return m_quadCount; }
 
+        static cShader *GetShader();
+        static void InitShaders();
+
     private:
         float GetTextureSlot(cTexture2D *texture);
+        
+        static cShader *s_2dshader;
 
     };
 }

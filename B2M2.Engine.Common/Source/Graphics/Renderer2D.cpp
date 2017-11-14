@@ -40,17 +40,21 @@ static vec3 MultiplyVec2ByMat4(float x, float y, const cMatrix4& matrix) {
     return vec3(vecOut.X, vecOut.Y, 0.f);
 }
 
+cShader *cRenderer2D::GetShader() {
+    return s_2dshader;
+}
+
 void cRenderer2D::Initalize(mat4 projectionMatrix) {
-    m_shader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
+    //s_2dshader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
     m_transforms.push_back(mat4(1.0f));
     m_quadCount = 0;
 
-    m_shader->Bind();
-    m_shader->SubmitUniformMat4("sys_Projection", projectionMatrix);
+    s_2dshader->Bind();
+    s_2dshader->SubmitUniformMat4("sys_Projection", projectionMatrix);
 
     int textureValues[] = { 0,1,2,3,4,5,6,7,8,9 };
 
-    m_shader->SubmitUniform1iv("sys_Textures", 9, textureValues);
+    s_2dshader->SubmitUniform1iv("sys_Textures", 9, textureValues);
 
     m_vao.Generate();
     m_vao.Bind();
@@ -71,7 +75,7 @@ void cRenderer2D::Initalize(mat4 projectionMatrix) {
     m_ibo.Generate(GL_ELEMENT_ARRAY_BUFFER, RendererIndexNum, indices, GL_STATIC_DRAW);
     m_ibo.Bind();
 
-    m_shader->Unbind();
+    s_2dshader->Unbind();
     m_indices = 0;
 }
 
@@ -207,7 +211,7 @@ void cRenderer2D::End() {
 }
 
 void cRenderer2D::Present() {
-    m_shader->Bind();
+    s_2dshader->Bind();
 
     for (size_t i = 0; i < m_textures.size(); i++)
         m_textures[i]->Bind(i);
@@ -224,7 +228,7 @@ void cRenderer2D::Present() {
     for (size_t i = 0; i < m_textures.size(); i++)
         m_textures[i]->UnBind(i);
 
-    m_shader->Unbind();
+    s_2dshader->Unbind();
     m_transforms.clear();
     m_transforms.push_back(mat4(1.0f));
 }
@@ -241,6 +245,13 @@ void cRenderer2D::PushTransform(const mat4 & matrix, bool override) {
 void cRenderer2D::PopTransform() {
     if(m_transforms.size() >= 1)
         m_transforms.pop_back();
+}
+
+cShader *cRenderer2D::s_2dshader = NULL;
+
+void cRenderer2D::InitShaders()
+{
+    s_2dshader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
 }
 
 float cRenderer2D::GetTextureSlot(cTexture2D * texture) {

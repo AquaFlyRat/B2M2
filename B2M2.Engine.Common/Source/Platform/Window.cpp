@@ -7,6 +7,7 @@
 #include <SDL2/SDL_syswm.h>
 #include <Windows.h>
 
+#include "../Graphics/Renderer2D.hpp"
 #include "OpenGL.hpp"
 
 using namespace b2m2;
@@ -19,7 +20,7 @@ void cWindow::Create(const sWindowConfig& config) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     
-    Uint32 windowFlags = SDL_WINDOW_OPENGL;
+    Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
     int winPosX = SDL_WINDOWPOS_UNDEFINED;
     int winPosY = SDL_WINDOWPOS_UNDEFINED;
@@ -57,7 +58,7 @@ void cWindow::Create(const sWindowConfig& config) {
 
     glfl::set_function_loader(SDL_GL_GetProcAddress);
     glfl::load_everything();
-
+    glViewport(0, 0, config.Width, config.Height);
     glGetIntegerv(GL_MAJOR_VERSION, &m_glMajorVersion);
     glGetIntegerv(GL_MINOR_VERSION, &m_glMinorVersion);
     
@@ -76,9 +77,23 @@ void cWindow::PollEvents() {
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) 
             m_bRunning = false;
+        
         if (e.type == SDL_KEYDOWN) {
             if (m_keyboardInputCallback) {
                 m_keyboardInputCallback(e);
+            }
+        }
+        int w, h;
+        SDL_GetWindowSize(m_handle, &w, &h);
+        printf("%i %i\n", w, h);
+        if (e.type == SDL_WINDOWEVENT) {
+            if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+                int width = e.window.data1;
+                int height = e.window.data2;
+                glViewport(0, 0, width, height);
+                cRenderer2D::GetShader()->Bind();
+                cRenderer2D::GetShader()->SubmitUniformMat4("sys_Projection", cMatrix4::Orthographic(width, 0, 0, height, 1.f, -1.f));
+                cRenderer2D::GetShader()->Unbind();
             }
         }
     }

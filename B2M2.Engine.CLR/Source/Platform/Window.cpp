@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL_syswm.h>
 #include <Windows.h>
+#include <Graphics/Renderer2D.hpp>
 
 namespace CharlieEngine {
     //using namespace b2m2;
@@ -42,6 +43,7 @@ namespace CharlieEngine {
             runtime.Initalize();
             m_handle = new b2m2::cWindow();
             m_handle->Create({ config->Width, config->Height, title, static_cast<b2m2::eWindowFlags>(config->Flags) });
+            b2m2::cRenderer2D::InitShaders();
         }
 
         void Delay(int ms) {
@@ -83,7 +85,22 @@ namespace CharlieEngine {
 
         void SetSize(int w, int h) {
             SDL_SetWindowSize(m_handle->Handle(), w, h);
-            glViewport(0, 0, w, h);
+        }
+
+        property int Width {
+            int get() { 
+                int w, h;
+                SDL_GetWindowSize(m_handle->Handle(), &w, &h);
+                return w;
+            }
+        }
+
+        property int Height {
+            int get() { 
+                int w, h;
+                SDL_GetWindowSize(m_handle->Handle(), &w, &h);
+                return h;
+            }
         }
 
         property int GLMajor {

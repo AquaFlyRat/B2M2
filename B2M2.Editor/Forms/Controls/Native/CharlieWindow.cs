@@ -13,16 +13,20 @@ namespace B2M2.Editor.Forms.Controls.Native
     {
         public Window NativeWindow;
         public Panel Panel;
-
-        public CharlieWindow()
+        int ow, oh;
+        public CharlieWindow(int width, int height)
         {
             Panel = new Panel();
-            Panel.Width    = 800;
-            Panel.Height   = 600;
+            Panel.Width    = width;
+            Panel.Height   = height;
             Panel.Dock     = DockStyle.Fill;
+            Panel.BackColor = System.Drawing.Color.Black;
             Panel.Location = new System.Drawing.Point(0, 0);
             Panel.Click    += (object o, EventArgs e) => { Panel.Parent.Select(); };
-            WindowConfig config = new WindowConfig(800, 600, "", WindowFlags.Borderless | WindowFlags.PositionOrigin); 
+
+            var screenDimensions = Screen.FromControl(Panel).Bounds;
+
+            WindowConfig config = new WindowConfig(screenDimensions.Width, screenDimensions.Height, "", WindowFlags.Borderless | WindowFlags.PositionOrigin); 
 
             NativeWindow = new Window(config);
             NativeWindow.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);
@@ -31,8 +35,7 @@ namespace B2M2.Editor.Forms.Controls.Native
             timer.Interval = 1000 / 60;
 
             Renderer2D renderer = new Renderer2D();
-            renderer.Initalize(Matrix4.Orthographic(800, 0, 0, 600, 1, -1));
-
+            renderer.Initalize(Matrix4.Orthographic(screenDimensions.Width, 0, 0, screenDimensions.Height, 1, -1));
             timer.Tick += (object o, EventArgs e) => {
                 NativeWindow.PollEvents();
                 NativeWindow.Clear();

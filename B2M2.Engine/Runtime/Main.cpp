@@ -23,12 +23,13 @@ int main()
     runtime.Initalize();
 
     cWindow window;
-    window.Create({ 800, 600, "B2M2 Engine!", eWindowFlags::None });
+    window.Create({ 800, 600, "B2M2 Engine!", eWindowFlags::ShowOnCreate });
     window.SetClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-    
+    window.Show();
+    cRenderer2D::InitShaders();
+
     cRenderer2D renderer;
     renderer.Initalize(cMatrix4::Orthographic(800, 0, 0, 600, 1.f, -1.f));
-
     while (window.IsRunning()) {
         window.PollEvents();
         

@@ -19,7 +19,7 @@ namespace B2M2.Editor.Forms.Controls
             InitializeComponent();
 
             DockText = "Render Window";
-            CharlieWindow window = new CharlieWindow();
+            CharlieWindow window = new CharlieWindow(Width, Height);
             window.Show();
 
             // Apparantly we need both for this to work correctly...
