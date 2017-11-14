@@ -11,14 +11,17 @@ namespace B2M2.Editor.Forms
             this._toolstrip = new DarkUI.Controls.DarkToolStrip();
             this._menuStrip = new DarkUI.Controls.DarkMenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.submitButToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.darkStatusStrip1 = new DarkUI.Controls.DarkStatusStrip();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this._menuStrip.SuspendLayout();
+            this.darkStatusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _dockPanel
@@ -27,7 +30,7 @@ namespace B2M2.Editor.Forms
             this._dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this._dockPanel.Location = new System.Drawing.Point(0, 52);
             this._dockPanel.Name = "_dockPanel";
-            this._dockPanel.Size = new System.Drawing.Size(1177, 669);
+            this._dockPanel.Size = new System.Drawing.Size(1177, 679);
             this._dockPanel.TabIndex = 0;
             // 
             // _toolstrip
@@ -68,6 +71,13 @@ namespace B2M2.Editor.Forms
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
@@ -99,36 +109,54 @@ namespace B2M2.Editor.Forms
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // submitButToolStripMenuItem
             // 
             this.submitButToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.submitButToolStripMenuItem.Name = "submitButToolStripMenuItem";
-            this.submitButToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.submitButToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.submitButToolStripMenuItem.Text = "Submit Bug";
+            // 
+            // darkStatusStrip1
+            // 
+            this.darkStatusStrip1.AutoSize = false;
+            this.darkStatusStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.darkStatusStrip1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkStatusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel2});
+            this.darkStatusStrip1.Location = new System.Drawing.Point(0, 701);
+            this.darkStatusStrip1.Name = "darkStatusStrip1";
+            this.darkStatusStrip1.Padding = new System.Windows.Forms.Padding(0, 5, 0, 3);
+            this.darkStatusStrip1.Size = new System.Drawing.Size(1177, 30);
+            this.darkStatusStrip1.SizingGrip = false;
+            this.darkStatusStrip1.TabIndex = 3;
+            this.darkStatusStrip1.Text = "darkStatusStrip1";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Margin = new System.Windows.Forms.Padding(0);
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(82, 22);
+            this.toolStripStatusLabel2.Text = "v0.1 Pre Alpha";
             // 
             // Editor
             // 
-            this.ClientSize = new System.Drawing.Size(1177, 721);
+            this.ClientSize = new System.Drawing.Size(1177, 731);
+            this.Controls.Add(this.darkStatusStrip1);
             this.Controls.Add(this._dockPanel);
             this.Controls.Add(this._toolstrip);
             this.Controls.Add(this._menuStrip);
             this.Name = "Editor";
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
+            this.darkStatusStrip1.ResumeLayout(false);
+            this.darkStatusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,5 +173,7 @@ namespace B2M2.Editor.Forms
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem submitButToolStripMenuItem;
+        private DarkUI.Controls.DarkStatusStrip darkStatusStrip1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

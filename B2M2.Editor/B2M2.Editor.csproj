@@ -87,6 +87,12 @@
     <Compile Include="Forms\Controls\ProjectExplorer.Designer.cs">
       <DependentUpon>ProjectExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Controls\Properties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\Properties.Designer.cs">
+      <DependentUpon>Properties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Controls\RenderWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\Controls\Console.resx">
       <DependentUpon>Console.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\Properties.resx">
+      <DependentUpon>Properties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Controls\RenderWindow.resx">
       <DependentUpon>RenderWindow.cs</DependentUpon>

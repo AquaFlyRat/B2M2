@@ -31,6 +31,8 @@ namespace B2M2.Editor.Forms
             _dockPanel.AddContent(_renderWindow);
             _dockPanel.AddContent(new Controls.ProjectExplorer());
             _dockPanel.AddContent(new Controls.Console());
+            _dockPanel.AddContent(new Controls.Properties());
+
         }
     }
 }
