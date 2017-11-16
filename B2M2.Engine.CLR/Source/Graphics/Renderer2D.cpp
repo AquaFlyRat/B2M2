@@ -44,6 +44,11 @@ void Renderer2D::DrawString(System::String ^ text, Font ^ font, Vector2^ pos, Co
     m_handle->DrawString(textcstr, font->GetHandle(), *pos->GetHandle(), { color->R,color->G,color->B,color->A });
 }
 
+void Renderer2D::DrawRectangle(Vector2 ^pos, float width, float height, Color ^ color)
+{
+    m_handle->DrawRectangle(*pos->GetHandle(), width, height, { color->R, color->G, color->B,color->A });
+}
+
 void Renderer2D::Begin()
 {
     m_handle->Begin();

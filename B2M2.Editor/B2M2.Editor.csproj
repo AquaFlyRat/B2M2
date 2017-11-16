@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CAF9A7E8-8DF3-4161-B3D3-C3F00182A03E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>B2M2.Editor</RootNamespace>
+    <RootNamespace>CharlieEngine.Editor</RootNamespace>
     <AssemblyName>B2M2.Editor</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -74,6 +74,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Engine\GameObject.cs" />
+    <Compile Include="Classes\Engine\Scene.cs" />
     <Compile Include="Forms\Controls\Console.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,6 +130,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -150,7 +153,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Classes\" />
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>

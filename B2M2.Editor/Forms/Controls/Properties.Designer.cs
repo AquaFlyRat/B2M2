@@ -1,4 +1,4 @@
-﻿namespace B2M2.Editor.Forms.Controls
+﻿namespace CharlieEngine.Editor.Forms.Controls
 {
     partial class Properties
     {
@@ -37,6 +37,7 @@
             this.DefaultDockArea = DarkUI.Docking.DarkDockArea.Right;
             this.DockText = "Properties";
             this.Name = "Properties";
+            this.Size = new System.Drawing.Size(277, 567);
             this.ResumeLayout(false);
 
         }

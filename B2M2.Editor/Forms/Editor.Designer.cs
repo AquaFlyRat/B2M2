@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace B2M2.Editor.Forms
+namespace CharlieEngine.Editor.Forms
 {
     partial class Editor : Form
     {
@@ -11,13 +11,13 @@ namespace B2M2.Editor.Forms
             this._toolstrip = new DarkUI.Controls.DarkToolStrip();
             this._menuStrip = new DarkUI.Controls.DarkMenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.submitButToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSubmitBug = new System.Windows.Forms.ToolStripMenuItem();
             this.darkStatusStrip1 = new DarkUI.Controls.DarkStatusStrip();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this._menuStrip.SuspendLayout();
@@ -65,18 +65,19 @@ namespace B2M2.Editor.Forms
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem});
+            this.btnExit});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // exitToolStripMenuItem
+            // btnExit
             // 
-            this.exitToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(152, 22);
+            this.btnExit.Text = "Exit";
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -103,7 +104,7 @@ namespace B2M2.Editor.Forms
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem,
-            this.submitButToolStripMenuItem});
+            this.btnSubmitBug});
             this.helpToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -113,15 +114,16 @@ namespace B2M2.Editor.Forms
             // 
             this.aboutToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // submitButToolStripMenuItem
+            // btnSubmitBug
             // 
-            this.submitButToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.submitButToolStripMenuItem.Name = "submitButToolStripMenuItem";
-            this.submitButToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.submitButToolStripMenuItem.Text = "Submit Bug";
+            this.btnSubmitBug.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.btnSubmitBug.Name = "btnSubmitBug";
+            this.btnSubmitBug.Size = new System.Drawing.Size(152, 22);
+            this.btnSubmitBug.Text = "Submit Bug";
+            this.btnSubmitBug.Click += new System.EventHandler(this.btnSubmitBug_Click);
             // 
             // darkStatusStrip1
             // 
@@ -170,9 +172,9 @@ namespace B2M2.Editor.Forms
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem windowToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
-        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem btnExit;
         private ToolStripMenuItem aboutToolStripMenuItem;
-        private ToolStripMenuItem submitButToolStripMenuItem;
+        private ToolStripMenuItem btnSubmitBug;
         private DarkUI.Controls.DarkStatusStrip darkStatusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel2;
     }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace B2M2.Editor.Forms
+namespace CharlieEngine.Editor.Forms
 {
     class Program
     {

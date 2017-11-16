@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using DarkUI.Docking;
 using DarkUI.Controls;
 
-namespace B2M2.Editor.Forms.Controls
+namespace CharlieEngine.Editor.Forms.Controls
 {
     public partial class Console : DarkToolWindow
     {

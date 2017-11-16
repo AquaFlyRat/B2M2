@@ -50,6 +50,9 @@ namespace b2m2 {
 
         void DrawString(const std::string& text, cFont *font, vec2 pos, cColor color);
 
+        void DrawLine(const cVector2& start, const cVector2& end, float thickness, cColor color);
+        void DrawRectangle(const cVector2& pos, float width, float height, cColor color);
+
         void Begin();
         void End();
         void Present();

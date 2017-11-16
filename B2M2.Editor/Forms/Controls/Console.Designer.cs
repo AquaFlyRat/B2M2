@@ -1,4 +1,4 @@
-﻿namespace B2M2.Editor.Forms.Controls
+﻿namespace CharlieEngine.Editor.Forms.Controls
 {
     partial class Console
     {

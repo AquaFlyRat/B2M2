@@ -83,9 +83,7 @@ void cWindow::PollEvents() {
                 m_keyboardInputCallback(e);
             }
         }
-        int w, h;
-        SDL_GetWindowSize(m_handle, &w, &h);
-        printf("%i %i\n", w, h);
+
         if (e.type == SDL_WINDOWEVENT) {
             if (e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
                 int width = e.window.data1;

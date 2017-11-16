@@ -13,9 +13,13 @@ namespace B2M2.Editor.Forms.Controls.Native
     {
         public Window NativeWindow;
         public Panel Panel;
-        int ow, oh;
-        public CharlieWindow(int width, int height)
+
+        private Action<Window, Renderer2D> _onDrawAction;
+        
+        public CharlieWindow(int width, int height, Action<Window, Renderer2D> onDraw)
         {
+            _onDrawAction = onDraw;
+
             Panel = new Panel();
             Panel.Width    = width;
             Panel.Height   = height;
@@ -36,13 +40,13 @@ namespace B2M2.Editor.Forms.Controls.Native
 
             Renderer2D renderer = new Renderer2D();
             renderer.Initalize(Matrix4.Orthographic(screenDimensions.Width, 0, 0, screenDimensions.Height, 1, -1));
+
             Font font = new Font("Assets/WendyOne-Regular.ttf", 38);
             timer.Tick += (object o, EventArgs e) => {
                 NativeWindow.PollEvents();
                 NativeWindow.Clear();
                 renderer.Begin();
-                renderer.FillRectangle(new Vector2(100, 100), 100, 100, new Color(0.1f, 0.7f, 0.3f, 1.0f));
-                renderer.DrawString("Hello World!", font, new Vector2(250, 250), new Color(0, 1.0f, 0.5f, 1.0f));
+                _onDrawAction(NativeWindow, renderer);
                 renderer.End();
                 renderer.Present();
                 NativeWindow.SwapBuffers();

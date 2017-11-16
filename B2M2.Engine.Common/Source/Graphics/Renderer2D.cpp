@@ -197,6 +197,43 @@ void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, c
     }
 }
 
+void cRenderer2D::DrawLine(const cVector2 & start, const cVector2 & end, float thickness, cColor color) {
+    mat4 back = m_transforms.back();
+
+    cVector2 normal = cVector2::Normalize(vec2(end.Y - start.Y, -(end.X - start.X))) * thickness;
+
+    m_buffer->Position = MultiplyVec2ByMat4(start.X + normal.X, start.Y + normal.Y, back);
+    m_buffer->TextureId = -1;
+    m_buffer->Color = color;
+    m_buffer++;
+
+    m_buffer->Position = MultiplyVec2ByMat4(end.X + normal.X, end.Y + normal.Y, back);
+    m_buffer->TextureId = -1;
+    m_buffer->Color = color;
+    m_buffer++;
+
+    m_buffer->Position = MultiplyVec2ByMat4(end.X - normal.X, end.Y - normal.Y, back);
+    m_buffer->TextureId = -1;
+    m_buffer->Color = color;
+    m_buffer++;
+
+    m_buffer->Position = MultiplyVec2ByMat4(start.X - normal.X, start.Y - normal.Y, back);
+    m_buffer->TextureId = -1;
+    m_buffer->Color = color;
+    m_buffer++;
+
+    m_indices += 6;
+}
+
+void cRenderer2D::DrawRectangle(const cVector2 & pos, float width, float height, cColor color) {
+    const float thickness = 2.f;
+
+    DrawLine({ pos.X, pos.Y }, { pos.X + width, pos.Y }, thickness, color);
+    DrawLine({ pos.X + width, pos.Y }, { pos.X + width, pos.Y + height }, thickness, color);
+    DrawLine({ pos.X + width, pos.Y + height }, { pos.X, pos.Y + height }, thickness, color);
+    DrawLine({ pos.X, pos.Y + height }, { pos.X, pos.Y }, thickness, color);
+}
+
 void cRenderer2D::Begin() {
     m_vao.Bind();
     m_buffer = m_vbo.Map<sVertex>();

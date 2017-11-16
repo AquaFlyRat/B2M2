@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DarkUI.Docking;
 
-namespace B2M2.Editor.Forms.Controls
+namespace CharlieEngine.Editor.Forms.Controls
 {
     public partial class Properties : DarkToolWindow
     {

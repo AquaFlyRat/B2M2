@@ -52,6 +52,8 @@ namespace CharlieEngine {
 
         void DrawString(System::String^ text, Font ^font, Vector2^ pos, Color ^color);
 
+        void DrawRectangle(Vector2 ^pos, float width, float height, Color ^color);
+
         void Begin();
         void End();
         void Present();

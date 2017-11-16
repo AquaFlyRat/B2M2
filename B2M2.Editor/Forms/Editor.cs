@@ -12,7 +12,7 @@ using DarkUI.Win32;
 using B2M2.Editor.Forms.Controls.Native;
 using System.Drawing;
 
-namespace B2M2.Editor.Forms
+namespace CharlieEngine.Editor.Forms
 {
     partial class Editor : Form
     {
@@ -32,7 +32,16 @@ namespace B2M2.Editor.Forms
             _dockPanel.AddContent(new Controls.ProjectExplorer());
             _dockPanel.AddContent(new Controls.Console());
             _dockPanel.AddContent(new Controls.Properties());
+        }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnSubmitBug_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/AquaFlyRat/B2M2/issues/new");
         }
     }
 }

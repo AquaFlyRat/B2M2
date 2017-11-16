@@ -36,7 +36,7 @@ int main()
         window.Clear();
         renderer.Begin();
         {
-            renderer.FillRectangle({ 100,100 }, 100, 100, { 1.0f, 0.0f, 0.0f, 1.0f });
+            renderer.DrawRectangle({ 100, 100 }, 100, 100, { 0.4f, 0.6f, 0.1f, 1.f });
         }
         renderer.End();
         renderer.Present();
