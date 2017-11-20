@@ -84,7 +84,8 @@ namespace CharlieEngine.Editor.Forms.Controls
 
         private void OnCharlieDraw(Window window, Renderer2D renderer)
         {
-            var cursorPos = PointToClient(Cursor.Position);
+            var cursorPosPoint = PointToClient(Cursor.Position);
+            Vector2 cursorPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(cursorPosPoint.X, cursorPosPoint.Y));
 
             foreach (GameObject obj in CurrentScene.Objects)
             {
@@ -105,10 +106,7 @@ namespace CharlieEngine.Editor.Forms.Controls
             Point clientTerms = PointToClient(Cursor.Position);
 
             GameObject obj = new GameObject();
-
-            Vector2 camPos = _window.GetRenderer().GetCameraPosition();
-            Vector2 objPos = new Vector2(clientTerms.X + camPos.X, clientTerms.Y + camPos.Y);
-
+            Vector2 objPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(clientTerms.X, clientTerms.Y));
             obj.Position = objPos;
 
             Vector2 size = _wendyOne.MeasureString("Testing");

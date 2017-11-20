@@ -54,7 +54,7 @@ cShader *cRenderer2D::GetShader() {
 
 void cRenderer2D::Initalize(mat4 projectionMatrix) {
     m_projection = projectionMatrix;
-    //s_2dshader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
+    
     m_transforms.push_back(mat4(1.0f));
     m_quadCount = 0;
 
@@ -288,25 +288,9 @@ void cRenderer2D::Present() {
 }
 
 cVector2 cRenderer2D::UnProject(float viewWidth, float viewHeight, const cVector2 & coords)
-{   
-    B2M2_LOG(cLogger::eLevel::Fatal, "Not Implemented Yet...");
-    ASSERT(false);  // Not implemented yet...
-    cVector4 vec;
-
-    vec.X = fabs(2.0f * coords.X / viewWidth - 1);
-    vec.Y = -(2.0f * coords.Y / viewHeight - 1);
-    vec.Z = 0;
-    vec.W = 1.0f;
-
-    cMatrix4 view = m_projection * m_camera.GetMatrix();
-    view.Invert();
-
-    cVector4 out = view.Multiply(vec.X, vec.Y, vec.Z, vec.W);
-    vec.X /= vec.W;
-    vec.Y /= vec.W;
-    vec.Z /= vec.W;
-
-    return { vec.X,vec.Y };
+{
+    // TODO: This should be a proper Screen -> World matrix conversion thingy. This is very dependant on a 1:1 pixel GL projection mapping.
+    return m_camera.Position + coords;
 }
 
 void cRenderer2D::PushTransform(const mat4 & matrix, bool override) {
