@@ -65,7 +65,8 @@ GLuint cShader::GenShader(const std::string & text, GLenum type)
         glGetShaderInfoLog(shader, 512, NULL, log);
         const char * shaderType = type == GL_VERTEX_SHADER ? "Vertex Shader" : "Fragment Shader";
         B2M2_LOG(cLogger::eLevel::Fatal, std::string("Shader Compiler error (") + shaderType + ") " + log);
-        abort();
+        //abort();
+        throw new std::runtime_error("Cannot gen shader! " + std::string(shaderType) + ": " + log);
     }
 
     return shader;
