@@ -25,11 +25,18 @@ namespace b2m2 {
         float       TextureId;
     };
 
+    class cCamera {
+    public:
+        vec2        Position;
+        
+        cMatrix4 GetMatrix();
+    };
+
     class cRenderer2D {
     private:
         cVertexArray m_vao;
         cBuffer m_vbo, m_ibo;
-
+        cMatrix4 m_projection;
         uint32 m_indices;
         sVertex *m_buffer;
         cShader *m_shader;
@@ -37,6 +44,7 @@ namespace b2m2 {
         std::vector<mat4> m_transforms;
         uint32 m_quadCount;
         uint32 m_tmpQuadCount = 0;
+        cCamera m_camera;
 
     public:
         void Initalize(mat4 projectionMatrix);
@@ -53,13 +61,17 @@ namespace b2m2 {
         void DrawLine(const cVector2& start, const cVector2& end, float thickness, cColor color);
         void DrawRectangle(const cVector2& pos, float width, float height, cColor color);
 
+        void SetProjection(cMatrix4 mat4);
+
         void Begin();
         void End();
         void Present();
 
+        cVector2 UnProject(float viewWidth, float viewHeight, const cVector2& coords);
+
         void PushTransform(const mat4& matrix, bool override = false);
         void PopTransform();
-
+        cCamera *GetCamera() { return &m_camera; }
         uint32 GetQuadCount() const { return m_quadCount; }
 
         static cShader *GetShader();

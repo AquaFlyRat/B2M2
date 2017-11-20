@@ -30,10 +30,23 @@ int main()
 
     cRenderer2D renderer;
     renderer.Initalize(cMatrix4::Orthographic(800, 0, 0, 600, 1.f, -1.f));
+    uint32_t last_tick_time = 0;
+    uint32_t delta = 0;
     while (window.IsRunning()) {
         window.PollEvents();
         
         window.Clear();
+        uint32_t tick_time = SDL_GetTicks();
+        delta = tick_time - last_tick_time;
+        last_tick_time = tick_time;
+        
+        if (cKeyboard::IsKeyDown(SDL_SCANCODE_RIGHT)) {
+            renderer.GetCamera()->Position.X += .0005f*delta;
+        }
+
+        if (cKeyboard::IsKeyDown(SDL_SCANCODE_LEFT)) {
+            renderer.GetCamera()->Position.X -= .0005f*delta;
+        }
         renderer.Begin();
         {
             renderer.DrawRectangle({ 100, 100 }, 100, 100, { 0.4f, 0.6f, 0.1f, 1.f });
@@ -42,6 +55,7 @@ int main()
         renderer.Present();
         
         window.SwapBuffers();
+        SDL_Delay(1000 / 60);
     }
     
     window.Destroy();   

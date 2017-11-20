@@ -136,6 +136,7 @@
     <ClInclude Include="Source\Graphics\Font.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\Buffer.hpp" />
     <ClInclude Include="Source\Graphics\OpenGL\OpenGLStructures.hpp" />
+    <ClInclude Include="Source\Graphics\OpenGL\Shaders\Renderer2DShader.h" />
     <ClInclude Include="Source\Graphics\OpenGL\VertexArray.hpp" />
     <ClInclude Include="Source\Graphics\Rectangle.hpp" />
     <ClInclude Include="Source\Graphics\Renderer2D.hpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Source\Containers\String.cpp" />
     <ClCompile Include="Source\Debug\Log.cpp" />
     <ClCompile Include="Source\Graphics\Font.cpp" />
+    <ClCompile Include="Source\Graphics\OpenGL\Shaders\Renderer2DShader.cpp" />
     <ClCompile Include="Source\Graphics\Renderer2D.cpp" />
     <ClCompile Include="Source\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Graphics\Texture2D.cpp" />

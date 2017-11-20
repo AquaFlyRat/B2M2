@@ -7,7 +7,7 @@
 #include <SDL2/SDL_syswm.h>
 #include <Windows.h>
 #include <Graphics/Renderer2D.hpp>
-
+#include "../Math/Vector2.hpp"
 namespace CharlieEngine {
     //using namespace b2m2;
 
@@ -60,6 +60,19 @@ namespace CharlieEngine {
 
         void SetClearColor(float r, float g, float b, float a) {
             m_handle->SetClearColor(r, g, b, a);
+        }
+
+        void SetViewportSize(float w, float h) {
+            int sdlw, sdlh;
+            SDL_GetWindowSize(m_handle->Handle(), &sdlw, &sdlh);
+
+            glViewport(0, sdlh - h, w, h);
+        }
+
+        Vector2 ^GetViewportSize() {
+            int sizes[4];
+            glGetIntegerv(GL_VIEWPORT, sizes);
+            return gcnew Vector2(sizes[2], sizes[3]);
         }
 
         void Destroy() {

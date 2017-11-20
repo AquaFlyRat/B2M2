@@ -89,9 +89,9 @@ void cWindow::PollEvents() {
                 int width = e.window.data1;
                 int height = e.window.data2;
                 glViewport(0, 0, width, height);
-                cRenderer2D::GetShader()->Bind();
+                /*cRenderer2D::GetShader()->Bind();
                 cRenderer2D::GetShader()->SubmitUniformMat4("sys_Projection", cMatrix4::Orthographic(width, 0, 0, height, 1.f, -1.f));
-                cRenderer2D::GetShader()->Unbind();
+                cRenderer2D::GetShader()->Unbind();*/
             }
         }
     }

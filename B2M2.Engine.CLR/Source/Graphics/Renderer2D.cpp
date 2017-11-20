@@ -49,6 +49,30 @@ void Renderer2D::DrawRectangle(Vector2 ^pos, float width, float height, Color ^ 
     m_handle->DrawRectangle(*pos->GetHandle(), width, height, { color->R, color->G, color->B,color->A });
 }
 
+void Renderer2D::MoveCamera(Vector2 ^ offset)
+{
+    b2m2::cVector2 vec2 = *offset->GetHandle();
+    m_handle->GetCamera()->Position.X += vec2.X;
+    m_handle->GetCamera()->Position.Y += vec2.Y;
+}
+
+Vector2 ^ Renderer2D::GetCameraPosition()
+{
+    b2m2::cCamera *camera = m_handle->GetCamera();
+    return gcnew Vector2(camera->Position.X, camera->Position.Y);
+}
+
+Vector2 ^ Renderer2D::UnProject(float viewWidth, float viewHeight, Vector2 ^ coords)
+{
+    b2m2::vec2 nat = m_handle->UnProject(viewWidth, viewHeight, *coords->GetHandle());
+    return gcnew Vector2(nat.X, nat.Y);
+}
+
+void Renderer2D::SetProjection(Matrix4 ^ mat4)
+{
+    m_handle->SetProjection(*mat4->GetHandle());
+}
+
 void Renderer2D::Begin()
 {
     m_handle->Begin();

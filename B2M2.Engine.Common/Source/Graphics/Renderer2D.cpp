@@ -7,8 +7,10 @@
 #include "Renderer2D.hpp"
 #include "Texture2D.hpp"
 #include "../Debug/Log.hpp"
-
+#include <limits>
 #include <SDL2/SDL_ttf.h>
+
+#include "OpenGL/Shaders/Renderer2DShader.h"
 
 using namespace b2m2;
 
@@ -16,6 +18,12 @@ static const int RenderableSize    = sizeof(sVertex) * 4;
 static const int MaxRenderables    = 10000;
 static const int RendererBatchSize = RenderableSize * MaxRenderables;
 static const int RendererIndexNum  = MaxRenderables * 6;
+
+cMatrix4 cCamera::GetMatrix() {
+    cVector2 inversePos(-Position.X, -Position.Y);
+    cMatrix4 transform = cMatrix4::Translate(inversePos);
+    return transform;
+}
 
 static void GenerateRectIndicesIntoBuffer(GLuint *buffer, uint32 indicesNum) {
     GLuint offset = 0;
@@ -45,6 +53,7 @@ cShader *cRenderer2D::GetShader() {
 }
 
 void cRenderer2D::Initalize(mat4 projectionMatrix) {
+    m_projection = projectionMatrix;
     //s_2dshader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
     m_transforms.push_back(mat4(1.0f));
     m_quadCount = 0;
@@ -234,6 +243,14 @@ void cRenderer2D::DrawRectangle(const cVector2 & pos, float width, float height,
     DrawLine({ pos.X, pos.Y + height }, { pos.X, pos.Y }, thickness, color);
 }
 
+void cRenderer2D::SetProjection(cMatrix4 mat4)
+{
+    m_projection = mat4;
+    s_2dshader->Bind();
+    s_2dshader->SubmitUniformMat4("sys_Projection", mat4);
+    s_2dshader->Unbind();
+}
+
 void cRenderer2D::Begin() {
     m_vao.Bind();
     m_buffer = m_vbo.Map<sVertex>();
@@ -249,7 +266,7 @@ void cRenderer2D::End() {
 
 void cRenderer2D::Present() {
     s_2dshader->Bind();
-
+    s_2dshader->SubmitUniformMat4("sys_View", m_camera.GetMatrix());
     for (size_t i = 0; i < m_textures.size(); i++)
         m_textures[i]->Bind(i);
 
@@ -270,6 +287,38 @@ void cRenderer2D::Present() {
     m_transforms.push_back(mat4(1.0f));
 }
 
+template <typename T>
+struct cTVec2 {
+    T X, Y;
+};
+
+cVector2 cRenderer2D::UnProject(float viewWidth, float viewHeight, const cVector2 & coords)
+{   
+    /*cMatrix4 view = m_camera.GetMatrix();
+    cMatrix4 matProjection = m_projection * view;
+    matProjection.Invert();
+
+    float in[4];
+    float winZ = 1.0;
+
+    in[0] = (2.0f*((float)(coords.X - 0) / (viewWidth - 0))) - 1.0f;
+    in[1] = 1.0f - (2.0f*((float)(coords.Y - 0) / (viewHeight - 0)));
+    in[2] = 2.0* winZ - 1.0;
+    in[3] = 1.0;
+    in[0] /= 4;
+    in[1] /= 4;
+
+
+    cVector4 vOut = matProjection.Multiply(in[0], in[1], in[2], in[3]);
+    vOut.W = 1.0f / vOut.W;
+    vOut.X *= vOut.X;
+    vOut.Y *= vOut.Y;
+    vOut.Z *= vOut.Z;
+
+    return { vOut.X, vOut.Y };*/
+    return coords;
+}
+
 void cRenderer2D::PushTransform(const mat4 & matrix, bool override) {
     if (override)
         m_transforms.push_back(matrix);
@@ -288,7 +337,7 @@ cShader *cRenderer2D::s_2dshader = NULL;
 
 void cRenderer2D::InitShaders()
 {
-    s_2dshader = cShaderManager::CreateShaderFromFile("Shaders/vertex.shader", "Shaders/fragment.shader");
+    s_2dshader = cShaderManager::CreateShaderFromText(Renderer2DShaderText::Vertex.c_str(), Renderer2DShaderText::Fragment.c_str());
 }
 
 float cRenderer2D::GetTextureSlot(cTexture2D * texture) {

@@ -51,6 +51,15 @@ cVector3 cMatrix4::Multiply(const cVector3& other) {
     return cVector3(x, y, z);
 }
 
+cVector4 cMatrix4::Multiply(float x, float y, float z, float w)
+{
+    return {
+        x * Elements[0 + 0 * 4] + y * Elements[0 + 1 * 4] + z * Elements[0 + 2 * 4] + w * Elements[0 + 3 * 4],
+        x * Elements[1 + 0 * 4] + y * Elements[1 + 1 * 4] + z * Elements[1 + 2 * 4] + w * Elements[1 + 3 * 4],
+        x * Elements[2 + 0 * 4] + y * Elements[2 + 1 * 4] + z * Elements[2 + 2 * 4] + w * Elements[2 + 3 * 4],
+        x * Elements[3 + 0 * 4] + y * Elements[3 + 1 * 4] + z * Elements[3 + 2 * 4] + w * Elements[3 + 3 * 4] };
+}
+
 cMatrix4 cMatrix4::operator*(const cMatrix4 & other) {
     return Multiply(other);
 }
@@ -143,6 +152,13 @@ cMatrix4 cMatrix4::RotateZ(float theta) {
     out.Elements[0 + 1 * 4] = -(::sin(radians));
     out.Elements[1 + 0 * 4] = (::sin(radians));
     return out;
+}
+
+cVector2 cMatrix4::TransformVector(const cVector2 & vec, const cMatrix4 & mat4)
+{
+    return cVector2(
+        vec.X * mat4.Elements[0]         + vec.Y * mat4.Elements[0 + 1 * 4] + 1 * mat4.Elements[0 + 2 * 4] + 1 * mat4.Elements[0 + 3 * 4],
+        vec.X * mat4.Elements[1 + 0 * 4] + vec.Y * mat4.Elements[1 + 1 * 4] + 1 * mat4.Elements[1 + 2 * 4] + 1 * mat4.Elements[1 + 3 * 4]);
 }
 
 cMatrix4 cMatrix4::Identity(float diag) {

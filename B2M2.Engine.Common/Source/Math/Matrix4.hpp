@@ -6,6 +6,11 @@
 #include <iostream>
 
 namespace b2m2 {
+
+    struct cVector4 {
+        float X, Y, Z, W;
+    };
+
     class cMatrix4
     {
     public:
@@ -17,23 +22,13 @@ namespace b2m2 {
 
         cMatrix4 Multiply(const cMatrix4& other);
         cVector3 Multiply(const cVector3& other);
+        cVector4 Multiply(float x, float y, float z, float w);
 
         cMatrix4 operator*(const cMatrix4& other);
         cVector3 operator*(const cVector3& other);
 
         float Elements[ElementCount];
 
-        /*void Translate(const cVector3& vector);
-        void Translate(const cVector2& vector);
-
-        void Scale(const cVector3& vector);
-        void Scale(const cVector2& vector);
-        void Scale(float scaleFactor);
-
-        void RotateX(float theta);
-        void RotateY(float theta);
-        void RotateZ(float theta);
-        */
         void Invert();
 
         cVector3 ScreenToWorld(
@@ -58,6 +53,8 @@ namespace b2m2 {
         static cMatrix4 RotateX(float theta);
         static cMatrix4 RotateY(float theta);
         static cMatrix4 RotateZ(float theta);
+
+        static cVector2 TransformVector(const cVector2& vec, const cMatrix4& mat4);
 
         friend std::ostream& operator<<(std::ostream& os, const cMatrix4& matrix);
     };
