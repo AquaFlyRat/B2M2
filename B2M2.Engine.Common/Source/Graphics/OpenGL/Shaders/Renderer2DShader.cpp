@@ -15,7 +15,7 @@ uniform mat4 sys_Projection;\n\
 uniform mat4 sys_View;\n\
 \n\
 void main() {\n\
-    gl_Position = sys_View * sys_Projection * vec4(position, 1.0);\n\
+    gl_Position = sys_Projection * sys_View * vec4(position, 1.0);\n\
 \n\
     passColor = color;\n\
     passUv = uv;\n\

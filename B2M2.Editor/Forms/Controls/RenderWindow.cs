@@ -51,7 +51,7 @@ namespace CharlieEngine.Editor.Forms.Controls
                     differenceY = e.Location.Y - lValue.Y;
                     
                     Renderer2D renderer = _window.GetRenderer();
-                    var offset = new Vector2(-((int)differenceX / 1000.0f), (int)differenceY / 1000.0f);
+                    var offset = new Vector2(-(differenceX), -differenceY);
                     System.Console.WriteLine(offset.X + ", " + offset.Y);
                     renderer.MoveCamera(offset);
                     _lastPoint = new Point(e.Location.X, e.Location.Y);
@@ -84,7 +84,7 @@ namespace CharlieEngine.Editor.Forms.Controls
 
         private void OnCharlieDraw(Window window, Renderer2D renderer)
         {
-            /*var cursorPos = PointToClient(Cursor.Position);
+            var cursorPos = PointToClient(Cursor.Position);
 
             foreach (GameObject obj in CurrentScene.Objects)
             {
@@ -99,21 +99,26 @@ namespace CharlieEngine.Editor.Forms.Controls
             }
             Vector2 viewSize = _window.NativeWindow.GetViewportSize();
             renderer.DrawRectangle(new Vector2(0, 0), Width, Height, new Color(1.0f, 0.5f, 1.0f, 1.0f));
-            */
-            renderer.FillRectangle(new Vector2(100, 100), 100, 100, new Color(1.0f, 0.0f, 1.0f, 1.0f));
+            
+            renderer.FillRectangle(new Vector2(-0.5f, -0.5f), 1.0f, 1.0f, new Color(1.0f, 0.0f, 1.0f, 1.0f));
         }
 
         private void _insertGameObject_Click(object sender, EventArgs e)
         {
             if (_createAt != null)
             {
-                Point clientTerms = PointToClient(Cursor.Position);
+                Point clientTerms = PointToClient(Cursor.Position);//_createAt.Value;
 
                 GameObject obj = new GameObject();
                 var screenDimensions = Screen.FromControl(_window.Panel).Bounds;
                 Vector2 viewSize = _window.NativeWindow.GetViewportSize();
-                Vector2 objPos = _window.GetRenderer().UnProject(viewSize.X, viewSize.Y, new Vector2(clientTerms.X, clientTerms.Y));
-                
+
+                Vector2 objPos = new Vector2(clientTerms.X, clientTerms.Y);//_window.GetRenderer().UnProject(Width,Height, new Vector2(clientTerms.X, clientTerms.Y));
+
+                Vector2 camPos = _window.GetRenderer().GetCameraPosition();
+                objPos.X += camPos.X;
+                objPos.Y += camPos.Y;
+
                 obj.Position = objPos;
 
                 Vector2 size = _wendyOne.MeasureString("Testing");

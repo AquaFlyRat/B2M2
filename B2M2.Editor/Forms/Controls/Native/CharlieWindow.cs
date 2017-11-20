@@ -31,7 +31,7 @@ namespace B2M2.Editor.Forms.Controls.Native
 
             var screenDimensions = Screen.FromControl(Panel).Bounds;
 
-            WindowConfig config = new WindowConfig(screenDimensions.Width, screenDimensions.Height, "", WindowFlags.Borderless | WindowFlags.PositionOrigin); 
+            WindowConfig config = new WindowConfig(screenDimensions.Width,screenDimensions.Height, "", WindowFlags.Borderless | WindowFlags.PositionOrigin); 
 
             NativeWindow = new Window(config);
             NativeWindow.SetClearColor(0.1f, 0.2f, 0.3f, 1.0f);

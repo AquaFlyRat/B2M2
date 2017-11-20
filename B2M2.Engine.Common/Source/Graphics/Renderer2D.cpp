@@ -294,29 +294,21 @@ struct cTVec2 {
 
 cVector2 cRenderer2D::UnProject(float viewWidth, float viewHeight, const cVector2 & coords)
 {   
-    /*cMatrix4 view = m_camera.GetMatrix();
-    cMatrix4 matProjection = m_projection * view;
-    matProjection.Invert();
+    cVector4 vec;
 
-    float in[4];
-    float winZ = 1.0;
+    vec.X = fabs(2.0f * coords.X / viewWidth - 1);
+    vec.Y = -(2.0f * coords.Y / viewHeight - 1);
+    vec.Z = 0;
+    vec.W = 1.0f;
 
-    in[0] = (2.0f*((float)(coords.X - 0) / (viewWidth - 0))) - 1.0f;
-    in[1] = 1.0f - (2.0f*((float)(coords.Y - 0) / (viewHeight - 0)));
-    in[2] = 2.0* winZ - 1.0;
-    in[3] = 1.0;
-    in[0] /= 4;
-    in[1] /= 4;
+    cMatrix4 view = m_projection * m_camera.GetMatrix();
+    view.Invert();
 
-
-    cVector4 vOut = matProjection.Multiply(in[0], in[1], in[2], in[3]);
-    vOut.W = 1.0f / vOut.W;
-    vOut.X *= vOut.X;
-    vOut.Y *= vOut.Y;
-    vOut.Z *= vOut.Z;
-
-    return { vOut.X, vOut.Y };*/
-    return coords;
+    cVector4 out = view.Multiply(vec.X, vec.Y, vec.Z, vec.W);
+    vec.X /= vec.W;
+    vec.Y /= vec.W;
+    vec.Z /= vec.W;
+    return { vec.X,vec.Y };
 }
 
 void cRenderer2D::PushTransform(const mat4 & matrix, bool override) {
