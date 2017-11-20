@@ -20,8 +20,7 @@ namespace CharlieEngine.Editor.Forms.Controls
         private Font _wendyOne;
         private Point? _lastPoint = null;
         private CharlieWindow _window = null;
-        private Point? _createAt = null;
-
+        
         public RenderWindow()
         {
             InitializeComponent();
@@ -29,13 +28,14 @@ namespace CharlieEngine.Editor.Forms.Controls
             DockText = "Render Window";
             _window = new CharlieWindow(Width, Height, OnCharlieDraw);
             _wendyOne = new Font("Assets/WendyOne-Regular.ttf", 48);
+
             _window.Panel.MouseClick += (object o, MouseEventArgs e) => {
                 if (e.Button == MouseButtons.Right)
                 {
                     _contextMenu.Show(Parent.PointToScreen(e.Location));
-                    _createAt = PointToClient(Cursor.Position);
                 }
             };
+
             _window.Panel.MouseUp += Panel_MouseUp;
             _window.Panel.MouseMove += (object o, MouseEventArgs e) => {
                 if (e.Button == MouseButtons.Middle)
@@ -51,9 +51,9 @@ namespace CharlieEngine.Editor.Forms.Controls
                     differenceY = e.Location.Y - lValue.Y;
                     
                     Renderer2D renderer = _window.GetRenderer();
-                    var offset = new Vector2(-(differenceX), -differenceY);
-                    System.Console.WriteLine(offset.X + ", " + offset.Y);
+                    var offset = new Vector2(-differenceX, -differenceY);
                     renderer.MoveCamera(offset);
+
                     _lastPoint = new Point(e.Location.X, e.Location.Y);
                 }
             };
@@ -95,37 +95,26 @@ namespace CharlieEngine.Editor.Forms.Controls
                         renderer.DrawRectangle(obj.Position, obj.Width, obj.Height, new Color(0.4f, 0.4f, 0.7f, 1.0f));
                     }
                 }
+
                 renderer.DrawString("Testing", _wendyOne, obj.Position, new Color(0.4f, 0.7f, 0.3f, 1.0f));
             }
-            Vector2 viewSize = _window.NativeWindow.GetViewportSize();
-            renderer.DrawRectangle(new Vector2(0, 0), Width, Height, new Color(1.0f, 0.5f, 1.0f, 1.0f));
-            
-            renderer.FillRectangle(new Vector2(-0.5f, -0.5f), 1.0f, 1.0f, new Color(1.0f, 0.0f, 1.0f, 1.0f));
         }
 
         private void _insertGameObject_Click(object sender, EventArgs e)
         {
-            if (_createAt != null)
-            {
-                Point clientTerms = PointToClient(Cursor.Position);//_createAt.Value;
+            Point clientTerms = PointToClient(Cursor.Position);
 
-                GameObject obj = new GameObject();
-                var screenDimensions = Screen.FromControl(_window.Panel).Bounds;
-                Vector2 viewSize = _window.NativeWindow.GetViewportSize();
+            GameObject obj = new GameObject();
 
-                Vector2 objPos = new Vector2(clientTerms.X, clientTerms.Y);//_window.GetRenderer().UnProject(Width,Height, new Vector2(clientTerms.X, clientTerms.Y));
+            Vector2 camPos = _window.GetRenderer().GetCameraPosition();
+            Vector2 objPos = new Vector2(clientTerms.X + camPos.X, clientTerms.Y + camPos.Y);
 
-                Vector2 camPos = _window.GetRenderer().GetCameraPosition();
-                objPos.X += camPos.X;
-                objPos.Y += camPos.Y;
+            obj.Position = objPos;
 
-                obj.Position = objPos;
-
-                Vector2 size = _wendyOne.MeasureString("Testing");
-                obj.Width = (int)size.X;
-                obj.Height = (int)size.Y;
-                CurrentScene.Objects.Add(obj);
-            }
+            Vector2 size = _wendyOne.MeasureString("Testing");
+            obj.Width = (int)size.X;
+            obj.Height = (int)size.Y;
+            CurrentScene.Objects.Add(obj);
         }
     }
 }

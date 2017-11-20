@@ -287,13 +287,10 @@ void cRenderer2D::Present() {
     m_transforms.push_back(mat4(1.0f));
 }
 
-template <typename T>
-struct cTVec2 {
-    T X, Y;
-};
-
 cVector2 cRenderer2D::UnProject(float viewWidth, float viewHeight, const cVector2 & coords)
 {   
+    B2M2_LOG(cLogger::eLevel::Fatal, "Not Implemented Yet...");
+    ASSERT(false);  // Not implemented yet...
     cVector4 vec;
 
     vec.X = fabs(2.0f * coords.X / viewWidth - 1);
@@ -308,6 +305,7 @@ cVector2 cRenderer2D::UnProject(float viewWidth, float viewHeight, const cVector
     vec.X /= vec.W;
     vec.Y /= vec.W;
     vec.Z /= vec.W;
+
     return { vec.X,vec.Y };
 }
 
