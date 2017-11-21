@@ -84,7 +84,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)Binaries\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)Binaries\$(Configuration)\ObjectFiles\</IntDir>
     <IncludePath>$(SolutionDir)B2M2.Engine.Common\Source;$(SolutionDir)B2M2.Engine.Common\ThirdParty\Include;$(IncludePath)</IncludePath>

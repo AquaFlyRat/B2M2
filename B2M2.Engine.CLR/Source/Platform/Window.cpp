@@ -1,13 +1,15 @@
 #using <mscorlib.dll>
-#include <Platform/Window.hpp>
 
 #include "../ManagedClass.h"
-#include <Platform/Runtime.hpp>
+#include "../Math/Vector2.hpp"
 
 #include <SDL2/SDL_syswm.h>
+
+#include <Platform/Runtime.hpp>
+#include <Platform/Window.hpp>
 #include <Windows.h>
 #include <Graphics/Renderer2D.hpp>
-#include "../Math/Vector2.hpp"
+
 namespace CharlieEngine {
     //using namespace arch;
 
@@ -62,7 +64,7 @@ namespace CharlieEngine {
             m_handle->SetClearColor(r, g, b, a);
         }
 
-        void SetViewportSize(float w, float h) {
+        void SetViewportSize(int w, int h) {
             int sdlw, sdlh;
             SDL_GetWindowSize(m_handle->Handle(), &sdlw, &sdlh);
 
@@ -72,7 +74,7 @@ namespace CharlieEngine {
         Vector2 ^GetViewportSize() {
             int sizes[4];
             glGetIntegerv(GL_VIEWPORT, sizes);
-            return gcnew Vector2(sizes[2], sizes[3]);
+            return gcnew Vector2(static_cast<float>(sizes[2]), static_cast<float>(sizes[3]));
         }
 
         void Destroy() {

@@ -18,8 +18,8 @@ void cSpritesheet::Create(const char *spritesheetPath, float spriteWidth, float 
     m_spriteWidth = spriteWidth;
     m_spriteHeight = spriteHeight;
 
-    m_rows = m_texture->GetHeight() / m_spriteHeight;
-    m_columns = m_texture->GetWidth() / m_spriteWidth;
+    m_rows = static_cast<int>(m_texture->GetHeight() / m_spriteHeight);
+    m_columns = static_cast<int>(m_texture->GetWidth() / m_spriteWidth);
 }
 
 void cSpritesheet::DrawSprite(cRenderer2D * renderer, int xIndex, int yIndex, vec2 pos, vec2 scale)
