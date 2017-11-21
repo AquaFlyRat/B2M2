@@ -19,5 +19,18 @@ namespace CharlieEngine.Editor.Forms.Controls
 
             DockText = "Properties";
         }
+
+        public void SetPosition(Vector2 pos)
+        {
+            if (pos != null)
+            {
+                txtPositionX.Text = pos.X.ToString();
+                txtPositionY.Text = pos.Y.ToString();
+            } else
+            {
+                txtPositionX.Text = "";
+                txtPositionY.Text = "";
+            }
+        }
     }
 }

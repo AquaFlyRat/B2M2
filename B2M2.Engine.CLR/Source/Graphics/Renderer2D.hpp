@@ -53,6 +53,8 @@ namespace CharlieEngine {
         void DrawString(System::String^ text, Font ^font, Vector2^ pos, Color ^color);
 
         void DrawRectangle(Vector2 ^pos, float width, float height, Color ^color);
+        void DrawLine(Vector2^ start, Vector2^ end, float thickness, Color^ color);
+
         void MoveCamera(Vector2 ^offset);
         Vector2 ^GetCameraPosition();
         Vector2 ^UnProject(float viewWidth, float viewHeight, Vector2^ coords);

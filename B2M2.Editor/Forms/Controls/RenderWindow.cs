@@ -20,7 +20,24 @@ namespace CharlieEngine.Editor.Forms.Controls
         private Font _wendyOne;
         private Point? _lastPoint = null;
         private CharlieWindow _window = null;
-        
+        private GameObject _selectedGameObject = null;
+
+        private void SetGameObject(GameObject obj,bool select=true)
+        {
+            if (obj != null)
+            {
+                if (select)
+                    _selectedGameObject = obj;
+                Properties props = Editor.GetPropertiesWindow();
+                props.SetPosition(obj.Position);
+            } else
+            {
+                Properties props = Editor.GetPropertiesWindow();
+                props.SetPosition(null);
+                _selectedGameObject = null;
+            }
+        }
+
         public RenderWindow()
         {
             InitializeComponent();
@@ -33,6 +50,28 @@ namespace CharlieEngine.Editor.Forms.Controls
                 if (e.Button == MouseButtons.Right)
                 {
                     _contextMenu.Show(Parent.PointToScreen(e.Location));
+                }
+                if(e.Button == MouseButtons.Left)
+                {
+                    var cursorPosPoint = PointToClient(Cursor.Position);
+                    Vector2 cursorPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(cursorPosPoint.X, cursorPosPoint.Y));
+                    bool found = false;
+                    foreach (GameObject obj in CurrentScene.Objects)
+                    {
+                        if (cursorPos.X > obj.Position.X && cursorPos.X < obj.Position.X + obj.Width)
+                        {
+                            if (cursorPos.Y > obj.Position.Y && cursorPos.Y < obj.Position.Y + obj.Height)
+                            {
+                                SetGameObject(obj);
+                                found = true;
+                            }
+                        }
+                    }
+
+                    if(!found)
+                    {
+                        SetGameObject(null);
+                    }
                 }
             };
 
@@ -86,7 +125,7 @@ namespace CharlieEngine.Editor.Forms.Controls
         {
             var cursorPosPoint = PointToClient(Cursor.Position);
             Vector2 cursorPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(cursorPosPoint.X, cursorPosPoint.Y));
-
+            
             foreach (GameObject obj in CurrentScene.Objects)
             {
                 if (cursorPos.X > obj.Position.X && cursorPos.X < obj.Position.X + obj.Width)
@@ -99,6 +138,11 @@ namespace CharlieEngine.Editor.Forms.Controls
 
                 renderer.DrawString("Testing", _wendyOne, obj.Position, new Color(0.4f, 0.7f, 0.3f, 1.0f));
             }
+
+            if (_selectedGameObject != null)
+            {
+                renderer.DrawRectangle(_selectedGameObject.Position, _selectedGameObject.Width, _selectedGameObject.Height, new Color(0.4f, 0.4f, 0.7f, 1.0f));
+            }
         }
 
         private void _insertGameObject_Click(object sender, EventArgs e)
@@ -108,6 +152,7 @@ namespace CharlieEngine.Editor.Forms.Controls
             GameObject obj = new GameObject();
             Vector2 objPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(clientTerms.X, clientTerms.Y));
             obj.Position = objPos;
+            SetGameObject(obj, false);
 
             Vector2 size = _wendyOne.MeasureString("Testing");
             obj.Width = (int)size.X;

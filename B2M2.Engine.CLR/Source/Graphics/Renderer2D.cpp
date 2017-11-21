@@ -49,6 +49,11 @@ void Renderer2D::DrawRectangle(Vector2 ^pos, float width, float height, Color ^ 
     m_handle->DrawRectangle(*pos->GetHandle(), width, height, { color->R, color->G, color->B,color->A });
 }
 
+void CharlieEngine::Renderer2D::DrawLine(Vector2 ^ start, Vector2 ^ end, float thickness, Color^ color)
+{
+    m_handle->DrawLine(*start->GetHandle(), *end->GetHandle(), thickness, { color->R, color->G,color->B, color->A });
+}
+
 void Renderer2D::MoveCamera(Vector2 ^ offset)
 {
     arch::cVector2 vec2 = *offset->GetHandle();
