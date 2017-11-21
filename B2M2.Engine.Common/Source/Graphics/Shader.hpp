@@ -40,7 +40,7 @@ namespace arch {
 
     struct cShaderManager {
     private:
-        static std::vector<cShader*> m_shaders;
+        static std::vector<cShader*> s_shaders;
 
     public:
         static cShader *CreateShaderFromFile(const char* vertexPath, const char *fragmentPath);

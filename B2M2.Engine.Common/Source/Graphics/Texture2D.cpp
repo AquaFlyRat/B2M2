@@ -9,6 +9,7 @@ using namespace arch;
 
 void cTexture2D::Create(const char *filePath, eFiltering format){
     m_filtering = format;
+
     SDL_Surface *surface = IMG_Load(filePath);
 
     if (!surface) {
@@ -21,8 +22,7 @@ void cTexture2D::Create(const char *filePath, eFiltering format){
     CreateGLTexture();
 }
 
-void cTexture2D::Create(SDL_Surface * surface, eFiltering filtering)
-{
+void cTexture2D::Create(SDL_Surface * surface, eFiltering filtering) {
     m_filtering = filtering;
     m_surface = surface;
     CreateGLTexture();

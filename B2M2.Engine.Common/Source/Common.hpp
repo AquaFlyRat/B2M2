@@ -26,18 +26,8 @@ namespace arch {
     typedef cVector2 vec2;
     typedef cVector3 vec3;
     typedef cMatrix4 mat4;
-    /*
-    typedef glm::vec2       vec2;
-    typedef glm::tvec2<int> ivec2;
-    
-    typedef glm::vec3       vec3;
-    typedef glm::tvec3<int> ivec3;
 
-    typedef glm::vec4       vec4;
-    typedef glm::tvec4<int> ivec4;
-    typedef glm::mat4       mat4;*/
-
-    inline bool ApproxEqual(float a1, float b1) {
+    inline bool FloatsApproxEqual(float a1, float b1) {
         return( fabs(a1 - b1) <= FLT_EPSILON);
     }
 }

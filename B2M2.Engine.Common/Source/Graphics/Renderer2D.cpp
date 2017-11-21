@@ -7,10 +7,9 @@
 #include "Renderer2D.hpp"
 #include "Texture2D.hpp"
 #include "../Debug/Log.hpp"
-#include <limits>
-#include <SDL2/SDL_ttf.h>
-
 #include "OpenGL/Shaders/Renderer2DShader.h"
+
+#include <SDL2/SDL_ttf.h>
 
 using namespace arch;
 
@@ -18,6 +17,8 @@ static const int RenderableSize    = sizeof(sVertex) * 4;
 static const int MaxRenderables    = 10000;
 static const int RendererBatchSize = RenderableSize * MaxRenderables;
 static const int RendererIndexNum  = MaxRenderables * 6;
+
+cShader *cRenderer2D::s_2dshader = NULL;
 
 cMatrix4 cCamera::GetMatrix() {
     cVector2 inversePos(-Position.X, -Position.Y);
@@ -40,6 +41,7 @@ static void GenerateRectIndicesIntoBuffer(GLuint *buffer, uint32 indicesNum) {
     }
 }
 
+// TODO: This could probably be optimised
 static vec3 MultiplyVec2ByMat4(float x, float y, const cMatrix4& matrix) {
     cVector3 _vec3(x, y, 0.f);
     cMatrix4 cpy = matrix;
@@ -289,28 +291,28 @@ void cRenderer2D::Present() {
 
 cVector2 cRenderer2D::UnProject(float viewWidth, float viewHeight, const cVector2 & coords)
 {
-    // TODO: This should be a proper Screen -> World matrix conversion thingy. This is very dependant on a 1:1 pixel GL projection mapping.
+    // TODO: This should be a proper Screen -> World
+    // matrix conversion thingy.
+    // This is very dependant on a 1:1 pixel GL projection mapping.
     return m_camera.Position + coords;
 }
 
 void cRenderer2D::PushTransform(const mat4 & matrix, bool override) {
-    if (override)
+    if (override) {
         m_transforms.push_back(matrix);
-    else {
+    } else {
         mat4 back = m_transforms.back();
         m_transforms.push_back(back * matrix);
     }
 }
 
 void cRenderer2D::PopTransform() {
-    if(m_transforms.size() >= 1)
+    if (m_transforms.size() >= 1) {
         m_transforms.pop_back();
+    }
 }
 
-cShader *cRenderer2D::s_2dshader = NULL;
-
-void cRenderer2D::InitShaders()
-{
+void cRenderer2D::InitShaders() {
     s_2dshader = cShaderManager::CreateShaderFromText(Renderer2DShaderText::Vertex.c_str(), Renderer2DShaderText::Fragment.c_str());
 }
 

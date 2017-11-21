@@ -6,7 +6,7 @@ using namespace arch;
 
 void cPhysicsComponent::Update(cGameObject *obj) {
     const b2Vec2& vec = m_body->GetPosition();
-    m_bOnGround = ApproxEqual(vec.y, obj->Position.Y);
+    m_bOnGround = FloatsApproxEqual(vec.y, obj->Position.Y);
     obj->Position.X = vec.x;
     obj->Position.Y = vec.y;
 }

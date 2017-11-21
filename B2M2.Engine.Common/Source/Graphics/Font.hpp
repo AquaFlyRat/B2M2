@@ -12,18 +12,19 @@
 namespace arch {
     class cFont {
     public:
-        void Create(const char *font, int32 size);
-        void Release();
+        void                      Create(const char *font, int32 size);
+        void                      Release();
 
-        TTF_Font *GetTTF() const { return m_sdlFont; }
-        cTexture2D* GetTexture() const { return m_texture; }
-        const std::string& GetAsciiData() const { return m_ascii; }
+        inline TTF_Font          *GetTTF()       const { return m_sdlFont; }
 
-        vec2 MeasureString(const std::string& text);
+        inline cTexture2D*        GetTexture()   const { return m_texture; }
+        inline const std::string& GetAsciiData() const { return m_ascii; }
+
+        vec2                      MeasureString(const std::string& text);
     private:
-        float m_size;
-        TTF_Font *m_sdlFont;
-        cTexture2D *m_texture;
-        std::string m_ascii;
+        float                     m_size;
+        TTF_Font                 *m_sdlFont;
+        cTexture2D               *m_texture;
+        std::string               m_ascii;
     };
 }

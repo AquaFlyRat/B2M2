@@ -30,9 +30,9 @@ namespace arch {
         void CreateGLTexture();
     
     private:
-        GLuint m_id;
-        eFiltering m_filtering;
-        bool m_bIsBound;
+        GLuint       m_id;
+        eFiltering   m_filtering;
+        bool         m_bIsBound;
         SDL_Surface *m_surface;
     };
 }
