@@ -16,7 +16,7 @@
 
 #include <vector>
 
-namespace b2m2 {
+namespace arch {
     struct sVertex
     {
         vec3        Position;

@@ -6,7 +6,7 @@
 
 #include "../Common.hpp"
 
-namespace b2m2 {
+namespace arch {
     struct sRectangle {
         vec2 Position;
         vec2 Size;

@@ -1,6 +1,6 @@
 #include "Renderer2DShader.h"
 
-std::string b2m2::Renderer2DShaderText::Vertex =
+std::string arch::Renderer2DShaderText::Vertex =
 "#version 330 core \n\
 layout(location = 0) in vec3  position; \n\
 layout(location = 1) in vec4  color; \n\
@@ -22,7 +22,7 @@ void main() {\n\
     passTexId = textureId;\n\
 }";
 
-std::string b2m2::Renderer2DShaderText::Fragment =
+std::string arch::Renderer2DShaderText::Fragment =
 "#version 330 core \n\
 \n\
 in vec4 passColor;\n\

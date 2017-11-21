@@ -8,11 +8,11 @@
 
 namespace CharlieEngine {
     public enum class TextureFiltering {
-        Linear = b2m2::cTexture2D::eFiltering::Linear,
-        Nearest = b2m2::cTexture2D::eFiltering::Nearest
+        Linear = arch::cTexture2D::eFiltering::Linear,
+        Nearest = arch::cTexture2D::eFiltering::Nearest
     };
 
-    public ref class Texture2D : ManagedClass<b2m2::cTexture2D> {
+    public ref class Texture2D : ManagedClass<arch::cTexture2D> {
     public:
         Texture2D(System::String^ filepath, TextureFiltering format);
 

@@ -6,7 +6,7 @@
 
 #include "../../Common.hpp"
 
-namespace b2m2 {
+namespace arch {
     class cVertexArray {
     public:
         void Bind() const { glBindVertexArray(m_id); }

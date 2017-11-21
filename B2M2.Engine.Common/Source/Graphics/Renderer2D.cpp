@@ -12,7 +12,7 @@
 
 #include "OpenGL/Shaders/Renderer2DShader.h"
 
-using namespace b2m2;
+using namespace arch;
 
 static const int RenderableSize    = sizeof(sVertex) * 4;
 static const int MaxRenderables    = 10000;

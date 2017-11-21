@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace B2M2.Editor.Forms.Controls.Native
+namespace arch.Editor.Forms.Controls.Native
 {
     class Win32
     {

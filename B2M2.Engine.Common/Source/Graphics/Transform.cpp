@@ -1,6 +1,6 @@
 #include "Transform.hpp"
 #include <glm/gtx/transform.hpp>
-using namespace b2m2;
+using namespace arch;
 
 mat4 cTransform::RotateAroundPoint(const vec3 & point, float angle)
 {

@@ -10,12 +10,12 @@
 #include "../Input/Keyboard.hpp"
 #include "../Common.hpp"
 
-void b2m2::cRuntime::Initalize() {
+void arch::cRuntime::Initalize() {
     int x = SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
 }
 
-void b2m2::cRuntime::Shutdown() {
+void arch::cRuntime::Shutdown() {
     SDL_Quit();
     TTF_Quit();
 }

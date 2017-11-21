@@ -9,7 +9,7 @@
 
 #include "../Debug/Log.hpp"
 
-using namespace b2m2;
+using namespace arch;
 
 std::vector<cShader*> cShaderManager::m_shaders = std::vector<cShader*>();
 

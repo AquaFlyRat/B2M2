@@ -5,7 +5,7 @@
 #include <math.h>
 #include <assert.h>
 
-using namespace b2m2;
+using namespace arch;
 
 const     int   cMatrix4::ElementCount;
 

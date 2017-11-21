@@ -10,7 +10,7 @@
 #define B2M2_LOG(level, msg) \
     cLogger::Get()->LogMessage(level, msg, __LINE__, __FILE__)
 
-namespace b2m2 {
+namespace arch {
     class cLogger {
     public:
         enum class eLevel {

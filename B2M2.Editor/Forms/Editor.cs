@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 
 using System.Diagnostics;
 using DarkUI.Win32;
-using B2M2.Editor.Forms.Controls.Native;
+using arch.Editor.Forms.Controls.Native;
 using System.Drawing;
 
 namespace CharlieEngine.Editor.Forms
@@ -41,7 +41,7 @@ namespace CharlieEngine.Editor.Forms
 
         private void btnSubmitBug_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/AquaFlyRat/B2M2/issues/new");
+            Process.Start("https://github.com/AquaFlyRat/arch/issues/new");
         }
     }
 }

@@ -8,7 +8,7 @@
 #include <sstream>
 #include <iostream>
 
-namespace b2m2 {
+namespace arch {
     template<typename T>
     void SplitString(const std::string &string, char delim, T result) {
         std::stringstream _stringstream(string);

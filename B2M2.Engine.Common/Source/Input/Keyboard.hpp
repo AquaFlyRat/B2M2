@@ -7,7 +7,7 @@
 #include "../Common.hpp"
 #include <SDL2/SDL.h>
 
-namespace b2m2 {
+namespace arch {
     class cKeyboard {
     private:
         const uint8 *m_keyState;

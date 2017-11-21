@@ -9,7 +9,7 @@
 
 #include <SDL2/SDL.h>
 
-using namespace b2m2;
+using namespace arch;
 
 void cLogger::LogMessage(eLevel level, std::string msg)
 {

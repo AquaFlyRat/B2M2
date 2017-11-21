@@ -36,7 +36,7 @@ namespace CharlieEngine {
         }
     };
 
-    public ref class Renderer2D : ManagedClass<b2m2::cRenderer2D> {
+    public ref class Renderer2D : ManagedClass<arch::cRenderer2D> {
     public:
         Renderer2D();
 

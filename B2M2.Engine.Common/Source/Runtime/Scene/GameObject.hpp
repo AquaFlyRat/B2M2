@@ -8,7 +8,7 @@
 
 #include "../../Common.hpp"
 
-namespace b2m2 {
+namespace arch {
     class cScene;
     class cGameObject;
     

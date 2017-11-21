@@ -5,7 +5,7 @@
 #include "Texture2D.hpp"
 #include "../Debug/Log.hpp"
 
-using namespace b2m2;
+using namespace arch;
 
 void cTexture2D::Create(const char *filePath, eFiltering format){
     m_filtering = format;

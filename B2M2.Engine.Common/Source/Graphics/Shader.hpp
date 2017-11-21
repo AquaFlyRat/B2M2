@@ -9,7 +9,7 @@
 
 #include <vector>
 
-namespace b2m2 {
+namespace arch {
     class cShader {
     private:
         GLuint m_id;

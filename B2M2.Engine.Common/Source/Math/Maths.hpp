@@ -1,5 +1,5 @@
 #pragma once
-namespace b2m2 {
+namespace arch {
     struct sMaths
     {
         static constexpr float PI = 3.14159265359f;

@@ -13,7 +13,7 @@
 #include "../Containers/String.hpp"
 #include "../Debug/Log.hpp"
 
-using namespace b2m2;
+using namespace arch;
 
 void cFont::Create(const char* font, int32 size) {
     m_sdlFont = TTF_OpenFont(font, size);

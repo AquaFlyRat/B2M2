@@ -11,9 +11,9 @@
 
 namespace CharlieEngine {
 
-    public ref class Matrix4 : ManagedClass<b2m2::cMatrix4> {
+    public ref class Matrix4 : ManagedClass<arch::cMatrix4> {
     private:
-        Matrix4(b2m2::cMatrix4 *matrix);
+        Matrix4(arch::cMatrix4 *matrix);
 
     public:
         Matrix4(float diag);

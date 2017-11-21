@@ -1,7 +1,7 @@
 #include "Matrix4.hpp"
 
 using namespace CharlieEngine;
-using namespace b2m2;
+using namespace arch;
 
 Matrix4::Matrix4(float diag)
 {

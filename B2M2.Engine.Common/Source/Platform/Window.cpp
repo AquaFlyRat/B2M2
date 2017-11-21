@@ -10,7 +10,7 @@
 #include "../Graphics/Renderer2D.hpp"
 #include "OpenGL.hpp"
 
-using namespace b2m2;
+using namespace arch;
 
 void cWindow::Create(const sWindowConfig& config) {
     m_config = config;

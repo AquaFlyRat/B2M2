@@ -8,7 +8,7 @@
 
 #include <Box2D/Box2D.h>
 
-namespace b2m2 {
+namespace arch {
     struct cPhysicsComponent : public cComponent {
         virtual void Update(cGameObject *obj);
         virtual void Create(cGameObject *obj);

@@ -6,7 +6,7 @@
 
 #include <vector>
 
-namespace b2m2 {
+namespace arch {
     class cRuntime {
     public:
         void Initalize();

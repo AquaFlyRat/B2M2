@@ -9,14 +9,14 @@
 #include <Graphics/Renderer2D.hpp>
 #include "../Math/Vector2.hpp"
 namespace CharlieEngine {
-    //using namespace b2m2;
+    //using namespace arch;
 
     public enum class WindowFlags {
-        ShowOnCreate = b2m2::eWindowFlags::ShowOnCreate,
-        Borderless = b2m2::eWindowFlags::Borderless,
-        None = b2m2::eWindowFlags::None,
-        PositionCentre = b2m2::eWindowFlags::PositionCentre,
-        PositionOrigin = b2m2::eWindowFlags::PositionOrigin
+        ShowOnCreate = arch::eWindowFlags::ShowOnCreate,
+        Borderless = arch::eWindowFlags::Borderless,
+        None = arch::eWindowFlags::None,
+        PositionCentre = arch::eWindowFlags::PositionCentre,
+        PositionOrigin = arch::eWindowFlags::PositionOrigin
     };
 
     public ref class WindowConfig {
@@ -34,16 +34,16 @@ namespace CharlieEngine {
         }
     };
 
-    public ref class Window : ManagedClass<b2m2::cWindow> {
+    public ref class Window : ManagedClass<arch::cWindow> {
     public:
         Window(WindowConfig^ config) {
             const char * title = (const char*) 
                 System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(config->Title).ToPointer();
-            b2m2::cRuntime runtime;
+            arch::cRuntime runtime;
             runtime.Initalize();
-            m_handle = new b2m2::cWindow();
-            m_handle->Create({ config->Width, config->Height, title, static_cast<b2m2::eWindowFlags>(config->Flags) });
-            b2m2::cRenderer2D::InitShaders();
+            m_handle = new arch::cWindow();
+            m_handle->Create({ config->Width, config->Height, title, static_cast<arch::eWindowFlags>(config->Flags) });
+            arch::cRenderer2D::InitShaders();
         }
 
         void Delay(int ms) {
@@ -127,7 +127,7 @@ namespace CharlieEngine {
         ~Window() {
             m_handle->Destroy();
 
-            b2m2::cRuntime runtime;
+            arch::cRuntime runtime;
             runtime.Shutdown();
         }
     };

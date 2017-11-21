@@ -7,7 +7,7 @@ Font::Font(System::String ^ font, int size)
     const char * title = (const char*)
         System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(font).ToPointer();
 
-    m_handle = new b2m2::cFont;
+    m_handle = new arch::cFont;
     m_handle->Create(title, size);
 }
 
@@ -24,6 +24,6 @@ Vector2 ^ Font::MeasureString(System::String ^ string)
 
     System::Runtime::InteropServices::Marshal::FreeHGlobal(System::IntPtr((void*)kPtoC));
 
-    b2m2::vec2 size = m_handle->MeasureString(outputstring);
+    arch::vec2 size = m_handle->MeasureString(outputstring);
     return gcnew Vector2(size.X, size.Y);
 }

@@ -6,7 +6,7 @@
 
 #include "../Common.hpp"
 
-namespace b2m2 {
+namespace arch {
     class cTransform {
     public:
         static mat4 RotateAroundPoint(const vec3& point, float angle);

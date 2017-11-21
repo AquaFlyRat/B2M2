@@ -7,9 +7,9 @@
 
 namespace CharlieEngine {
     
-    public ref class Vector3 : ManagedClass<b2m2::cVector3> {
+    public ref class Vector3 : ManagedClass<arch::cVector3> {
     private:
-        Vector3(b2m2::cVector3* vecptr);
+        Vector3(arch::cVector3* vecptr);
     public:
         Vector3();
         Vector3(float x, float y, float z);

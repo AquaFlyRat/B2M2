@@ -7,8 +7,8 @@ Texture2D::Texture2D(System::String^ filepath, TextureFiltering format)
     const char * title = (const char*)
         System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filepath).ToPointer();
 
-    m_handle = new b2m2::cTexture2D;
-    m_handle->Create(title, static_cast<b2m2::cTexture2D::eFiltering>(format));
+    m_handle = new arch::cTexture2D;
+    m_handle->Create(title, static_cast<arch::cTexture2D::eFiltering>(format));
 }
 
 void Texture2D::Destroy()

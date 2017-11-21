@@ -7,7 +7,7 @@
 #include "../../Graphics/Texture2D.hpp"
 #include "../../Graphics/Renderer2D.hpp"
 
-namespace b2m2 {
+namespace arch {
     class cSpritesheet {
     private:
         float m_spriteWidth, m_spriteHeight;

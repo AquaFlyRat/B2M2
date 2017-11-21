@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using CharlieEngine;
 using System.Windows.Forms;
 
-namespace B2M2.Editor.Forms.Controls.Native
+namespace arch.Editor.Forms.Controls.Native
 {
     class CharlieWindow
     {

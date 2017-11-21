@@ -16,14 +16,14 @@
 
 int main()
 {
-    using namespace b2m2;
+    using namespace arch;
     cRuntime runtime;
 
     cKeyboard::Initalize();
     runtime.Initalize();
 
     cWindow window;
-    window.Create({ 800, 600, "B2M2 Engine!", eWindowFlags::ShowOnCreate });
+    window.Create({ 800, 600, "arch Engine!", eWindowFlags::ShowOnCreate });
     window.SetClearColor(1.0f, 1.0f, 0.0f, 1.0f);
     window.Show();
     cRenderer2D::InitShaders();

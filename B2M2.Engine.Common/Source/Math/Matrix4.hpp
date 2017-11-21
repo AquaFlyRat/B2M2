@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-namespace b2m2 {
+namespace arch {
 
     struct cVector4 {
         float X, Y, Z, W;

@@ -4,7 +4,7 @@
 
 #include "Spritesheet.hpp"
 
-using namespace b2m2;
+using namespace arch;
 
 cSpritesheet::cSpritesheet(): m_animationIndex(0)
 {

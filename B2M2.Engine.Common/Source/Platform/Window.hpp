@@ -9,7 +9,7 @@
 #include <SDL2/SDL.h>
 #include <functional>
 
-namespace b2m2 {
+namespace arch {
 
     enum eWindowFlags {
         ShowOnCreate,

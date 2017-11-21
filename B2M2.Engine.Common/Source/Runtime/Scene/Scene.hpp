@@ -9,7 +9,7 @@
 #include "../../Common.hpp"
 #include "GameObject.hpp"
 
-namespace b2m2 {
+namespace arch {
     class cScene {
     private:
         b2World *m_b2World;

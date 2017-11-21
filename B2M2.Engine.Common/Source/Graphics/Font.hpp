@@ -9,7 +9,7 @@
 #include "Texture2D.hpp"
 #include "../Common.hpp"
 
-namespace b2m2 {
+namespace arch {
     class cFont {
     public:
         void Create(const char *font, int32 size);

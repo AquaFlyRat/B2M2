@@ -16,7 +16,7 @@
 
 #include "Platform/OpenGL.hpp"
 
-namespace b2m2 {
+namespace arch {
     typedef unsigned int  uint32;
     typedef int           int32;
     

@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-namespace b2m2 {
+namespace arch {
     class cVector3 {
     public:
         float X, Y, Z;

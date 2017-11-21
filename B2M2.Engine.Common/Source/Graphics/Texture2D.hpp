@@ -7,7 +7,7 @@
 #include "../Common.hpp"
 #include <SDL2/SDL_image.h>
 
-namespace b2m2 {
+namespace arch {
     class cTexture2D {
     public:
         enum eFiltering {

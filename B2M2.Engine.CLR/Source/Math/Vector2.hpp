@@ -7,7 +7,7 @@
 
 namespace CharlieEngine {
 
-    public ref class Vector2 : ManagedClass<b2m2::cVector2> {
+    public ref class Vector2 : ManagedClass<arch::cVector2> {
     public:
         Vector2(float x, float y);
         Vector2();

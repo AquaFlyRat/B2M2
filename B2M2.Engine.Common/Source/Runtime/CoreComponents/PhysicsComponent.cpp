@@ -2,7 +2,7 @@
 
 #include "../Scene/Scene.hpp"
 
-using namespace b2m2;
+using namespace arch;
 
 void cPhysicsComponent::Update(cGameObject *obj) {
     const b2Vec2& vec = m_body->GetPosition();

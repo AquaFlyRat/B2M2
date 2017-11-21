@@ -7,7 +7,7 @@
 #include "../../Common.hpp"
 #include <vector>
 
-namespace b2m2 {
+namespace arch {
 
     struct sInputAttribute {
         int32 Index;

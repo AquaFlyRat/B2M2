@@ -1,6 +1,6 @@
 #pragma once
 
-namespace b2m2 {
+namespace arch {
     class cColor {
     private:
         static const int OneOver255 = 1 / 255;

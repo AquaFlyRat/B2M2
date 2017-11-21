@@ -4,7 +4,7 @@ using namespace CharlieEngine;
 
 Renderer2D::Renderer2D()
 {
-    m_handle = new b2m2::cRenderer2D();
+    m_handle = new arch::cRenderer2D();
 }
 
 void Renderer2D::Initalize(Matrix4 ^ projection)
@@ -51,20 +51,20 @@ void Renderer2D::DrawRectangle(Vector2 ^pos, float width, float height, Color ^ 
 
 void Renderer2D::MoveCamera(Vector2 ^ offset)
 {
-    b2m2::cVector2 vec2 = *offset->GetHandle();
+    arch::cVector2 vec2 = *offset->GetHandle();
     m_handle->GetCamera()->Position.X += vec2.X;
     m_handle->GetCamera()->Position.Y += vec2.Y;
 }
 
 Vector2 ^ Renderer2D::GetCameraPosition()
 {
-    b2m2::cCamera *camera = m_handle->GetCamera();
+    arch::cCamera *camera = m_handle->GetCamera();
     return gcnew Vector2(camera->Position.X, camera->Position.Y);
 }
 
 Vector2 ^ Renderer2D::UnProject(float viewWidth, float viewHeight, Vector2 ^ coords)
 {
-    b2m2::vec2 nat = m_handle->UnProject(viewWidth, viewHeight, *coords->GetHandle());
+    arch::vec2 nat = m_handle->UnProject(viewWidth, viewHeight, *coords->GetHandle());
     return gcnew Vector2(nat.X, nat.Y);
 }
 

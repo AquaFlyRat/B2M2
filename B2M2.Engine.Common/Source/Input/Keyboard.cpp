@@ -2,9 +2,9 @@
 
 #include <SDL2/SDL.h>
 
-using namespace b2m2;
+using namespace arch;
 
-void b2m2::cKeyboard::Initalize()
+void arch::cKeyboard::Initalize()
 {
     cKeyboard *keyboard = cKeyboard::Get();
     keyboard->m_keyState = SDL_GetKeyboardState(NULL);
