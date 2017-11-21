@@ -7,6 +7,8 @@
 #include <sstream>
 #include <iostream>
 
+#include <SDL2/SDL.h>
+
 using namespace b2m2;
 
 void cLogger::LogMessage(eLevel level, std::string msg)
@@ -20,6 +22,7 @@ void cLogger::LogMessage(eLevel level, std::string msg, int line, const char * f
         return;
     }
 
+
     std::string text = GetLevelText(level);
     std::stringstream stream;
     stream << "[" << text << "]: ";
@@ -28,6 +31,10 @@ void cLogger::LogMessage(eLevel level, std::string msg, int line, const char * f
     }
 
     stream << msg;
+
+    if ((int)level & (int)eLevel::Fatal) {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Encountered Fatal Error!", stream.str().c_str(), NULL);
+    }
 
     std::cout << stream.str() << std::endl;
 }
