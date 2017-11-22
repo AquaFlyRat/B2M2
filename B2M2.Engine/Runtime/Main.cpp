@@ -3,7 +3,6 @@
 #include <Graphics/Shader.hpp>
 #include <Graphics/Renderer2D.hpp>
 #include <Graphics/Texture2D.hpp>
-#include <glm/gtx/quaternion.hpp>
 #include <Graphics/Transform.hpp>
 #include <Input/Keyboard.hpp>
 #include <Windows.h>
