@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using DarkUI.Docking;
 using DarkUI.Controls;
 
-namespace CharlieEngine.Editor.Forms.Controls
+namespace Arch.Editor.View
 {
     public partial class Console : DarkToolWindow
     {

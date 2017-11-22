@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace CharlieEngine.Editor.Forms
+namespace Arch.Editor.View
 {
     partial class Editor : Form
     {

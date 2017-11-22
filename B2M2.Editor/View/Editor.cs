@@ -9,34 +9,34 @@ using System.Runtime.InteropServices;
 
 using System.Diagnostics;
 using DarkUI.Win32;
-using arch.Editor.Forms.Controls.Native;
+using Arch.Editor.View.Native;
 using System.Drawing;
 
-namespace CharlieEngine.Editor.Forms
+namespace Arch.Editor.View
 {
     partial class Editor : Form
     {
-        private Controls.RenderWindow _renderWindow = new Controls.RenderWindow();
-        private static Controls.Properties _properties;
+        private RenderWindow _renderWindow = new RenderWindow();
+        private static Properties _properties;
         public Editor()
         {
             InitializeComponent();
 
             WindowState = FormWindowState.Maximized;
 
-            _properties = new Controls.Properties();
+            _properties = new Properties();
 
             Application.AddMessageFilter(new ControlScrollFilter());
             Application.AddMessageFilter(_dockPanel.DockContentDragFilter);
             Application.AddMessageFilter(_dockPanel.DockResizeFilter);
             
             _dockPanel.AddContent(_renderWindow);
-            _dockPanel.AddContent(new Controls.ProjectExplorer());
-            _dockPanel.AddContent(new Controls.Console());
+            _dockPanel.AddContent(new ProjectExplorer());
+            _dockPanel.AddContent(new Console());
             _dockPanel.AddContent(_properties);
         }
 
-        public static Controls.Properties GetPropertiesWindow()
+        public static Properties GetPropertiesWindow()
         {
             return _properties;
         }

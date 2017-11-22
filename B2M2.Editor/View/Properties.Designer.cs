@@ -1,4 +1,4 @@
-﻿namespace CharlieEngine.Editor.Forms.Controls
+﻿namespace Arch.Editor.View
 {
     partial class Properties
     {

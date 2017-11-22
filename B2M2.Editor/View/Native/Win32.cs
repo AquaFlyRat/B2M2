@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace arch.Editor.Forms.Controls.Native
+namespace Arch.Editor.View.Native
 {
     class Win32
     {

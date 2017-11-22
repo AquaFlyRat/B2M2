@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DarkUI.Docking;
 
-namespace CharlieEngine.Editor.Forms.Controls
+using CharlieEngine;
+
+namespace Arch.Editor.View
 {
     public partial class Properties : DarkToolWindow
     {

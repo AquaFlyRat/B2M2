@@ -8,16 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DarkUI.Docking;
-using arch.Editor.Forms.Controls.Native;
 
-using CharlieEngine.Editor.Classes.Engine;
+using Arch.Editor.View.Native;
+using Arch.Editor.Model;
 
-namespace CharlieEngine.Editor.Forms.Controls
+using CharlieEngine;
+
+namespace Arch.Editor.View
 {
     public partial class RenderWindow : DarkDocument
     {
         public static Scene CurrentScene = new Scene();
-        private Font _wendyOne;
+        private CharlieEngine.Font _wendyOne;
         private Point? _lastPoint = null;
         private CharlieWindow _window = null;
         private GameObject _selectedGameObject = null;
@@ -44,7 +46,7 @@ namespace CharlieEngine.Editor.Forms.Controls
 
             DockText = "Render Window";
             _window = new CharlieWindow(Width, Height, OnCharlieDraw);
-            _wendyOne = new Font("Assets/WendyOne-Regular.ttf", 48);
+            _wendyOne = new CharlieEngine.Font("Assets/WendyOne-Regular.ttf", 48);
 
             _window.Panel.MouseClick += (object o, MouseEventArgs e) => {
                 if (e.Button == MouseButtons.Right)
@@ -132,16 +134,16 @@ namespace CharlieEngine.Editor.Forms.Controls
                 {
                     if (cursorPos.Y > obj.Position.Y && cursorPos.Y < obj.Position.Y + obj.Height)
                     {
-                        renderer.DrawRectangle(obj.Position, obj.Width, obj.Height, new Color(0.4f, 0.4f, 0.7f, 1.0f));
+                        renderer.DrawRectangle(obj.Position, obj.Width, obj.Height, new CharlieEngine.Color(0.4f, 0.4f, 0.7f, 1.0f));
                     }
                 }
 
-                renderer.DrawString("Testing", _wendyOne, obj.Position, new Color(0.4f, 0.7f, 0.3f, 1.0f));
+                renderer.DrawString("Testing", _wendyOne, obj.Position, new CharlieEngine.Color(0.4f, 0.7f, 0.3f, 1.0f));
             }
 
             if (_selectedGameObject != null)
             {
-                renderer.DrawRectangle(_selectedGameObject.Position, _selectedGameObject.Width, _selectedGameObject.Height, new Color(0.4f, 0.4f, 0.7f, 1.0f));
+                renderer.DrawRectangle(_selectedGameObject.Position, _selectedGameObject.Width, _selectedGameObject.Height, new CharlieEngine.Color(0.4f, 0.4f, 0.7f, 1.0f));
             }
         }
 
@@ -152,6 +154,8 @@ namespace CharlieEngine.Editor.Forms.Controls
             GameObject obj = new GameObject();
             Vector2 objPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(clientTerms.X, clientTerms.Y));
             obj.Position = objPos;
+
+            SetGameObject(null);
             SetGameObject(obj, false);
 
             Vector2 size = _wendyOne.MeasureString("Testing");

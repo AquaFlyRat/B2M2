@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharlieEngine.Editor.Classes.Engine
+namespace Arch.Editor.Model
 {
     public class Scene
     {

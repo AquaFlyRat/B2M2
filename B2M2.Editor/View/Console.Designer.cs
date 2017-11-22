@@ -1,6 +1,6 @@
-﻿namespace CharlieEngine.Editor.Forms.Controls
+﻿namespace Arch.Editor.View
 {
-    partial class ProjectExplorer
+    partial class Console
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Console
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.DefaultDockArea = DarkUI.Docking.DarkDockArea.Bottom;
+            this.DockText = "Output";
+            this.Name = "Console";
+            this.Size = new System.Drawing.Size(500, 200);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
