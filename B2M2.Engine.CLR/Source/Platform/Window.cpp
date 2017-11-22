@@ -11,8 +11,6 @@
 #include <Graphics/Renderer2D.hpp>
 
 namespace CharlieEngine {
-    //using namespace arch;
-
     public enum class WindowFlags {
         ShowOnCreate = arch::eWindowFlags::ShowOnCreate,
         Borderless = arch::eWindowFlags::Borderless,
@@ -49,7 +47,7 @@ namespace CharlieEngine {
         }
 
         void Delay(int ms) {
-            SDL_Delay(ms);
+            m_handle->Delay(ms);
         }
 
         void PollEvents() {
@@ -65,16 +63,7 @@ namespace CharlieEngine {
         }
 
         void SetViewportSize(int w, int h) {
-            int sdlw, sdlh;
-            SDL_GetWindowSize(m_handle->Handle(), &sdlw, &sdlh);
-
-            glViewport(0, sdlh - h, w, h);
-        }
-
-        Vector2 ^GetViewportSize() {
-            int sizes[4];
-            glGetIntegerv(GL_VIEWPORT, sizes);
-            return gcnew Vector2(static_cast<float>(sizes[2]), static_cast<float>(sizes[3]));
+            m_handle->SetViewportSize(w, h);
         }
 
         void Destroy() {
@@ -90,16 +79,11 @@ namespace CharlieEngine {
         }
 
         System::IntPtr GetHWND() {
-            SDL_SysWMinfo systemInfo;
-            SDL_VERSION(&systemInfo.version);
-            SDL_GetWindowWMInfo(m_handle->Handle(), &systemInfo);
-
-            HWND handle = systemInfo.info.win.window;
-            return System::IntPtr(handle);
+            return System::IntPtr(m_handle->GetWin32Handle());
         }
 
         void SetSize(int w, int h) {
-            SDL_SetWindowSize(m_handle->Handle(), w, h);
+            m_handle->SetSize(w, h);
         }
 
         property int Width {

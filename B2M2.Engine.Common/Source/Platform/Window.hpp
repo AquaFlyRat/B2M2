@@ -110,6 +110,14 @@ namespace arch {
         /// <return>If the window is currently open/running.</return>
         bool        IsRunning() const { return m_bRunning; }
 
+        void SetSize(int w, int h);
+
+        void Delay(int ms);
+
+        void SetViewportSize(int w, int h);
+
+        void *GetWin32Handle();
+
         bool        HasFocus() const { return m_bHasKeyFocus && m_bHasMouseFocus; }
 
         /// <summary>

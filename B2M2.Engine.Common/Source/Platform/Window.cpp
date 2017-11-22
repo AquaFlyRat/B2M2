@@ -5,7 +5,6 @@
 #include "Window.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_syswm.h>
-#include <Windows.h>
 
 #include "../Graphics/Renderer2D.hpp"
 #include "OpenGL.hpp"
@@ -64,6 +63,31 @@ void cWindow::Create(const sWindowConfig& config) {
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void cWindow::SetSize(int w, int h) {
+    SDL_SetWindowSize(Handle(), w, h);
+}
+
+void cWindow::Delay(int ms) {
+    SDL_Delay(ms);
+}
+
+void *cWindow::GetWin32Handle() {
+    SDL_SysWMinfo systemInfo;
+    SDL_VERSION(&systemInfo.version);
+    SDL_GetWindowWMInfo(Handle(), &systemInfo);
+    void *handle = systemInfo.info.win.window;
+    return handle;
+}
+
+void cWindow::SetViewportSize(int w, int h) {
+    int sdlw, sdlh;
+    SDL_GetWindowSize(Handle(), &sdlw, &sdlh);
+
+    // TODO: This is is inverted (when prehaps it doesn't need to be for every circumstance???)
+    //       It was inverted to fix the editor, so may not work standalone.
+    glViewport(0, sdlh - h, w, h);
 }
 
 void cWindow::Show() {
