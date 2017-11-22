@@ -76,12 +76,15 @@
   <ItemGroup>
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Scene.cs" />
-    <Compile Include="View\Console.cs">
+    <Compile Include="Model\SystemExtensions.cs" />
+    <Compile Include="Presenters\MapEditorPresenter.cs" />
+    <Compile Include="View\OutputWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="View\Console.Designer.cs">
-      <DependentUpon>Console.cs</DependentUpon>
+    <Compile Include="View\OutputWindow.Designer.cs">
+      <DependentUpon>OutputWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Interfaces\IMapEditorView.cs" />
     <Compile Include="View\Native\CharlieWindow.cs" />
     <Compile Include="View\ProjectExplorer.cs">
       <SubType>UserControl</SubType>
@@ -110,8 +113,8 @@
     <Compile Include="View\Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <EmbeddedResource Include="View\Console.resx">
-      <DependentUpon>Console.cs</DependentUpon>
+    <EmbeddedResource Include="View\OutputWindow.resx">
+      <DependentUpon>OutputWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Properties.resx">
       <DependentUpon>Properties.cs</DependentUpon>
@@ -154,7 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Presenters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Misc\Credits.html" />

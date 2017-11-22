@@ -1,6 +1,6 @@
 ﻿namespace Arch.Editor.View
 {
-    partial class Console
+    partial class OutputWindow
     {
         /// <summary> 
         /// Required designer variable.

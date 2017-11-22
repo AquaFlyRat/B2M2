@@ -13,155 +13,95 @@ using Arch.Editor.View.Native;
 using Arch.Editor.Model;
 
 using CharlieEngine;
+using Arch.Editor.View.Interfaces;
 
 namespace Arch.Editor.View
 {
-    public partial class RenderWindow : DarkDocument
+    public partial class RenderWindow : DarkDocument, IMapEditorView
     {
-        public static Scene CurrentScene = new Scene();
-        private CharlieEngine.Font _wendyOne;
-        private Point? _lastPoint = null;
+        public Scene CurrentScene = new Scene();
         private CharlieWindow _window = null;
-        private GameObject _selectedGameObject = null;
+        
+        public event EventHandler<GameObjectCreatedArgs> OnObjectCreated;
+        public event EventHandler<LeftClickArgs> OnLeftClick;
+        public event EventHandler<CameraScrollArgs> OnCameraScroll;
+        public event EventHandler<ViewportDrawArgs> OnViewportDraw;
+        public event EventHandler OnCameraScrollStop;
 
-        private void SetGameObject(GameObject obj,bool select=true)
-        {
-            if (obj != null)
-            {
-                if (select)
-                    _selectedGameObject = obj;
-                Properties props = Editor.GetPropertiesWindow();
-                props.SetPosition(obj.Position);
-            } else
-            {
-                Properties props = Editor.GetPropertiesWindow();
-                props.SetPosition(null);
-                _selectedGameObject = null;
-            }
-        }
+        public GameObject SelectedObject { get; }
+        public int ViewportWidth { get { return Width; } }
+        public int ViewportHeight { get { return Height; } }
+        public Renderer2D Renderer { get { return _window.GetRenderer(); } }
 
         public RenderWindow()
         {
             InitializeComponent();
-
+            
             DockText = "Render Window";
             _window = new CharlieWindow(Width, Height, OnCharlieDraw);
-            _wendyOne = new CharlieEngine.Font("Assets/WendyOne-Regular.ttf", 48);
 
-            _window.Panel.MouseClick += (object o, MouseEventArgs e) => {
-                if (e.Button == MouseButtons.Right)
-                {
-                    _contextMenu.Show(Parent.PointToScreen(e.Location));
-                }
-                if(e.Button == MouseButtons.Left)
-                {
-                    var cursorPosPoint = PointToClient(Cursor.Position);
-                    Vector2 cursorPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(cursorPosPoint.X, cursorPosPoint.Y));
-                    bool found = false;
-                    foreach (GameObject obj in CurrentScene.Objects)
-                    {
-                        if (cursorPos.X > obj.Position.X && cursorPos.X < obj.Position.X + obj.Width)
-                        {
-                            if (cursorPos.Y > obj.Position.Y && cursorPos.Y < obj.Position.Y + obj.Height)
-                            {
-                                SetGameObject(obj);
-                                found = true;
-                            }
-                        }
-                    }
-
-                    if(!found)
-                    {
-                        SetGameObject(null);
-                    }
-                }
-            };
-
+            _window.Panel.MouseClick += Panel_MouseClick;
             _window.Panel.MouseUp += Panel_MouseUp;
-            _window.Panel.MouseMove += (object o, MouseEventArgs e) => {
-                if (e.Button == MouseButtons.Middle)
-                {             
-                    if (_lastPoint == null)
-                    {
-                        _lastPoint = e.Location;
-                    }
+            _window.Panel.MouseMove += Panel_MouseMove;
+            _window.Panel.Resize += Panel_Resize;            
 
-                    Point lValue = _lastPoint.Value;
-                    float differenceX, differenceY;
-                    differenceX = e.Location.X - lValue.X;
-                    differenceY = e.Location.Y - lValue.Y;
-                    
-                    Renderer2D renderer = _window.GetRenderer();
-                    var offset = new Vector2(-differenceX, -differenceY);
-                    renderer.MoveCamera(offset);
-
-                    _lastPoint = new Point(e.Location.X, e.Location.Y);
-                }
-            };
-
-            _window.Panel.Resize += RenderWindow_Resize;
 
             _window.Show();
 
-            // Apparantly we need both for this to work correctly...
+            // Apparantly we need both for this to work correctly... (by both I mean SetParent & Controls.Add)
             // Please don't touch or all hell starts to break loose.
             Win32.SetParent(_window.NativeWindow.GetHWND(), Handle);
             Controls.Add(_window.Panel);
+
+            new Presenters.MapEditorPresenter(this, CurrentScene);
         }
 
-        private void RenderWindow_Resize(object sender, EventArgs e)
+        private void Panel_Resize(object sender, EventArgs e)
         {
             _window.NativeWindow.SetViewportSize(Width, Height);
             _window.GetRenderer().SetProjection(Matrix4.Orthographic(Width, 0, 0, Height, 1.0f, -1.0f));
+        }
+
+        private void Panel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                OnCameraScroll?.Invoke(this, new CameraScrollArgs(new Vector2(e.Location.X, e.Location.Y)));
+            }
+        }
+
+        private void Panel_MouseClick(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    Vector2 clickedPos = PointToClient(Cursor.Position).ToVector2();
+                    OnLeftClick?.Invoke(this, new LeftClickArgs(clickedPos));
+                    break;
+
+                case MouseButtons.Right:
+                    _contextMenu.Show(Parent.PointToScreen(e.Location));
+                    break;
+            };
         }
 
         private void Panel_MouseUp(object sender, MouseEventArgs e)
         {
             if(e.Button == MouseButtons.Middle)
             {
-                _lastPoint = null;
+                OnCameraScrollStop?.Invoke(this, new EventArgs());
             }
         }
 
         private void OnCharlieDraw(Window window, Renderer2D renderer)
         {
-            var cursorPosPoint = PointToClient(Cursor.Position);
-            Vector2 cursorPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(cursorPosPoint.X, cursorPosPoint.Y));
-            
-            foreach (GameObject obj in CurrentScene.Objects)
-            {
-                if (cursorPos.X > obj.Position.X && cursorPos.X < obj.Position.X + obj.Width)
-                {
-                    if (cursorPos.Y > obj.Position.Y && cursorPos.Y < obj.Position.Y + obj.Height)
-                    {
-                        renderer.DrawRectangle(obj.Position, obj.Width, obj.Height, new CharlieEngine.Color(0.4f, 0.4f, 0.7f, 1.0f));
-                    }
-                }
-
-                renderer.DrawString("Testing", _wendyOne, obj.Position, new CharlieEngine.Color(0.4f, 0.7f, 0.3f, 1.0f));
-            }
-
-            if (_selectedGameObject != null)
-            {
-                renderer.DrawRectangle(_selectedGameObject.Position, _selectedGameObject.Width, _selectedGameObject.Height, new CharlieEngine.Color(0.4f, 0.4f, 0.7f, 1.0f));
-            }
+            OnViewportDraw?.Invoke(this, new ViewportDrawArgs(renderer));
         }
 
         private void _insertGameObject_Click(object sender, EventArgs e)
         {
-            Point clientTerms = PointToClient(Cursor.Position);
-
-            GameObject obj = new GameObject();
-            Vector2 objPos = _window.GetRenderer().UnProject(Width, Height, new Vector2(clientTerms.X, clientTerms.Y));
-            obj.Position = objPos;
-
-            SetGameObject(null);
-            SetGameObject(obj, false);
-
-            Vector2 size = _wendyOne.MeasureString("Testing");
-            obj.Width = (int)size.X;
-            obj.Height = (int)size.Y;
-            CurrentScene.Objects.Add(obj);
+            Point cursorPosition = PointToClient(Cursor.Position);
+            OnObjectCreated?.Invoke(this, new GameObjectCreatedArgs(cursorPosition.ToVector2()));
         }
     }
 }

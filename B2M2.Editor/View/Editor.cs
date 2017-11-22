@@ -32,7 +32,7 @@ namespace Arch.Editor.View
             
             _dockPanel.AddContent(_renderWindow);
             _dockPanel.AddContent(new ProjectExplorer());
-            _dockPanel.AddContent(new Console());
+            _dockPanel.AddContent(new OutputWindow());
             _dockPanel.AddContent(_properties);
         }
 

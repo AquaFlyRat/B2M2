@@ -12,9 +12,9 @@ using DarkUI.Controls;
 
 namespace Arch.Editor.View
 {
-    public partial class Console : DarkToolWindow
+    public partial class OutputWindow : DarkToolWindow
     {
-        public Console()
+        public OutputWindow()
         {
             InitializeComponent();
         }
