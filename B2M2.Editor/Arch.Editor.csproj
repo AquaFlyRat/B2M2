@@ -150,6 +150,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Arch.Editor.UIToolkit\Arch.Editor.UIToolkit.csproj">
+      <Project>{02e4a77c-7398-486b-ad4b-51e16fa93b5e}</Project>
+      <Name>Arch.Editor.UIToolkit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\B2M2.Engine.CLR\B2M2.Engine.CLR.vcxproj">
       <Project>{292e805b-fbb1-4ab3-a2b9-a506620d00b6}</Project>
       <Name>B2M2.Engine.CLR</Name>
