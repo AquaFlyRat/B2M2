@@ -57,6 +57,7 @@
             this.darkTextBox1.Name = "darkTextBox1";
             this.darkTextBox1.Size = new System.Drawing.Size(196, 20);
             this.darkTextBox1.TabIndex = 3;
+            this.darkTextBox1.Click += new System.EventHandler(this.darkTextBox1_Click);
             // 
             // darkLabel2
             // 
@@ -89,6 +90,8 @@
             this.vector21.Name = "vector21";
             this.vector21.Size = new System.Drawing.Size(247, 30);
             this.vector21.TabIndex = 1;
+            this.vector21.X = 0F;
+            this.vector21.Y = 0F;
             // 
             // Properties
             // 

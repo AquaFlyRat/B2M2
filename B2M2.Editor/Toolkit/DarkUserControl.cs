@@ -10,10 +10,9 @@ using System.Windows.Forms;
 
 namespace Arch.Editor.Toolkit
 {
-    public partial class Vector2 : DarkUserControl
+    public partial class DarkUserControl : UserControl
     {
-        private CharlieEngine.Vector2 _value = new CharlieEngine.Vector2();
-        public Vector2()
+        public DarkUserControl()
         {
             InitializeComponent();
         }
