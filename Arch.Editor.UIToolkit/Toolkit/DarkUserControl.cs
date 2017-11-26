@@ -7,19 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DarkUI.Docking;
 
-using CharlieEngine;
-
-namespace Arch.Editor.View
+namespace Arch.Editor.Toolkit
 {
-    public partial class Properties : DarkToolWindow
+    public partial class DarkUserControl : UserControl
     {
-        public Properties()
+        public DarkUserControl()
         {
             InitializeComponent();
-
-            DockText = "Properties";
         }
     }
 }
