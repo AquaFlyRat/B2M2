@@ -45,6 +45,37 @@ namespace Arch.Editor.Toolkit
         public Vector2()
         {
             InitializeComponent();
+
+            txtX.TextChanged += TxtX_TextChanged;
+            txtY.TextChanged += TxtY_TextChanged;
+        }
+
+        private static Color InvalidValueForeColor = Color.IndianRed;
+        private static Color DefaultLightForeColor = DarkUI.Config.Colors.LightText;
+
+        private void HandleTextBoxTextChanges(ref DarkUI.Controls.DarkTextBox textBox, ref float element)
+        {
+            float newValue;
+            bool validFloat = Single.TryParse(textBox.Text, out newValue);
+
+            if(validFloat)
+            {
+                textBox.ForeColor = DefaultLightForeColor;
+                element = newValue;
+            } else
+            {
+                textBox.ForeColor = InvalidValueForeColor;
+            }
+        }
+
+        private void TxtX_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxTextChanges(ref txtX, ref _x);
+        }
+
+        private void TxtY_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxTextChanges(ref txtY, ref _y);
         }
     }
 }
