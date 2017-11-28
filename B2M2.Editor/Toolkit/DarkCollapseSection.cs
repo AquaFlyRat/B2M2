@@ -13,97 +13,94 @@ namespace Arch.Editor.Toolkit
     public class DarkCollapseSection : Panel
     {
         private string _sectionHeader;
-
-        [Category("Appearance")]
-        [Description("The section header text associated with this control.")]
-        public string SectionHeader
-        {
-            get { return _sectionHeader; }
-            set
-            {
-                _sectionHeader = value;
-                Invalidate();
-            }
-        }
-
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            // Absorb event
-        }
-
-        int padding = 6;
-
-        TriangleButton toggle = new TriangleButton();         
+        const int _arrowPadding = 6;
+        private TriangleButton _expansionToggle = new TriangleButton();         
+        bool _isSectionExpanded = false;
+        int _heightWhenLastExpanded = 0;
+        
         public DarkCollapseSection()
         {
             Click += DarkCollapseSection_Click;
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+            _expansionToggle = CreateToggleButton();
+            Controls.Add(_expansionToggle);
+        }
+
+        private int CalculateToggleButtonXPosition()
+        {
+            return Width - 20 - _arrowPadding;
+        }
+
+        private TriangleButton CreateToggleButton()
+        {
             int w = 20, h = 10;
-            toggle.Width = w;
-            toggle.Height = h;
-            
-            toggle.Location = new Point(Width-20-padding, padding);
-            toggle.Anchor = AnchorStyles.Right | AnchorStyles.Top;      
-            toggle.MaximumSize = new Size(w, h);
-            toggle.MinimumSize = new Size(w, h);
-            toggle.Click += Toggle_Click;
-            Controls.Add(toggle);
+            TriangleButton toggleButton = new TriangleButton();
+            toggleButton.Width = w;
+            toggleButton.Height = h;
+
+            toggleButton.Location = new Point(CalculateToggleButtonXPosition(), _arrowPadding);
+            toggleButton.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            toggleButton.MaximumSize = new Size(w, h);
+            toggleButton.MinimumSize = new Size(w, h);
+            toggleButton.Click += ToggleButtonClick;
+            return toggleButton;
+        }
+
+        private void Redraw()
+        {
+            Invalidate();
+            _expansionToggle.Invalidate();
         }
 
         private void DarkCollapseSection_Click(object sender, EventArgs e)
         {
             Focus();
-            Invalidate();
-            toggle.Invalidate();
+            Redraw();
         }
-
-        bool _isExpanded = false;
-        int _lastHeight = 0;
-        private void Toggle_Click(object sender, EventArgs e)
+        
+        private void ToggleButtonClick(object sender, EventArgs e)
         {
-            _isExpanded = !_isExpanded;
+            _isSectionExpanded = !_isSectionExpanded;
 
-            if(_isExpanded)
+            if(_isSectionExpanded)
             {
-                toggle.Direction = TriangleDirection.Downwards;
-                _lastHeight = Size.Height;
+                _expansionToggle.Direction = TriangleDirection.Downwards;
+                _heightWhenLastExpanded = Size.Height;
                 Size = new Size(Width, 25);
             } else
             {
-                toggle.Direction = TriangleDirection.Upwards;
-                Height = _lastHeight;
+                _expansionToggle.Direction = TriangleDirection.Upwards;
+                Height = _heightWhenLastExpanded;
             }
-            toggle.Invalidate();
+
+            Redraw();
         }
 
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-            Focus();
-        }
-
-        protected override void OnEnter(System.EventArgs e)
+        protected override void OnEnter(EventArgs e)
         {
             Focus();
             base.OnEnter(e);
 
-            Invalidate();
-            toggle.Invalidate();
+            Redraw();
         }
 
-        protected override void OnLeave(System.EventArgs e)
+        protected override void OnLeave(EventArgs e)
         {
             base.OnLeave(e);
-            Invalidate();
-            toggle.Invalidate();
+
+            Redraw();
         }
 
         protected override void OnResize(EventArgs eventargs)
         {
-            toggle.Location = new Point(Width - 20-padding, padding);
             base.OnResize(eventargs);
+            _expansionToggle.Location = new Point(CalculateToggleButtonXPosition(), _arrowPadding);
+
             Invalidate();
         }
+
+        protected override void OnPaintBackground(PaintEventArgs e) { }
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -162,7 +159,21 @@ namespace Arch.Editor.Toolkit
 
                 g.DrawRectangle(p, modRect);
             }
+        }
 
+        [Category("Appearance")]
+        [Description("The section header text associated with this control.")]
+        public string SectionHeader
+        {
+            get
+            {
+                return _sectionHeader;
+            }
+            set
+            {
+                _sectionHeader = value;
+                Invalidate();
+            }
         }
     }
 }

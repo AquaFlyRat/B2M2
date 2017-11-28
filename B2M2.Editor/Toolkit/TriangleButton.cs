@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace Arch.Editor.Toolkit
 {
@@ -19,7 +20,7 @@ namespace Arch.Editor.Toolkit
         public TriangleDirection Direction = TriangleDirection.Upwards;
         public bool DrawFocusedBackground = false;
 
-        protected override void OnLeave(System.EventArgs e)
+        protected override void OnLeave(EventArgs e)
         {
             base.OnLeave(e);
             Invalidate();
@@ -47,24 +48,24 @@ namespace Arch.Editor.Toolkit
         
         protected override void OnPaint(PaintEventArgs pevent)
         {
+            Graphics g = pevent.Graphics;
             var rect = ClientRectangle;
             var bgColor = Parent.ContainsFocus ? Colors.BlueBackground : Colors.HeaderBackground;
             
             using (var b = new SolidBrush(bgColor))
             {
-                pevent.Graphics.FillRectangle(b, rect);
+                g.FillRectangle(b, rect);
             }
-            pevent.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            SmoothingMode lastSmoothingMode = g.SmoothingMode;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
 
             using (var p = new SolidBrush(Colors.GreyHighlight))
             {
-                FillTriangle(pevent.Graphics, rect.Location, new Size(Width, Height), p);
+                FillTriangle(g, rect.Location, new Size(Width, Height), p);
             }
-        }
 
-        public void Draw()
-        {
-            Refresh();
+            g.SmoothingMode = lastSmoothingMode;    // We're finished doing our bit, so reset it back to whatever it was
         }
     }
 }
