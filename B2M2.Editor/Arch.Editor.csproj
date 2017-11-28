@@ -79,6 +79,9 @@
     <Compile Include="Model\Scene.cs" />
     <Compile Include="Model\SystemExtensions.cs" />
     <Compile Include="Presenters\MapEditorPresenter.cs" />
+    <Compile Include="Toolkit\DarkCollapseSection.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Toolkit\DarkUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,6 +89,9 @@
       <DependentUpon>DarkUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Toolkit\DesignerUtils.cs" />
+    <Compile Include="Toolkit\TriangleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Toolkit\Vector2.cs">
       <SubType>UserControl</SubType>
     </Compile>

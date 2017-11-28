@@ -24,8 +24,6 @@ namespace Arch.Editor.View
 
         private void darkTextBox1_Click(object sender, EventArgs e)
         {
-            darkSectionPanel1.Select();
-            darkTextBox1.Select();
         }
     }
 }
