@@ -31,8 +31,12 @@
             this.darkLabel1 = new DarkUI.Controls.DarkLabel();
             this.darkTextBox1 = new DarkUI.Controls.DarkTextBox();
             this.darkCollapseSection1 = new Arch.Editor.Toolkit.DarkCollapseSection();
-            this.darkLabel2 = new DarkUI.Controls.DarkLabel();
+            this.vector21 = new Arch.Editor.Toolkit.Vector2();
+            this.darkLabel4 = new DarkUI.Controls.DarkLabel();
+            this.vecScale = new Arch.Editor.Toolkit.Vector2();
+            this.darkLabel3 = new DarkUI.Controls.DarkLabel();
             this.Position = new Arch.Editor.Toolkit.Vector2();
+            this.darkLabel2 = new DarkUI.Controls.DarkLabel();
             this.darkCollapseSection1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,23 +67,61 @@
             // 
             this.darkCollapseSection1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.darkCollapseSection1.Controls.Add(this.vector21);
+            this.darkCollapseSection1.Controls.Add(this.darkLabel4);
+            this.darkCollapseSection1.Controls.Add(this.vecScale);
+            this.darkCollapseSection1.Controls.Add(this.darkLabel3);
             this.darkCollapseSection1.Controls.Add(this.Position);
             this.darkCollapseSection1.Controls.Add(this.darkLabel2);
             this.darkCollapseSection1.Location = new System.Drawing.Point(9, 56);
             this.darkCollapseSection1.Name = "darkCollapseSection1";
             this.darkCollapseSection1.SectionHeader = "Transformation";
-            this.darkCollapseSection1.Size = new System.Drawing.Size(256, 145);
+            this.darkCollapseSection1.Size = new System.Drawing.Size(256, 225);
             this.darkCollapseSection1.TabIndex = 4;
             // 
-            // darkLabel2
+            // vector21
             // 
-            this.darkLabel2.AutoSize = true;
-            this.darkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel2.Location = new System.Drawing.Point(14, 33);
-            this.darkLabel2.Name = "darkLabel2";
-            this.darkLabel2.Size = new System.Drawing.Size(44, 13);
-            this.darkLabel2.TabIndex = 1;
-            this.darkLabel2.Text = "Position";
+            this.vector21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.vector21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.vector21.Location = new System.Drawing.Point(17, 146);
+            this.vector21.Name = "vector21";
+            this.vector21.Size = new System.Drawing.Size(236, 30);
+            this.vector21.TabIndex = 6;
+            this.vector21.X = 0F;
+            this.vector21.Y = 0F;
+            // 
+            // darkLabel4
+            // 
+            this.darkLabel4.AutoSize = true;
+            this.darkLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel4.Location = new System.Drawing.Point(14, 130);
+            this.darkLabel4.Name = "darkLabel4";
+            this.darkLabel4.Size = new System.Drawing.Size(47, 13);
+            this.darkLabel4.TabIndex = 5;
+            this.darkLabel4.Text = "Rotation";
+            // 
+            // vecScale
+            // 
+            this.vecScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.vecScale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.vecScale.Location = new System.Drawing.Point(17, 98);
+            this.vecScale.Name = "vecScale";
+            this.vecScale.Size = new System.Drawing.Size(236, 30);
+            this.vecScale.TabIndex = 4;
+            this.vecScale.X = 0F;
+            this.vecScale.Y = 0F;
+            // 
+            // darkLabel3
+            // 
+            this.darkLabel3.AutoSize = true;
+            this.darkLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel3.Location = new System.Drawing.Point(14, 82);
+            this.darkLabel3.Name = "darkLabel3";
+            this.darkLabel3.Size = new System.Drawing.Size(34, 13);
+            this.darkLabel3.TabIndex = 3;
+            this.darkLabel3.Text = "Scale";
             // 
             // Position
             // 
@@ -92,6 +134,16 @@
             this.Position.TabIndex = 2;
             this.Position.X = 0F;
             this.Position.Y = 0F;
+            // 
+            // darkLabel2
+            // 
+            this.darkLabel2.AutoSize = true;
+            this.darkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel2.Location = new System.Drawing.Point(14, 33);
+            this.darkLabel2.Name = "darkLabel2";
+            this.darkLabel2.Size = new System.Drawing.Size(44, 13);
+            this.darkLabel2.TabIndex = 1;
+            this.darkLabel2.Text = "Position";
             // 
             // Properties
             // 
@@ -115,7 +167,11 @@
         private DarkUI.Controls.DarkLabel darkLabel1;
         private DarkUI.Controls.DarkTextBox darkTextBox1;
         private Toolkit.DarkCollapseSection darkCollapseSection1;
-        private Toolkit.Vector2 Position;
         private DarkUI.Controls.DarkLabel darkLabel2;
+        private DarkUI.Controls.DarkLabel darkLabel3;
+        private Toolkit.Vector2 vecScale;
+        private Toolkit.Vector2 vector21;
+        private DarkUI.Controls.DarkLabel darkLabel4;
+        public Toolkit.Vector2 Position;
     }
 }

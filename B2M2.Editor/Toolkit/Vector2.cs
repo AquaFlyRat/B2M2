@@ -77,5 +77,22 @@ namespace Arch.Editor.Toolkit
         {
             HandleTextBoxTextChanges(ref txtY, ref _y);
         }
+
+        public void BindToVector2(CharlieEngine.Vector2 vec2)
+        {
+            X = vec2.X;
+            Y = vec2.Y;
+
+            vec2.PropertyChanged += (object sender, PropertyChangedEventArgs e) =>
+            {
+                if(e.PropertyName == "X")
+                {
+                    X = vec2.X;
+                } else if(e.PropertyName == "Y")
+                {
+                    Y = vec2.Y;
+                }
+            };
+        }
     }
 }

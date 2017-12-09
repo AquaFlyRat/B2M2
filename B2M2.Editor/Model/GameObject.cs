@@ -12,7 +12,6 @@ namespace Arch.Editor.Model
     {
         public int Width, Height;
         public Vector2 Position;
-
         public string Name;
 
         public GameObject(Vector2 position, int width, int height, string name)
