@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.darkLabel1 = new DarkUI.Controls.DarkLabel();
-            this.darkTextBox1 = new DarkUI.Controls.DarkTextBox();
+            this.ObjectName = new DarkUI.Controls.DarkTextBox();
             this.darkCollapseSection1 = new Arch.Editor.Toolkit.DarkCollapseSection();
             this.vector21 = new Arch.Editor.Toolkit.Vector2();
             this.darkLabel4 = new DarkUI.Controls.DarkLabel();
@@ -50,18 +50,18 @@
             this.darkLabel1.TabIndex = 2;
             this.darkLabel1.Text = "Name";
             // 
-            // darkTextBox1
+            // ObjectName
             // 
-            this.darkTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ObjectName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.darkTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.darkTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.darkTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkTextBox1.Location = new System.Drawing.Point(69, 30);
-            this.darkTextBox1.Name = "darkTextBox1";
-            this.darkTextBox1.Size = new System.Drawing.Size(196, 20);
-            this.darkTextBox1.TabIndex = 3;
-            this.darkTextBox1.Click += new System.EventHandler(this.darkTextBox1_Click);
+            this.ObjectName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.ObjectName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ObjectName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.ObjectName.Location = new System.Drawing.Point(69, 30);
+            this.ObjectName.Name = "ObjectName";
+            this.ObjectName.Size = new System.Drawing.Size(196, 20);
+            this.ObjectName.TabIndex = 3;
+            this.ObjectName.Click += new System.EventHandler(this.darkTextBox1_Click);
             // 
             // darkCollapseSection1
             // 
@@ -150,7 +150,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.darkCollapseSection1);
-            this.Controls.Add(this.darkTextBox1);
+            this.Controls.Add(this.ObjectName);
             this.Controls.Add(this.darkLabel1);
             this.DefaultDockArea = DarkUI.Docking.DarkDockArea.Right;
             this.DockText = "Properties";
@@ -165,7 +165,6 @@
 
         #endregion
         private DarkUI.Controls.DarkLabel darkLabel1;
-        private DarkUI.Controls.DarkTextBox darkTextBox1;
         private Toolkit.DarkCollapseSection darkCollapseSection1;
         private DarkUI.Controls.DarkLabel darkLabel2;
         private DarkUI.Controls.DarkLabel darkLabel3;
@@ -173,5 +172,6 @@
         private DarkUI.Controls.DarkLabel darkLabel4;
         public Toolkit.Vector2 Position;
         public Toolkit.Vector2 ObjectScale;
+        public DarkUI.Controls.DarkTextBox ObjectName;
     }
 }
