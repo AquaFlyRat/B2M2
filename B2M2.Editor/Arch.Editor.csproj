@@ -40,7 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -175,16 +175,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\B2M2.Engine.CLR\B2M2.Engine.CLR.vcxproj">
-      <Project>{292e805b-fbb1-4ab3-a2b9-a506620d00b6}</Project>
-      <Name>B2M2.Engine.CLR</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Misc\Credits.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\B2M2.Engine.CLR\B2M2.Engine.CLR.vcxproj">
+      <Project>{292e805b-fbb1-4ab3-a2b9-a506620d00b6}</Project>
+      <Name>B2M2.Engine.CLR</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

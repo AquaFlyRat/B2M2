@@ -13,6 +13,7 @@ using Arch.Editor.View.Native;
 using Arch.Editor.Model;
 
 using CharlieEngine;
+
 using Arch.Editor.View.Interfaces;
 
 namespace Arch.Editor.View
@@ -43,11 +44,10 @@ namespace Arch.Editor.View
             _window.Panel.MouseClick += Panel_MouseClick;
             _window.Panel.MouseUp += Panel_MouseUp;
             _window.Panel.MouseMove += Panel_MouseMove;
-            _window.Panel.Resize += Panel_Resize;            
-
-
+            _window.Panel.Resize += Panel_Resize;
+            
             _window.Show();
-
+            
             // Apparantly we need both for this to work correctly... (by both I mean SetParent & Controls.Add)
             // Please don't touch or all hell starts to break loose.
             Win32.SetParent(_window.NativeWindow.GetHWND(), Handle);

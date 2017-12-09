@@ -12,7 +12,7 @@ namespace Arch.Editor.Toolkit
 {
     enum TriangleDirection
     {
-        Upwards, Downwards
+        Upwards, Downwards, RightFacing
     }
 
     class TriangleButton : Button
@@ -40,6 +40,11 @@ namespace Arch.Editor.Toolkit
                     point[0] = new Point(pos.X + (size.Width / 2), pos.Y);
                     point[1] = new Point(pos.X, pos.Y + size.Height);
                     point[2] = new Point(pos.X + size.Width, pos.Y + size.Height);
+                    break;
+                case TriangleDirection.RightFacing:
+                    point[0] = pos;
+                    point[1] = new Point(pos.X, pos.Y + size.Height);
+                    point[2] = new Point(pos.X + size.Width, pos.Y + (size.Height) / 2);
                     break;
             }
 
