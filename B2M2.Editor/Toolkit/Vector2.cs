@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using CharlieEngine;
 namespace Arch.Editor.Toolkit
 {
     public partial class Vector2 : DarkUserControl
     {
         private float _x, _y;
+        private bool _internalUpdate = false;
 
         public float X
         {
@@ -24,9 +25,12 @@ namespace Arch.Editor.Toolkit
             set
             {
                 _x = value;
+                _internalUpdate = true;
                 txtX.Text = value.ToString();
+                _internalUpdate = false;
                 if (_data != null)
-                    _data.X = value;
+                    ((CharlieEngine.Vector2)_data).X = value;
+                ValuesChanged?.Invoke(this, new Vector2ChangedEventArgs(_x, _y, _internalUpdate));
             }
         }
 
@@ -40,9 +44,13 @@ namespace Arch.Editor.Toolkit
             set
             {
                 _y = value;
+                _internalUpdate = true;
                 txtY.Text = value.ToString();
+                _internalUpdate = false;
+
                 if (_data != null)
-                    _data.Y = value;
+                    ((CharlieEngine.Vector2)_data).Y = value;
+                ValuesChanged?.Invoke(this, new Vector2ChangedEventArgs(_x, _y, _internalUpdate));
             }
         }
 
@@ -54,8 +62,8 @@ namespace Arch.Editor.Toolkit
             txtY.TextChanged += TxtY_TextChanged;
         }
 
-        private static Color InvalidValueForeColor = Color.IndianRed;
-        private static Color DefaultLightForeColor = DarkUI.Config.Colors.LightText;
+        private static System.Drawing.Color InvalidValueForeColor = System.Drawing.Color.IndianRed;
+        private static System.Drawing.Color DefaultLightForeColor = DarkUI.Config.Colors.LightText;
 
         private void HandleTextBoxTextChanges(ref DarkUI.Controls.DarkTextBox textBox, ref float element)
         {
@@ -66,6 +74,7 @@ namespace Arch.Editor.Toolkit
             {
                 textBox.ForeColor = DefaultLightForeColor;
                 element = newValue;
+                ValuesChanged?.Invoke(this, new Vector2ChangedEventArgs(_x, _y, _internalUpdate));
             } else
             {
                 textBox.ForeColor = InvalidValueForeColor;
@@ -81,7 +90,7 @@ namespace Arch.Editor.Toolkit
             if (_data != null)
             {
                 _updateOnDataChange = false;
-                _data.X = _x;
+                ((CharlieEngine.Vector2)_data).X = _x;
                 _updateOnDataChange = true;
             }
         }
@@ -92,12 +101,12 @@ namespace Arch.Editor.Toolkit
             if (_data != null)
             {
                 _updateOnDataChange = false;
-                _data.Y = _y;
+                ((CharlieEngine.Vector2)_data).Y = _y;
                 _updateOnDataChange = true;
             }
         }
 
-        private CharlieEngine.Vector2 _data;
+        private object _data;
 
         private void EngineValueChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -106,11 +115,11 @@ namespace Arch.Editor.Toolkit
 
             if (e.PropertyName == "X")
             {
-                X = _data.X;
+                X = ((CharlieEngine.Vector2)_data).X;
             }
             else if (e.PropertyName == "Y")
             {
-                Y = _data.Y;
+                Y = ((CharlieEngine.Vector2)_data).Y;
             }
         }
 
@@ -127,11 +136,14 @@ namespace Arch.Editor.Toolkit
         {
             if (_data != null)
             {
-                _data.PropertyChanged -= EngineValueChanged;
+                ((CharlieEngine.Vector2)_data).PropertyChanged -= EngineValueChanged;
                 _data = null;
             }
+
             X = 0;
             Y = 0;
         }
+
+        public event EventHandler<Vector2ChangedEventArgs> ValuesChanged;
     }
 }

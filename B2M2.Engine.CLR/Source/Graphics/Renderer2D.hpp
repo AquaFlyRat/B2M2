@@ -51,8 +51,11 @@ namespace CharlieEngine {
         void DrawTextureClip(Texture2D ^texture, Vector2 ^pos, Rectangle^ clip, Color^ color);
 
         void DrawString(System::String^ text, Font ^font, Vector2^ pos, Color ^color);
+        void DrawString(System::String^ text, Font ^font, Vector2^ pos, Color ^color, Vector2 ^scale);
 
         void DrawRectangle(Vector2 ^pos, float width, float height, Color ^color);
+        void DrawRectangle(Vector2 ^pos, float width, float height, Color ^color, Vector2 ^scale);
+
         void DrawLine(Vector2^ start, Vector2^ end, float thickness, Color^ color);
 
         void MoveCamera(Vector2 ^offset);

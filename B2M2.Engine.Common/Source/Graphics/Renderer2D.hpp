@@ -55,10 +55,10 @@ namespace arch {
         void            DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, vec2 scale = { 1.f, 1.f });
         void            DrawTextureClip(cTexture2D *texture, vec2 pos, sRectangle clip, cColor color, vec2 scale = { 1.f, 1.f });
 
-        void            DrawString(const std::string& text, cFont *font, vec2 pos, cColor color);
-
+        void            DrawString(const std::string& text, cFont *font, vec2 pos, cColor color, cVector2 scale = { 1.f, 1.f });
+        
         void            DrawLine(const cVector2& start, const cVector2& end, float thickness, cColor color);
-        void            DrawRectangle(const cVector2& pos, float width, float height, cColor color);
+        void            DrawRectangle(const cVector2& pos, float width, float height, cColor color, cVector2 scale = { 1.f, 1.f });
 
         void            SetProjection(cMatrix4 mat4);
 

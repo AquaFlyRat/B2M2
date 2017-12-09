@@ -98,6 +98,7 @@
     <Compile Include="Toolkit\Vector2.Designer.cs">
       <DependentUpon>Vector2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Toolkit\Vector2ChangedEventArgs.cs" />
     <Compile Include="View\OutputWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>

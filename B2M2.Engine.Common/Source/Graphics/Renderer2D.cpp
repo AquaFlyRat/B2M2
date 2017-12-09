@@ -177,7 +177,7 @@ void cRenderer2D::DrawTextureClip(cTexture2D * texture, vec2 pos, sRectangle cli
     m_tmpQuadCount++;
 }
 
-void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, cColor color) {
+void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, cColor color, cVector2 scale) {
     TTF_Font *sdlfont = font->GetTTF();
     const std::string& ascii = font->GetAsciiData();
     cTexture2D *texture = font->GetTexture();
@@ -187,7 +187,7 @@ void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, c
 
     for (char c : text) {
         if (c == '\n') {
-            yPos += texture->GetHeight();
+            yPos += texture->GetHeight() * scale.Y;
             xPos = pos.X;
             continue;
         }
@@ -202,9 +202,9 @@ void cRenderer2D::DrawString(const std::string & text, cFont * font, vec2 pos, c
         int minx, maxx, miny, maxy, advance;
         TTF_GlyphMetrics(sdlfont, c, &minx, &maxx, &miny, &maxy, &advance);
         
-        DrawTextureClip(texture, { xPos, yPos }, sRectangle(xoffset, 0, static_cast<float>(advance), static_cast<float>(texture->GetHeight())), color);
+        DrawTextureClip(texture, { xPos, yPos }, sRectangle(xoffset, 0, static_cast<float>(advance), static_cast<float>(texture->GetHeight())), color, scale);
 
-        xPos += advance;
+        xPos += advance * scale.X;
     }
 }
 
@@ -236,8 +236,11 @@ void cRenderer2D::DrawLine(const cVector2 & start, const cVector2 & end, float t
     m_indices += 6;
 }
 
-void cRenderer2D::DrawRectangle(const cVector2 & pos, float width, float height, cColor color) {
+void cRenderer2D::DrawRectangle(const cVector2 & pos, float width, float height, cColor color, cVector2 scale) {
     const float thickness = 2.f;
+    
+    width *= scale.X;
+    height *= scale.Y;
 
     DrawLine({ pos.X, pos.Y }, { pos.X + width, pos.Y }, thickness, color);
     DrawLine({ pos.X + width, pos.Y }, { pos.X + width, pos.Y + height }, thickness, color);

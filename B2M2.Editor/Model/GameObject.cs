@@ -10,9 +10,35 @@ namespace Arch.Editor.Model
 {
     public class GameObject
     {
-        public int Width, Height;
+        private int _w, _h;
+
+        public int Width
+        {
+            get
+            {
+                return (int)(_w * Scale.X);
+            }
+            set
+            {
+                _w = value;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return (int)(_h * Scale.Y);
+            }
+            set
+            {
+                _h = value;
+            }
+        }
+
         public Vector2 Position;
         public string Name;
+        public Vector2 Scale;
 
         public GameObject(Vector2 position, int width, int height, string name)
         {
@@ -20,12 +46,14 @@ namespace Arch.Editor.Model
             Width = width;
             Height = height;
             Name = name;
+            Scale = new Vector2(1, 1);
         }
 
         public GameObject(Vector2 position, string name)
         {
             Position = position;
             Name = name;
+            Scale = new Vector2(1, 1);
         }
     }
 }

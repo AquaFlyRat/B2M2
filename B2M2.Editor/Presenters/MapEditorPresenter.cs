@@ -28,11 +28,14 @@ namespace Arch.Editor.Presenters
             {
                 View.Properties props = View.Editor.GetPropertiesWindow();
                 props.Position.RemoveBindings();
-
+                props.ObjectScale.RemoveBindings();
                 _currentGameObject = value;
-                
+
                 if (_currentGameObject != null)
+                {
                     props.Position.BindToVector2(_currentGameObject.Position);
+                    props.ObjectScale.BindToVector2(_currentGameObject.Scale);
+                }
             }
         }
         
@@ -49,8 +52,15 @@ namespace Arch.Editor.Presenters
 
             View.Properties props = View.Editor.GetPropertiesWindow();
             props.Position.BindToVector2(CurrentGameObject.Position);
-            
+            props.ObjectScale.BindToVector2(CurrentGameObject.Scale);
+            props.ObjectScale.ValuesChanged += ObjectScale_ValuesChanged;
+
             _viewportFont = new Font("Assets/WendyOne-Regular.ttf", 38);
+        }
+        
+        private void ObjectScale_ValuesChanged(object sender, Toolkit.Vector2ChangedEventArgs e)
+        {
+            
         }
 
         private void OnViewportLeftClick(object sender, LeftClickArgs e)
@@ -103,7 +113,7 @@ namespace Arch.Editor.Presenters
 
             foreach(GameObject obj in _scene.Objects) 
             {
-                renderer.DrawString(obj.Name, _viewportFont, obj.Position, objColor);
+                renderer.DrawString(obj.Name, _viewportFont, obj.Position, objColor, obj.Scale);
             }
 
             if(CurrentGameObject != null)

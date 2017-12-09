@@ -44,9 +44,21 @@ void Renderer2D::DrawString(System::String ^ text, Font ^ font, Vector2^ pos, Co
     m_handle->DrawString(textcstr, font->GetHandle(), *pos->GetHandle(), { color->R,color->G,color->B,color->A });
 }
 
+void CharlieEngine::Renderer2D::DrawString(System::String ^ text, Font ^ font, Vector2 ^ pos, Color ^ color, Vector2 ^ scale)
+{
+    const char * textcstr = (const char*)
+        System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(text).ToPointer();
+    m_handle->DrawString(textcstr, font->GetHandle(), *pos->GetHandle(), { color->R,color->G,color->B,color->A }, *scale->GetHandle());
+}
+
 void Renderer2D::DrawRectangle(Vector2 ^pos, float width, float height, Color ^ color)
 {
     m_handle->DrawRectangle(*pos->GetHandle(), width, height, { color->R, color->G, color->B,color->A });
+}
+
+void CharlieEngine::Renderer2D::DrawRectangle(Vector2 ^ pos, float width, float height, Color ^ color, Vector2 ^ scale)
+{
+    m_handle->DrawRectangle(*pos->GetHandle(), width, height, { color->R, color->G, color->B,color->A }, *scale->GetHandle());
 }
 
 void CharlieEngine::Renderer2D::DrawLine(Vector2 ^ start, Vector2 ^ end, float thickness, Color^ color)

@@ -33,7 +33,7 @@
             this.darkCollapseSection1 = new Arch.Editor.Toolkit.DarkCollapseSection();
             this.vector21 = new Arch.Editor.Toolkit.Vector2();
             this.darkLabel4 = new DarkUI.Controls.DarkLabel();
-            this.vecScale = new Arch.Editor.Toolkit.Vector2();
+            this.ObjectScale = new Arch.Editor.Toolkit.Vector2();
             this.darkLabel3 = new DarkUI.Controls.DarkLabel();
             this.Position = new Arch.Editor.Toolkit.Vector2();
             this.darkLabel2 = new DarkUI.Controls.DarkLabel();
@@ -69,7 +69,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.darkCollapseSection1.Controls.Add(this.vector21);
             this.darkCollapseSection1.Controls.Add(this.darkLabel4);
-            this.darkCollapseSection1.Controls.Add(this.vecScale);
+            this.darkCollapseSection1.Controls.Add(this.ObjectScale);
             this.darkCollapseSection1.Controls.Add(this.darkLabel3);
             this.darkCollapseSection1.Controls.Add(this.Position);
             this.darkCollapseSection1.Controls.Add(this.darkLabel2);
@@ -101,17 +101,17 @@
             this.darkLabel4.TabIndex = 5;
             this.darkLabel4.Text = "Rotation";
             // 
-            // vecScale
+            // ObjectScale
             // 
-            this.vecScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ObjectScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.vecScale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.vecScale.Location = new System.Drawing.Point(17, 98);
-            this.vecScale.Name = "vecScale";
-            this.vecScale.Size = new System.Drawing.Size(236, 30);
-            this.vecScale.TabIndex = 4;
-            this.vecScale.X = 0F;
-            this.vecScale.Y = 0F;
+            this.ObjectScale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
+            this.ObjectScale.Location = new System.Drawing.Point(17, 98);
+            this.ObjectScale.Name = "ObjectScale";
+            this.ObjectScale.Size = new System.Drawing.Size(236, 30);
+            this.ObjectScale.TabIndex = 4;
+            this.ObjectScale.X = 0F;
+            this.ObjectScale.Y = 0F;
             // 
             // darkLabel3
             // 
@@ -169,9 +169,9 @@
         private Toolkit.DarkCollapseSection darkCollapseSection1;
         private DarkUI.Controls.DarkLabel darkLabel2;
         private DarkUI.Controls.DarkLabel darkLabel3;
-        private Toolkit.Vector2 vecScale;
         private Toolkit.Vector2 vector21;
         private DarkUI.Controls.DarkLabel darkLabel4;
         public Toolkit.Vector2 Position;
+        public Toolkit.Vector2 ObjectScale;
     }
 }
