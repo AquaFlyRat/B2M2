@@ -33,6 +33,7 @@ namespace Arch.Editor.View
             Application.AddMessageFilter(_dockPanel.DockResizeFilter);
             
             _dockPanel.AddContent(_properties);
+            
             _dockPanel.AddContent(_renderWindow);
             _dockPanel.AddContent(new ProjectExplorer());
             _dockPanel.AddContent(new OutputWindow());

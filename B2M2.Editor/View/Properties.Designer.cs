@@ -59,7 +59,7 @@
             this.ObjectName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.ObjectName.Location = new System.Drawing.Point(69, 30);
             this.ObjectName.Name = "ObjectName";
-            this.ObjectName.Size = new System.Drawing.Size(196, 20);
+            this.ObjectName.Size = new System.Drawing.Size(307, 20);
             this.ObjectName.TabIndex = 3;
             this.ObjectName.Click += new System.EventHandler(this.darkTextBox1_Click);
             // 
@@ -76,7 +76,7 @@
             this.darkCollapseSection1.Location = new System.Drawing.Point(9, 56);
             this.darkCollapseSection1.Name = "darkCollapseSection1";
             this.darkCollapseSection1.SectionHeader = "Transformation";
-            this.darkCollapseSection1.Size = new System.Drawing.Size(256, 225);
+            this.darkCollapseSection1.Size = new System.Drawing.Size(367, 225);
             this.darkCollapseSection1.TabIndex = 4;
             // 
             // vector21
@@ -84,9 +84,9 @@
             this.vector21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.vector21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.vector21.Location = new System.Drawing.Point(17, 146);
+            this.vector21.Location = new System.Drawing.Point(67, 89);
             this.vector21.Name = "vector21";
-            this.vector21.Size = new System.Drawing.Size(236, 30);
+            this.vector21.Size = new System.Drawing.Size(296, 25);
             this.vector21.TabIndex = 6;
             this.vector21.X = 0F;
             this.vector21.Y = 0F;
@@ -95,7 +95,7 @@
             // 
             this.darkLabel4.AutoSize = true;
             this.darkLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel4.Location = new System.Drawing.Point(14, 130);
+            this.darkLabel4.Location = new System.Drawing.Point(13, 92);
             this.darkLabel4.Name = "darkLabel4";
             this.darkLabel4.Size = new System.Drawing.Size(47, 13);
             this.darkLabel4.TabIndex = 5;
@@ -106,9 +106,9 @@
             this.ObjectScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ObjectScale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.ObjectScale.Location = new System.Drawing.Point(17, 98);
+            this.ObjectScale.Location = new System.Drawing.Point(67, 60);
             this.ObjectScale.Name = "ObjectScale";
-            this.ObjectScale.Size = new System.Drawing.Size(236, 30);
+            this.ObjectScale.Size = new System.Drawing.Size(297, 30);
             this.ObjectScale.TabIndex = 4;
             this.ObjectScale.X = 0F;
             this.ObjectScale.Y = 0F;
@@ -117,7 +117,7 @@
             // 
             this.darkLabel3.AutoSize = true;
             this.darkLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel3.Location = new System.Drawing.Point(14, 82);
+            this.darkLabel3.Location = new System.Drawing.Point(14, 64);
             this.darkLabel3.Name = "darkLabel3";
             this.darkLabel3.Size = new System.Drawing.Size(34, 13);
             this.darkLabel3.TabIndex = 3;
@@ -128,9 +128,9 @@
             this.Position.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Position.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.Position.Location = new System.Drawing.Point(17, 49);
+            this.Position.Location = new System.Drawing.Point(67, 31);
             this.Position.Name = "Position";
-            this.Position.Size = new System.Drawing.Size(236, 30);
+            this.Position.Size = new System.Drawing.Size(297, 30);
             this.Position.TabIndex = 2;
             this.Position.X = 0F;
             this.Position.Y = 0F;
@@ -139,7 +139,7 @@
             // 
             this.darkLabel2.AutoSize = true;
             this.darkLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.darkLabel2.Location = new System.Drawing.Point(14, 33);
+            this.darkLabel2.Location = new System.Drawing.Point(14, 35);
             this.darkLabel2.Name = "darkLabel2";
             this.darkLabel2.Size = new System.Drawing.Size(44, 13);
             this.darkLabel2.TabIndex = 1;
@@ -154,8 +154,9 @@
             this.Controls.Add(this.darkLabel1);
             this.DefaultDockArea = DarkUI.Docking.DarkDockArea.Right;
             this.DockText = "Properties";
+            this.MinimumSize = new System.Drawing.Size(383, 0);
             this.Name = "Properties";
-            this.Size = new System.Drawing.Size(272, 597);
+            this.Size = new System.Drawing.Size(383, 597);
             this.darkCollapseSection1.ResumeLayout(false);
             this.darkCollapseSection1.PerformLayout();
             this.ResumeLayout(false);
