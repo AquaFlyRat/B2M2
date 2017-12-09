@@ -154,7 +154,6 @@
             this.Controls.Add(this.darkLabel1);
             this.DefaultDockArea = DarkUI.Docking.DarkDockArea.Right;
             this.DockText = "Properties";
-            this.MinimumSize = new System.Drawing.Size(383, 0);
             this.Name = "Properties";
             this.Size = new System.Drawing.Size(383, 597);
             this.darkCollapseSection1.ResumeLayout(false);

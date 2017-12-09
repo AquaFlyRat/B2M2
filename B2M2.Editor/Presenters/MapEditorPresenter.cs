@@ -36,6 +36,9 @@ namespace Arch.Editor.Presenters
                     props.Position.BindToVector2(_currentGameObject.Position);
                     props.ObjectScale.BindToVector2(_currentGameObject.Scale);
                     props.ObjectName.Text = _currentGameObject.Name;
+                } else
+                {
+                    props.ObjectName.Text = string.Empty;
                 }
             }
         }
