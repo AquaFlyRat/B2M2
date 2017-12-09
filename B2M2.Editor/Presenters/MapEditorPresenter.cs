@@ -17,7 +17,7 @@ namespace Arch.Editor.Presenters
         private Font _viewportFont;
 
         private Vector2 _lastMousePosition;
-        private GameObject _currentGameObject = null;
+        private GameObject _currentGameObject = new GameObject(new Vector2(), string.Empty);
 
         public MapEditorPresenter(IMapEditorView view, Scene scene)
         {
@@ -28,8 +28,30 @@ namespace Arch.Editor.Presenters
             _view.OnViewportDraw += OnViewportDraw;
             _view.OnCameraScroll += OnCameraScroll;
             _view.OnCameraScrollStop += OnCameraScrollStop;
+            _view.OnLeftClick += OnViewportLeftClick;
 
+            View.Properties props = View.Editor.GetPropertiesWindow();
+            props.Position.BindToVector2(_currentGameObject.Position);
+            
             _viewportFont = new Font("Assets/WendyOne-Regular.ttf", 38);
+        }
+
+        private void OnViewportLeftClick(object sender, LeftClickArgs e)
+        {
+            bool found = false;
+            foreach(GameObject obj in _scene.Objects)
+            {
+                if(Classes.Collisions.ABBCheckInside(e.ClickedPoint.X, e.ClickedPoint.Y, obj))
+                {
+                    _currentGameObject = obj;
+                    found = true;
+                }
+            }
+
+            if(!found)
+            {
+                _currentGameObject = null;
+            }
         }
 
         private void OnCameraScrollStop(object sender, EventArgs e)
@@ -64,17 +86,13 @@ namespace Arch.Editor.Presenters
             {
                 renderer.DrawString(obj.Name, _viewportFont, obj.Position, objColor);
             }
+
+            if(_currentGameObject != null)
+                renderer.DrawRectangle(_currentGameObject.Position, _currentGameObject.Width, _currentGameObject.Height, new Color(1.0f, 1.0f, 1.0f, 1.0f));
         }
 
         private void OnObjectCreated(object sender, GameObjectCreatedArgs args)
         {
-            if(_currentGameObject != null)
-            {
-                _currentGameObject.Position.X += 20;
-                _currentGameObject.Position.Y += 20;
-                return;
-            }
-
             Renderer2D renderer = _view.Renderer;
             Vector2 worldCoordinates = renderer.UnProject(_view.ViewportWidth, _view.ViewportHeight, args.CreatedAt);
 
@@ -83,11 +101,7 @@ namespace Arch.Editor.Presenters
             Vector2 stringSize = _viewportFont.MeasureString(gameObject.Name);
             gameObject.Width  = (int)stringSize.X;
             gameObject.Height = (int)stringSize.Y;
-
-            View.Properties props = View.Editor.GetPropertiesWindow();
-            props.Position.BindToVector2(gameObject.Position);
             _currentGameObject = gameObject;
-        
             _scene.Objects.Add(gameObject);
         }
     }

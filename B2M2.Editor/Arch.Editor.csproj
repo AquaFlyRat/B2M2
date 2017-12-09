@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Collisions.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Scene.cs" />
     <Compile Include="Model\SystemExtensions.cs" />

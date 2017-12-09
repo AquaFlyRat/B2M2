@@ -16,7 +16,7 @@ namespace Arch.Editor.View
 {
     partial class Editor : Form
     {
-        private RenderWindow _renderWindow = new RenderWindow();
+        private RenderWindow _renderWindow;
         private static Properties _properties;
         public Editor()
         {
@@ -24,16 +24,18 @@ namespace Arch.Editor.View
 
             WindowState = FormWindowState.Maximized;
 
+            
             _properties = new Properties();
+            _renderWindow = new RenderWindow();
 
             Application.AddMessageFilter(new ControlScrollFilter());
             Application.AddMessageFilter(_dockPanel.DockContentDragFilter);
             Application.AddMessageFilter(_dockPanel.DockResizeFilter);
             
+            _dockPanel.AddContent(_properties);
             _dockPanel.AddContent(_renderWindow);
             _dockPanel.AddContent(new ProjectExplorer());
             _dockPanel.AddContent(new OutputWindow());
-            _dockPanel.AddContent(_properties);
         }
 
         public static Properties GetPropertiesWindow()
