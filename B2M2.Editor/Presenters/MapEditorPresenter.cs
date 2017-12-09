@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Arch.Editor.Presenters
 {
@@ -13,12 +14,28 @@ namespace Arch.Editor.Presenters
     {
         private IMapEditorView _view;
         private Scene _scene;
-
         private Font _viewportFont;
-
         private Vector2 _lastMousePosition;
-        private GameObject _currentGameObject = new GameObject(new Vector2(), string.Empty);
 
+        private GameObject _currentGameObject = new GameObject(new Vector2(), string.Empty);
+        public GameObject CurrentGameObject
+        {
+            get
+            {
+                return _currentGameObject;
+            }
+            private set
+            {
+                View.Properties props = View.Editor.GetPropertiesWindow();
+                props.Position.RemoveBindings();
+
+                _currentGameObject = value;
+                
+                if (_currentGameObject != null)
+                    props.Position.BindToVector2(_currentGameObject.Position);
+            }
+        }
+        
         public MapEditorPresenter(IMapEditorView view, Scene scene)
         {
             _view = view;
@@ -31,26 +48,28 @@ namespace Arch.Editor.Presenters
             _view.OnLeftClick += OnViewportLeftClick;
 
             View.Properties props = View.Editor.GetPropertiesWindow();
-            props.Position.BindToVector2(_currentGameObject.Position);
+            props.Position.BindToVector2(CurrentGameObject.Position);
             
             _viewportFont = new Font("Assets/WendyOne-Regular.ttf", 38);
         }
 
         private void OnViewportLeftClick(object sender, LeftClickArgs e)
         {
+            Vector2 worldPos = _view.Renderer.UnProject(_view.ViewportWidth, _view.ViewportHeight, e.ClickedPoint);
+
             bool found = false;
             foreach(GameObject obj in _scene.Objects)
             {
-                if(Classes.Collisions.ABBCheckInside(e.ClickedPoint.X, e.ClickedPoint.Y, obj))
+                if(Classes.Collisions.ABBCheckInside(worldPos.X, worldPos.Y, obj))
                 {
-                    _currentGameObject = obj;
+                    CurrentGameObject = obj;
                     found = true;
                 }
             }
 
             if(!found)
             {
-                _currentGameObject = null;
+                CurrentGameObject = null;
             }
         }
 
@@ -87,8 +106,8 @@ namespace Arch.Editor.Presenters
                 renderer.DrawString(obj.Name, _viewportFont, obj.Position, objColor);
             }
 
-            if(_currentGameObject != null)
-                renderer.DrawRectangle(_currentGameObject.Position, _currentGameObject.Width, _currentGameObject.Height, new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            if(CurrentGameObject != null)
+                renderer.DrawRectangle(CurrentGameObject.Position, CurrentGameObject.Width, CurrentGameObject.Height, new Color(1.0f, 1.0f, 1.0f, 1.0f));
         }
 
         private void OnObjectCreated(object sender, GameObjectCreatedArgs args)
@@ -101,7 +120,7 @@ namespace Arch.Editor.Presenters
             Vector2 stringSize = _viewportFont.MeasureString(gameObject.Name);
             gameObject.Width  = (int)stringSize.X;
             gameObject.Height = (int)stringSize.Y;
-            _currentGameObject = gameObject;
+            CurrentGameObject = gameObject;
             _scene.Objects.Add(gameObject);
         }
     }
