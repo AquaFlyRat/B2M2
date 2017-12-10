@@ -76,7 +76,7 @@
             this.darkCollapseSection1.Location = new System.Drawing.Point(9, 56);
             this.darkCollapseSection1.Name = "darkCollapseSection1";
             this.darkCollapseSection1.SectionHeader = "Transformation";
-            this.darkCollapseSection1.Size = new System.Drawing.Size(367, 225);
+            this.darkCollapseSection1.Size = new System.Drawing.Size(367, 123);
             this.darkCollapseSection1.TabIndex = 4;
             // 
             // vector21

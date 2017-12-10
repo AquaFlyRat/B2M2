@@ -38,6 +38,7 @@ namespace Arch.Editor.View
             _dockPanel.AddContent(_renderWindow);
             _dockPanel.AddContent(new ProjectExplorer());
             _dockPanel.AddContent(new OutputWindow());
+            _dockPanel.AddContent(new Layers());
         }
 
         public static Properties GetPropertiesWindow()

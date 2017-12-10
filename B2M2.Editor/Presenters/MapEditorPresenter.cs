@@ -110,8 +110,8 @@ namespace Arch.Editor.Presenters
             Vector2 offset = new Vector2(args.NewCursorPosition.X - _lastMousePosition.X,
                                          args.NewCursorPosition.Y - _lastMousePosition.Y);
 
-            offset.X = -offset.X;
-            offset.Y = -offset.Y;
+            offset.X = -offset.X*0.75f;
+            offset.Y = -offset.Y*0.75f;
 
             _view.Renderer.MoveCamera(offset);
 

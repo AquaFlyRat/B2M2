@@ -89,6 +89,10 @@
     <Compile Include="Toolkit\DarkUserControl.Designer.cs">
       <DependentUpon>DarkUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Toolkit\ListViewExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Toolkit\ListViewItemExtended.cs" />
     <Compile Include="Toolkit\TriangleButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -99,6 +103,12 @@
       <DependentUpon>Vector2.cs</DependentUpon>
     </Compile>
     <Compile Include="Toolkit\Vector2ChangedEventArgs.cs" />
+    <Compile Include="View\Layers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\Layers.Designer.cs">
+      <DependentUpon>Layers.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\OutputWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -140,6 +150,9 @@
     <EmbeddedResource Include="Toolkit\Vector2.resx">
       <DependentUpon>Vector2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\Layers.resx">
+      <DependentUpon>Layers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\OutputWindow.resx">
       <DependentUpon>OutputWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -176,10 +189,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Data\grabHandCursor.cur" />
+    <None Include="Data\create-new-pencil-button.png" />
+    <None Include="Data\edit-tool.png" />
     <Content Include="Misc\Credits.html" />
   </ItemGroup>
   <ItemGroup>
