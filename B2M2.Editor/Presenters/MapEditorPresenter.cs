@@ -13,7 +13,7 @@ namespace Arch.Editor.Presenters
     class MapEditorPresenter
     {
         private IMapEditorView _view;
-        //private Scene _scene;
+        
         private Font _viewportFont;
         private Vector2 _lastMousePosition;
 
@@ -66,7 +66,7 @@ namespace Arch.Editor.Presenters
 
         private void MapEditorPresenter_CheckChanged(object sender, Toolkit.ListItemChangedEventArgs e)
         {
-            Layer layer = Scene.Current.Layers.Where(a => a.Name == e.Affected.Text).FirstOrDefault();
+            Layer layer = Scene.Current.Layers.Where(a => a.ID == ((Layer)(e.Affected.Tag)).ID).FirstOrDefault();
             layer.Visible = e.Affected.Checked;
             CurrentGameObject = null;
         }
