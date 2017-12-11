@@ -132,6 +132,8 @@ namespace Arch.Editor.Toolkit
             
         }
 
+        public event EventHandler<ListItemCheckChangedEventArgs> CheckChanged;
+
         protected override void OnMouseClick(MouseEventArgs e)
         {
             var range = ItemIndexesInView().ToList();
@@ -149,6 +151,7 @@ namespace Arch.Editor.Toolkit
                 if (checkRect.Contains(pos))
                 {
                     Items[i].Checked = !Items[i].Checked;
+                    CheckChanged?.Invoke(this, new ListItemCheckChangedEventArgs(Items[i]));
                 }
             }
 

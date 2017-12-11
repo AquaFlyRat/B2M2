@@ -13,7 +13,7 @@ namespace Arch.Editor.Presenters
     class MapEditorPresenter
     {
         private IMapEditorView _view;
-        private Scene _scene;
+        //private Scene _scene;
         private Font _viewportFont;
         private Vector2 _lastMousePosition;
 
@@ -46,8 +46,7 @@ namespace Arch.Editor.Presenters
         public MapEditorPresenter(IMapEditorView view, Scene scene)
         {
             _view = view;
-            _scene = scene;
-
+            
             _view.OnObjectCreated += OnObjectCreated;
             _view.OnViewportDraw += OnViewportDraw;
             _view.OnCameraScroll += OnCameraScroll;
@@ -60,6 +59,16 @@ namespace Arch.Editor.Presenters
             
             props.ObjectName.TextChanged += ObjectName_TextChanged;
             _viewportFont = new Font("Assets/WendyOne-Regular.ttf", 38);
+
+            View.Layers layers = View.Editor.GetLayersWindow();
+            layers.GetLayersList().CheckChanged += MapEditorPresenter_CheckChanged;
+        }
+
+        private void MapEditorPresenter_CheckChanged(object sender, Toolkit.ListItemCheckChangedEventArgs e)
+        {
+            Layer layer = Scene.Current.Layers.Where(a => a.Name == e.Affected.Text).FirstOrDefault();
+            layer.Visible = e.Affected.Checked;
+            CurrentGameObject = null;
         }
 
         private void ObjectName_TextChanged(object sender, EventArgs e)
@@ -80,15 +89,18 @@ namespace Arch.Editor.Presenters
             Vector2 worldPos = _view.Renderer.UnProject(_view.ViewportWidth, _view.ViewportHeight, e.ClickedPoint);
 
             bool found = false;
-            foreach(GameObject obj in _scene.Objects)
+            foreach (Layer layer in Scene.Current.GetVisible())
             {
-                if(Classes.Collisions.ABBCheckInside(worldPos.X, worldPos.Y, obj))
+                foreach (GameObject obj in layer.Objects)
                 {
-                    CurrentGameObject = obj;
-                    found = true;
+                    if (Classes.Collisions.ABBCheckInside(worldPos.X, worldPos.Y, obj))
+                    {
+                        CurrentGameObject = obj;
+                        found = true;
+                    }
                 }
             }
-
+            
             if(!found)
             {
                 CurrentGameObject = null;
@@ -123,9 +135,12 @@ namespace Arch.Editor.Presenters
             Renderer2D renderer = args.Renderer;
             Color objColor = new Color(0.6f, 0.4f, 0.9f, 1.0f);
 
-            foreach(GameObject obj in _scene.Objects) 
+            foreach (Layer layer in Scene.Current.GetVisible())
             {
-                renderer.DrawString(obj.Name, _viewportFont, obj.Position, objColor, obj.Scale);
+                foreach (GameObject obj in layer.Objects)
+                {
+                    renderer.DrawString(obj.Name, _viewportFont, obj.Position, objColor, obj.Scale);
+                }
             }
 
             if(CurrentGameObject != null)
@@ -143,7 +158,7 @@ namespace Arch.Editor.Presenters
             gameObject.Width  = (int)stringSize.X;
             gameObject.Height = (int)stringSize.Y;
             CurrentGameObject = gameObject;
-            _scene.Objects.Add(gameObject);
+            Scene.Current.Layers[0].Objects.Add(gameObject);
         }
     }
 }

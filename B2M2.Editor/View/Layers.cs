@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Arch.Editor.Model;
+using Arch.Editor.Toolkit;
 
 namespace Arch.Editor.View
 {
@@ -18,9 +20,23 @@ namespace Arch.Editor.View
 
             DockArea = DarkUI.Docking.DarkDockArea.Right;
             DockText = "Layers";
-            listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
-            listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
-            listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
+
+            Scene currentScene = Scene.Current;
+            foreach(Layer layer in currentScene.Layers)
+            {
+                ListViewItemExtended item = new ListViewItemExtended();
+                item.Tag = layer;
+                item.Text = layer.Name;
+                item.Checked = true;
+                listViewExtended1.Items.Add(item);
+            }
+
+            listViewExtended1.SelectedIndices.Add(0);
+        }
+
+        public ListViewExtended GetLayersList()
+        {
+            return listViewExtended1;
         }
 
         private void btnAddNewLayer_Click(object sender, EventArgs e)

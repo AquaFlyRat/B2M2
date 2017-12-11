@@ -18,13 +18,15 @@ namespace Arch.Editor.View
     {
         private RenderWindow _renderWindow;
         private static Properties _properties;
+        private static Layers _layers;
+
         public Editor()
         {
             InitializeComponent();
 
             WindowState = FormWindowState.Maximized;
-
             
+            _layers = new Layers();
             _properties = new Properties();
             _renderWindow = new RenderWindow();
 
@@ -38,12 +40,17 @@ namespace Arch.Editor.View
             _dockPanel.AddContent(_renderWindow);
             _dockPanel.AddContent(new ProjectExplorer());
             _dockPanel.AddContent(new OutputWindow());
-            _dockPanel.AddContent(new Layers());
+            _dockPanel.AddContent(_layers);
         }
 
         public static Properties GetPropertiesWindow()
         {
             return _properties;
+        }
+
+        public static Layers GetLayersWindow()
+        {
+            return _layers;
         }
 
         private void btnExit_Click(object sender, EventArgs e)
