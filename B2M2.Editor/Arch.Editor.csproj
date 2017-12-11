@@ -90,7 +90,7 @@
     <Compile Include="Toolkit\DarkUserControl.Designer.cs">
       <DependentUpon>DarkUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Toolkit\ListItemCheckChangedEventArgs.cs" />
+    <Compile Include="Toolkit\ListItemChangedEventArgs.cs" />
     <Compile Include="Toolkit\ListViewExtended.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Arch.Editor.Toolkit
 {
-    public class ListItemCheckChangedEventArgs : EventArgs
+    public class ListItemChangedEventArgs : EventArgs
     {
         public ListViewItemExtended Affected { get; private set; }
 
-        public ListItemCheckChangedEventArgs(ListViewItemExtended layer)
+        public ListItemChangedEventArgs(ListViewItemExtended layer)
         {
             Affected = layer;
         }

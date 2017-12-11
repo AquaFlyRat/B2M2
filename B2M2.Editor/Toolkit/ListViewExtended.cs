@@ -132,7 +132,8 @@ namespace Arch.Editor.Toolkit
             
         }
 
-        public event EventHandler<ListItemCheckChangedEventArgs> CheckChanged;
+        public event EventHandler<ListItemChangedEventArgs> CheckChanged;
+        public event EventHandler<ListItemChangedEventArgs> ItemTextChanged;
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
@@ -151,7 +152,7 @@ namespace Arch.Editor.Toolkit
                 if (checkRect.Contains(pos))
                 {
                     Items[i].Checked = !Items[i].Checked;
-                    CheckChanged?.Invoke(this, new ListItemCheckChangedEventArgs(Items[i]));
+                    CheckChanged?.Invoke(this, new ListItemChangedEventArgs(Items[i]));
                 }
             }
 
@@ -281,7 +282,7 @@ namespace Arch.Editor.Toolkit
                 {
                     Items[_editingIndex].Text += e.KeyChar;
                 }
-
+                ItemTextChanged?.Invoke(this, new ListItemChangedEventArgs(Items[_editingIndex]));
                 _waitingForStopTyping.Start();
                 _cursorVisible = true;
                 _cursorFlash.Stop();

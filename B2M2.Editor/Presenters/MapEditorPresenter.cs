@@ -64,7 +64,7 @@ namespace Arch.Editor.Presenters
             layers.GetLayersList().CheckChanged += MapEditorPresenter_CheckChanged;
         }
 
-        private void MapEditorPresenter_CheckChanged(object sender, Toolkit.ListItemCheckChangedEventArgs e)
+        private void MapEditorPresenter_CheckChanged(object sender, Toolkit.ListItemChangedEventArgs e)
         {
             Layer layer = Scene.Current.Layers.Where(a => a.Name == e.Affected.Text).FirstOrDefault();
             layer.Visible = e.Affected.Checked;

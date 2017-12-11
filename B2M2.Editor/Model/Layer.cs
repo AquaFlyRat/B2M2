@@ -12,10 +12,11 @@ namespace Arch.Editor.Model
 
         public string Name;
         public bool Visible = true;
-
+        public string ID;
         public Layer(string name)
         {
             Name = name;
+            ID = Guid.NewGuid().ToString();
         }
     }
 }

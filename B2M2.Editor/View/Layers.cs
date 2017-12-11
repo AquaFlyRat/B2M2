@@ -30,8 +30,20 @@ namespace Arch.Editor.View
                 item.Checked = true;
                 listViewExtended1.Items.Add(item);
             }
-
+            listViewExtended1.ItemTextChanged += ListViewExtended1_ItemTextChanged;
             listViewExtended1.SelectedIndices.Add(0);
+        }
+
+        private void ListViewExtended1_ItemTextChanged(object sender, ListItemChangedEventArgs e)
+        {
+            Scene currentScene = Scene.Current;
+            foreach (Layer layer in currentScene.Layers)
+            {
+                if (layer.ID == ((Layer)e.Affected.Tag).ID)
+                {
+                    layer.Name = e.Affected.Text;
+                }
+            }
         }
 
         public ListViewExtended GetLayersList()
