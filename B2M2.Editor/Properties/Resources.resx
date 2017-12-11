@@ -127,4 +127,7 @@
   <data name="edit_tool" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\edit-tool.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="rubbish_bin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\rubbish-bin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

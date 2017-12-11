@@ -31,6 +31,7 @@
             this.listViewExtended1 = new Arch.Editor.Toolkit.ListViewExtended();
             this.darkToolStrip1 = new DarkUI.Controls.DarkToolStrip();
             this.btnAddNewLayer = new System.Windows.Forms.ToolStripButton();
+            this.btnRemoveLayer = new System.Windows.Forms.ToolStripButton();
             this.darkToolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +50,8 @@
             this.darkToolStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.darkToolStrip1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
             this.darkToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAddNewLayer});
+            this.btnAddNewLayer,
+            this.btnRemoveLayer});
             this.darkToolStrip1.Location = new System.Drawing.Point(0, 25);
             this.darkToolStrip1.Name = "darkToolStrip1";
             this.darkToolStrip1.Padding = new System.Windows.Forms.Padding(5, 0, 1, 0);
@@ -64,9 +66,20 @@
             this.btnAddNewLayer.Image = global::Arch.Editor.Properties.Resources.edit_tool;
             this.btnAddNewLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnAddNewLayer.Name = "btnAddNewLayer";
-            this.btnAddNewLayer.Size = new System.Drawing.Size(24, 24);
+            this.btnAddNewLayer.Size = new System.Drawing.Size(23, 25);
             this.btnAddNewLayer.Text = "toolStripButton1";
             this.btnAddNewLayer.Click += new System.EventHandler(this.btnAddNewLayer_Click);
+            // 
+            // btnRemoveLayer
+            // 
+            this.btnRemoveLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRemoveLayer.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.btnRemoveLayer.Image = global::Arch.Editor.Properties.Resources.rubbish_bin;
+            this.btnRemoveLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRemoveLayer.Name = "btnRemoveLayer";
+            this.btnRemoveLayer.Size = new System.Drawing.Size(24, 24);
+            this.btnRemoveLayer.Text = "toolStripButton1";
+            this.btnRemoveLayer.Click += new System.EventHandler(this.btnRemoveLayer_Click);
             // 
             // Layers
             // 
@@ -87,5 +100,6 @@
         private Toolkit.ListViewExtended listViewExtended1;
         private DarkUI.Controls.DarkToolStrip darkToolStrip1;
         private System.Windows.Forms.ToolStripButton btnAddNewLayer;
+        private System.Windows.Forms.ToolStripButton btnRemoveLayer;
     }
 }

@@ -194,6 +194,7 @@
     <None Include="Data\grabHandCursor.cur" />
     <None Include="Data\create-new-pencil-button.png" />
     <None Include="Data\edit-tool.png" />
+    <None Include="Data\rubbish-bin.png" />
     <Content Include="Misc\Credits.html" />
   </ItemGroup>
   <ItemGroup>

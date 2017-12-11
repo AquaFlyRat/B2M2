@@ -21,12 +21,19 @@ namespace Arch.Editor.View
             listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
             listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
             listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
-
         }
 
         private void btnAddNewLayer_Click(object sender, EventArgs e)
         {
             listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
+        }
+
+        private void btnRemoveLayer_Click(object sender, EventArgs e)
+        {
+            foreach (int index in listViewExtended1.SelectedIndices)
+            {
+                listViewExtended1.Items.RemoveAt(index);
+            }
         }
     }
 }

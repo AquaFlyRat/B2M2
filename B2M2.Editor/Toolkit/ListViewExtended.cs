@@ -30,10 +30,20 @@ namespace Arch.Editor.Toolkit
         private List<int> _selectedIndices;
         private int _anchoredItemStart = -1;
         private int _anchoredItemEnd = -1;
+        private bool _labelEdit;
 
         #endregion
 
         #region Property Region
+
+        [Category("Behaviour")]
+        [Description("Double clicking will enable edit mode on the selected item.")]
+        [DefaultValue(false)]
+        public bool LabelEdit
+        {
+            get { return _labelEdit;  }
+            set { _labelEdit = value; }
+        }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -110,13 +120,12 @@ namespace Arch.Editor.Toolkit
 
             var top = range.Min();
             var bottom = range.Max();
+            var pos = OffsetMousePosition;
 
             for (int i = 0; i <= Items.Count; i++)
             {
                 Rectangle checkRect = new Rectangle(0, i * ItemHeight, Consts.CheckBoxSize+5, ItemHeight);
-                Point x = PointToClient(Cursor.Position);
-                //x.Y += top * ItemHeight;
-                if (checkRect.Contains(e.Location))
+                if (checkRect.Contains(pos))
                 {
                     Items[i].Checked = !Items[i].Checked;
                 }
@@ -152,7 +161,7 @@ namespace Arch.Editor.Toolkit
 
             if (e.OldItems != null)
             {
-                foreach (DarkListItem item in e.OldItems)
+                foreach (ListViewItemExtended item in e.OldItems)
                     item.TextChanged -= Item_TextChanged;
 
                 // Find the starting index of the old item list and update anything past that
@@ -205,6 +214,7 @@ namespace Arch.Editor.Toolkit
             var top = range.Min();
             var bottom = range.Max();
             var width = Math.Max(ContentSize.Width, Viewport.Width);
+            bool foundItem = false;
 
             for (var i = top; i <= bottom; i++)
             {
@@ -220,6 +230,70 @@ namespace Arch.Editor.Toolkit
                         SelectItem(i);
                 }
             }
+
+            if(!foundItem)
+            {
+                if(_editingIndex >= 0)
+                {
+                    _editingIndex = -1;
+                }
+            }
+        }
+
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            base.OnKeyPress(e);
+
+            if(_editingIndex >= 0)
+            {
+                if(e.KeyChar == (char)Keys.Back)
+                {
+                    Items[_editingIndex].Text = Items[_editingIndex].Text.Remove(Items[_editingIndex].Text.Length - 1);
+                } else
+                {
+                    Items[_editingIndex].Text += e.KeyChar;
+                }
+                Invalidate();
+                Update();
+            }
+        }
+
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            _editingIndex = -1;
+        }
+
+        private int _editingIndex = -1;
+
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+
+            if (Items.Count == 0)
+                return;
+
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            var pos = OffsetMousePosition;
+
+            var range = ItemIndexesInView().ToList();
+
+            var top = range.Min();
+            var bottom = range.Max();
+            var width = Math.Max(ContentSize.Width, Viewport.Width);
+
+            for (var i = top; i <= bottom; i++)
+            {
+                var rect = new Rectangle(0, i * ItemHeight, width, ItemHeight);
+
+                if (rect.Contains(pos))
+                {
+                    _editingIndex = i;
+                }
+            }
+            Invalidate();
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -565,10 +639,31 @@ namespace Arch.Editor.Toolkit
                     };
 
                     var modFont = new Font(Font, Items[i].FontStyle);
-
                     var modRect = new Rectangle(rect.Left + 10 + Consts.CheckBoxSize, rect.Top, rect.Width, rect.Height);
-                    
+
+                    StringFormat f = new StringFormat(StringFormat.GenericTypographic)
+                    { FormatFlags = StringFormatFlags.MeasureTrailingSpaces };
+
+                    var strSize = g.MeasureString(Items[i].Text, modFont, 256, f);
+                    Rectangle editingRect = new Rectangle(modRect.Left, modRect.Top+2, (int)strSize.Width + 5, (int)strSize.Height + 3);
+
+                    if (_editingIndex == i)
+                    {
+                        using (var txtBack = new SolidBrush(Colors.LightBackground))
+                        {
+                            g.FillRectangle(txtBack, editingRect);
+                        }
+                    }
+
                     g.DrawString(Items[i].Text, modFont, b, modRect, stringFormat);
+
+                    if (_editingIndex == i)
+                    {
+                        using (var foreColor = new Pen(Colors.LightText))
+                        {
+                            g.DrawRectangle(foreColor, editingRect);
+                        }
+                    }
                 }
 
                 int checkX = 3;
@@ -578,6 +673,7 @@ namespace Arch.Editor.Toolkit
                 using (var p = new Pen(borderColor))
                 {
                     var boxRect = new Rectangle(checkX, (i * ItemHeight)+ checkY, Consts.CheckBoxSize, Consts.CheckBoxSize);
+
                     g.DrawRectangle(p, boxRect);
                 }
 
