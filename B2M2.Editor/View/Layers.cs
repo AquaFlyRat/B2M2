@@ -30,9 +30,12 @@ namespace Arch.Editor.View
 
         private void btnRemoveLayer_Click(object sender, EventArgs e)
         {
-            foreach (int index in listViewExtended1.SelectedIndices)
+            foreach (int index in listViewExtended1.SelectedIndices.ToList())
             {
-                listViewExtended1.Items.RemoveAt(index);
+                if (index < listViewExtended1.Items.Count && index >= 0)
+                {
+                    listViewExtended1.Items.RemoveAt(index);
+                }
             }
         }
     }

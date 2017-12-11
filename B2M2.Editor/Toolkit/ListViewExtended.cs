@@ -31,6 +31,8 @@ namespace Arch.Editor.Toolkit
         private int _anchoredItemStart = -1;
         private int _anchoredItemEnd = -1;
         private bool _labelEdit;
+        private Timer _cursorFlash = new Timer();
+        private Timer _waitingForStopTyping = new Timer();
 
         #endregion
 
@@ -96,10 +98,29 @@ namespace Arch.Editor.Toolkit
 
         #region Constructor Region
 
+        private bool _cursorVisible = false;
+
         public ListViewExtended()
         {
             Items = new ObservableCollection<ListViewItemExtended>();
             _selectedIndices = new List<int>();
+            _cursorFlash.Interval = 500;
+            _cursorFlash.Tick += OnCursorFlash;
+
+            _waitingForStopTyping.Interval = 300;
+            _waitingForStopTyping.Tick += OnStopLabelTyping;
+        }
+
+        private void OnStopLabelTyping(object sender, EventArgs e)
+        {
+            _waitingForStopTyping.Stop();
+            _cursorFlash.Start();
+        }
+
+        private void OnCursorFlash(object sender, EventArgs e)
+        {
+            _cursorVisible = !_cursorVisible;
+            Invalidate();
         }
 
         #endregion
@@ -235,7 +256,7 @@ namespace Arch.Editor.Toolkit
             {
                 if(_editingIndex >= 0)
                 {
-                    _editingIndex = -1;
+                    StopEditing();
                 }
             }
         }
@@ -248,11 +269,20 @@ namespace Arch.Editor.Toolkit
             {
                 if(e.KeyChar == (char)Keys.Back)
                 {
-                    Items[_editingIndex].Text = Items[_editingIndex].Text.Remove(Items[_editingIndex].Text.Length - 1);
+                    string text = Items[_editingIndex].Text;
+                    if (text.Length > 0)
+                    {
+                        Items[_editingIndex].Text = text.Remove(text.Length - 1);
+                    }
                 } else
                 {
                     Items[_editingIndex].Text += e.KeyChar;
                 }
+
+                _waitingForStopTyping.Start();
+                _cursorVisible = true;
+                _cursorFlash.Stop();
+
                 Invalidate();
                 Update();
             }
@@ -261,7 +291,13 @@ namespace Arch.Editor.Toolkit
         protected override void OnLostFocus(EventArgs e)
         {
             base.OnLostFocus(e);
+            StopEditing();
+        }
+
+        private void StopEditing()
+        {
             _editingIndex = -1;
+            _cursorFlash.Stop();
         }
 
         private int _editingIndex = -1;
@@ -291,6 +327,7 @@ namespace Arch.Editor.Toolkit
                 if (rect.Contains(pos))
                 {
                     _editingIndex = i;
+                    _cursorFlash.Start();
                 }
             }
             Invalidate();
@@ -303,8 +340,19 @@ namespace Arch.Editor.Toolkit
             if (Items.Count == 0)
                 return;
 
+            if (_editingIndex >= 0)
+            {
+                if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Escape)
+                {
+                    StopEditing();
+                    Invalidate();
+                    return;
+                }
+            }
+
             if (e.KeyCode != Keys.Down && e.KeyCode != Keys.Up)
                 return;
+
 
             if (MultiSelect && ModifierKeys == Keys.Shift)
             {
@@ -595,7 +643,7 @@ namespace Arch.Editor.Toolkit
         #endregion
 
         #region Paint Region
-
+        
         protected override void PaintContent(Graphics g)
         {
             var range = ItemIndexesInView().ToList();
@@ -643,11 +691,19 @@ namespace Arch.Editor.Toolkit
 
                     StringFormat f = new StringFormat(StringFormat.GenericTypographic)
                     { FormatFlags = StringFormatFlags.MeasureTrailingSpaces };
+                    
+                    int w = (int)g.MeasureString(Items[i].Text, modFont, 512, f).Width;
+                    Rectangle editingRect = new Rectangle(modRect.Left, modRect.Top+2, w+7, rect.Height-5);
 
-                    var strSize = g.MeasureString(Items[i].Text, modFont, 256, f);
-                    Rectangle editingRect = new Rectangle(modRect.Left, modRect.Top+2, (int)strSize.Width + 5, (int)strSize.Height + 3);
+                    if(Items[i].Text.Length == 0)
+                    {
+                        editingRect.Height = modRect.Height-5;
 
-                    if (_editingIndex == i)
+                    }
+
+                    bool inEditMode = (_editingIndex == i);
+
+                    if (inEditMode)
                     {
                         using (var txtBack = new SolidBrush(Colors.LightBackground))
                         {
@@ -657,11 +713,17 @@ namespace Arch.Editor.Toolkit
 
                     g.DrawString(Items[i].Text, modFont, b, modRect, stringFormat);
 
-                    if (_editingIndex == i)
+                    if (inEditMode)
                     {
                         using (var foreColor = new Pen(Colors.LightText))
                         {
                             g.DrawRectangle(foreColor, editingRect);
+                            if (_cursorVisible)
+                            {
+                                
+                                //int x = (editingRect.X + w);
+                                //g.DrawLine(Pens.Red,x, editingRect.Top + 2, x, editingRect.Bottom - 2);
+                            }
                         }
                     }
                 }
