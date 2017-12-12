@@ -13,7 +13,8 @@ namespace Arch.Editor.Model
         public Scene()
         {
             Layers.Add(new Layer("Default"));
-        }
+            CurrentLayer = Layers[0];
+       }
 
         public List<Layer> GetVisible()
         {
@@ -21,5 +22,7 @@ namespace Arch.Editor.Model
         }
 
         public static Scene Current = new Scene();
+
+        public Layer CurrentLayer { get; set; }
     }
 }

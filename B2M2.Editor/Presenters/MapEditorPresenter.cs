@@ -149,6 +149,8 @@ namespace Arch.Editor.Presenters
 
         private void OnObjectCreated(object sender, GameObjectCreatedArgs args)
         {
+            if (Scene.Current.CurrentLayer == null) return;
+
             Renderer2D renderer = _view.Renderer;
             Vector2 worldCoordinates = renderer.UnProject(_view.ViewportWidth, _view.ViewportHeight, args.CreatedAt);
 
@@ -158,7 +160,7 @@ namespace Arch.Editor.Presenters
             gameObject.Width  = (int)stringSize.X;
             gameObject.Height = (int)stringSize.Y;
             CurrentGameObject = gameObject;
-            Scene.Current.Layers[0].Objects.Add(gameObject);
+            Scene.Current.CurrentLayer.Objects.Add(gameObject);
         }
     }
 }

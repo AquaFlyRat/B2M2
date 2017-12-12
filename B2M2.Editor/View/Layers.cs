@@ -32,6 +32,16 @@ namespace Arch.Editor.View
             }
             listViewExtended1.ItemTextChanged += ListViewExtended1_ItemTextChanged;
             listViewExtended1.SelectedIndices.Add(0);
+            listViewExtended1.SelectedIndicesChanged += ListViewExtended1_SelectedIndicesChanged;
+        }
+
+        private void ListViewExtended1_SelectedIndicesChanged(object sender, EventArgs e)
+        {
+            if (listViewExtended1.SelectedIndices.Count == 0)
+                return;
+
+            int selIndex = listViewExtended1.SelectedIndices[0];
+            Scene.Current.CurrentLayer = Scene.Current.Layers.Where(a => a.ID == ((Layer)listViewExtended1.Items[selIndex].Tag).ID).FirstOrDefault();
         }
 
         private void ListViewExtended1_ItemTextChanged(object sender, ListItemChangedEventArgs e)
@@ -53,18 +63,37 @@ namespace Arch.Editor.View
 
         private void btnAddNewLayer_Click(object sender, EventArgs e)
         {
-            listViewExtended1.Items.Add(new Toolkit.ListViewItemExtended("Hello World!"));
+            string layerName = "New Layer";
+
+            Layer backLayer = new Layer("Hello World!");
+            
+            ListViewItemExtended item = new ListViewItemExtended();
+            item.Tag = backLayer;
+            item.Text = layerName;
+            item.Checked = true;
+            listViewExtended1.Items.Add(item);
+
+            Scene.Current.Layers.Add(backLayer);
         }
 
         private void btnRemoveLayer_Click(object sender, EventArgs e)
         {
+            Layer atSelection = (Layer)listViewExtended1.Items[listViewExtended1.SelectedIndices[0]].Tag;
+
+            if (Scene.Current.CurrentLayer == atSelection)
+            {
+                Scene.Current.CurrentLayer = null;
+            }
+
+            Scene.Current.Layers.Remove(atSelection);
+
             foreach (int index in listViewExtended1.SelectedIndices.ToList())
             {
                 if (index < listViewExtended1.Items.Count && index >= 0)
                 {
                     listViewExtended1.Items.RemoveAt(index);
                 }
-            }
+            }     
         }
     }
 }
