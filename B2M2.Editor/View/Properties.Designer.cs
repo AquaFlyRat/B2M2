@@ -31,12 +31,13 @@
             this.darkLabel1 = new DarkUI.Controls.DarkLabel();
             this.ObjectName = new DarkUI.Controls.DarkTextBox();
             this.darkCollapseSection1 = new Arch.Editor.Toolkit.DarkCollapseSection();
-            this.vector21 = new Arch.Editor.Toolkit.Vector2();
             this.darkLabel4 = new DarkUI.Controls.DarkLabel();
             this.ObjectScale = new Arch.Editor.Toolkit.Vector2();
             this.darkLabel3 = new DarkUI.Controls.DarkLabel();
             this.Position = new Arch.Editor.Toolkit.Vector2();
             this.darkLabel2 = new DarkUI.Controls.DarkLabel();
+            this.txtAngle = new DarkUI.Controls.DarkTextBox();
+            this.darkLabel5 = new DarkUI.Controls.DarkLabel();
             this.darkCollapseSection1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +68,8 @@
             // 
             this.darkCollapseSection1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.darkCollapseSection1.Controls.Add(this.vector21);
+            this.darkCollapseSection1.Controls.Add(this.darkLabel5);
+            this.darkCollapseSection1.Controls.Add(this.txtAngle);
             this.darkCollapseSection1.Controls.Add(this.darkLabel4);
             this.darkCollapseSection1.Controls.Add(this.ObjectScale);
             this.darkCollapseSection1.Controls.Add(this.darkLabel3);
@@ -78,18 +80,6 @@
             this.darkCollapseSection1.SectionHeader = "Transformation";
             this.darkCollapseSection1.Size = new System.Drawing.Size(367, 123);
             this.darkCollapseSection1.TabIndex = 4;
-            // 
-            // vector21
-            // 
-            this.vector21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.vector21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
-            this.vector21.Location = new System.Drawing.Point(67, 89);
-            this.vector21.Name = "vector21";
-            this.vector21.Size = new System.Drawing.Size(296, 25);
-            this.vector21.TabIndex = 6;
-            this.vector21.X = 0F;
-            this.vector21.Y = 0F;
             // 
             // darkLabel4
             // 
@@ -145,6 +135,30 @@
             this.darkLabel2.TabIndex = 1;
             this.darkLabel2.Text = "Position";
             // 
+            // txtAngle
+            // 
+            this.txtAngle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAngle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
+            this.txtAngle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAngle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.txtAngle.Location = new System.Drawing.Point(90, 90);
+            this.txtAngle.Name = "txtAngle";
+            this.txtAngle.Size = new System.Drawing.Size(257, 20);
+            this.txtAngle.TabIndex = 6;
+            // 
+            // darkLabel5
+            // 
+            this.darkLabel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.darkLabel5.AutoSize = true;
+            this.darkLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.darkLabel5.Location = new System.Drawing.Point(353, 93);
+            this.darkLabel5.Name = "darkLabel5";
+            this.darkLabel5.Size = new System.Drawing.Size(11, 13);
+            this.darkLabel5.TabIndex = 7;
+            this.darkLabel5.Text = "°";
+            // 
             // Properties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,10 +182,11 @@
         private Toolkit.DarkCollapseSection darkCollapseSection1;
         private DarkUI.Controls.DarkLabel darkLabel2;
         private DarkUI.Controls.DarkLabel darkLabel3;
-        private Toolkit.Vector2 vector21;
         private DarkUI.Controls.DarkLabel darkLabel4;
         public Toolkit.Vector2 Position;
         public Toolkit.Vector2 ObjectScale;
         public DarkUI.Controls.DarkTextBox ObjectName;
+        private DarkUI.Controls.DarkTextBox txtAngle;
+        private DarkUI.Controls.DarkLabel darkLabel5;
     }
 }

@@ -29,6 +29,8 @@ namespace Arch.Editor.Presenters
                 View.Properties props = View.Editor.GetPropertiesWindow();
                 props.Position.RemoveBindings();
                 props.ObjectScale.RemoveBindings();
+                props.Rotation = 0.0f;
+
                 _currentGameObject = value;
 
                 if (_currentGameObject != null)
@@ -36,7 +38,9 @@ namespace Arch.Editor.Presenters
                     props.Position.BindToVector2(_currentGameObject.Position);
                     props.ObjectScale.BindToVector2(_currentGameObject.Scale);
                     props.ObjectName.Text = _currentGameObject.Name;
-                } else
+                    props.Rotation = props.Rotation;
+                }
+                else
                 {
                     props.ObjectName.Text = string.Empty;
                 }

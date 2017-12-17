@@ -25,5 +25,18 @@ namespace Arch.Editor.View
         private void darkTextBox1_Click(object sender, EventArgs e)
         {
         }
+
+        public float Rotation
+        {
+            get
+            {
+                return Single.Parse(txtAngle.Text);
+            }
+            set
+            {
+                txtAngle.Text = value.ToString();
+            }
+        }
+
     }
 }

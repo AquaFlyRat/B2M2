@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Collisions.cs" />
+    <Compile Include="Classes\MatrixUtils.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\Layer.cs" />
     <Compile Include="Model\Scene.cs" />

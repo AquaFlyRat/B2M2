@@ -40,6 +40,8 @@ namespace Arch.Editor.Model
         public string Name;
         public Vector2 Scale;
 
+        public float Rotation = 0.0f;
+
         public GameObject(Vector2 position, int width, int height, string name)
         {
             Position = position;

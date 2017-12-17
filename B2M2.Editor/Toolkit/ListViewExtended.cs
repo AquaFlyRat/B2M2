@@ -327,8 +327,9 @@ namespace Arch.Editor.Toolkit
             for (var i = top; i <= bottom; i++)
             {
                 var rect = new Rectangle(0, i * ItemHeight, width, ItemHeight);
+                var modRect = new Rectangle(rect.Left + 10 + Consts.CheckBoxSize, rect.Top, rect.Width, rect.Height);
 
-                if (rect.Contains(pos))
+                if (modRect.Contains(pos))
                 {
                     _editingIndex = i;
                     _cursorFlash.Start();
