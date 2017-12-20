@@ -24,8 +24,9 @@ namespace Arch.Editor.View
 
         private void darkTextBox1_Click(object sender, EventArgs e)
         {
+            
         }
-
+        
         public float Rotation
         {
             get
@@ -38,5 +39,10 @@ namespace Arch.Editor.View
             }
         }
 
+        private void btnSpriteBrowse_Click(object sender, EventArgs e)
+        {
+            SpriteChooser spChooser = new SpriteChooser();
+            spChooser.ShowDialog();
+        }
     }
 }

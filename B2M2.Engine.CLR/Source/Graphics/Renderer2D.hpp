@@ -55,6 +55,7 @@ namespace CharlieEngine {
 
         void DrawRectangle(Vector2 ^pos, float width, float height, Color ^color);
         void DrawRectangle(Vector2 ^pos, float width, float height, Color ^color, Vector2 ^scale);
+        void DrawRectangle(Vector2 ^pos, float width, float height, Color ^color, Vector2 ^scale, float thickness);
 
         void DrawLine(Vector2^ start, Vector2^ end, float thickness, Color^ color);
 

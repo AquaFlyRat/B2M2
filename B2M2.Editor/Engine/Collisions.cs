@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Arch.Editor.Model;
+using Arch.Editor.Engine;
 
-namespace Arch.Editor.Classes
+namespace Arch.Editor.Engine
 {
     public class Collisions
     {

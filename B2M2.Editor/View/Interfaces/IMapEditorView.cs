@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using CharlieEngine;
-using Arch.Editor.Model;
+using Arch.Editor.Engine;
 
 namespace Arch.Editor.View.Interfaces
 {

@@ -236,9 +236,7 @@ void cRenderer2D::DrawLine(const cVector2 & start, const cVector2 & end, float t
     m_indices += 6;
 }
 
-void cRenderer2D::DrawRectangle(const cVector2 & pos, float width, float height, cColor color, cVector2 scale) {
-    const float thickness = 2.f;
-    
+void cRenderer2D::DrawRectangle(const cVector2 & pos, float width, float height, cColor color, cVector2 scale, float thickness) {
     width *= scale.X;
     height *= scale.Y;
 

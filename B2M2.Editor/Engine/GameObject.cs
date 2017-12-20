@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using CharlieEngine;
 
-namespace Arch.Editor.Model
+namespace Arch.Editor.Engine
 {
     public class GameObject
     {

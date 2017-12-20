@@ -14,17 +14,24 @@ namespace Arch.Editor.Toolkit
     {
         private string _sectionHeader;
         const int _arrowPadding = 6;
-        private TriangleButton _expansionToggle = new TriangleButton();         
+        private TriangleButton _expansionToggle = new TriangleButton();
         bool _isSectionExpanded = false;
         int _heightWhenLastExpanded = 0;
-        
+
+        [Category("Behaviour")]
+        [Description("Does the section toggle button appear?")]
+        public bool HasButton { get; set; } = false;
+
         public DarkCollapseSection()
         {
             Click += DarkCollapseSection_Click;
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
-            _expansionToggle = CreateToggleButton();
-            Controls.Add(_expansionToggle);
+            if (HasButton)
+            {
+                _expansionToggle = CreateToggleButton();
+                Controls.Add(_expansionToggle);
+            }
         }
 
         private int CalculateToggleButtonXPosition()
@@ -61,13 +68,15 @@ namespace Arch.Editor.Toolkit
         
         private void ToggleButtonClick(object sender, EventArgs e)
         {
+            if (!HasButton) return;
+
             _isSectionExpanded = !_isSectionExpanded;
 
             if(_isSectionExpanded)
             {
                 _expansionToggle.Direction = TriangleDirection.Downwards;
                 _heightWhenLastExpanded = Size.Height;
-                Size = new Size(Width, 25);
+                Height = 25;
             } else
             {
                 _expansionToggle.Direction = TriangleDirection.Upwards;
@@ -75,6 +84,8 @@ namespace Arch.Editor.Toolkit
             }
 
             Redraw();
+            this.Parent.PerformLayout();
+            foreach (Control child in Parent.Controls) child.Invalidate();
         }
 
         protected override void OnEnter(EventArgs e)

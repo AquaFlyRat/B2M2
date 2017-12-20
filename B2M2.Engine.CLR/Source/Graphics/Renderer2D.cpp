@@ -61,6 +61,11 @@ void CharlieEngine::Renderer2D::DrawRectangle(Vector2 ^ pos, float width, float 
     m_handle->DrawRectangle(*pos->GetHandle(), width, height, { color->R, color->G, color->B,color->A }, *scale->GetHandle());
 }
 
+void CharlieEngine::Renderer2D::DrawRectangle(Vector2 ^ pos, float width, float height, Color ^ color, Vector2 ^ scale, float thickness)
+{
+    m_handle->DrawRectangle(*pos->GetHandle(), width, height, { color->R, color->G, color->B,color->A }, *scale->GetHandle(), thickness);
+}
+
 void CharlieEngine::Renderer2D::DrawLine(Vector2 ^ start, Vector2 ^ end, float thickness, Color^ color)
 {
     m_handle->DrawLine(*start->GetHandle(), *end->GetHandle(), thickness, { color->R, color->G,color->B, color->A });

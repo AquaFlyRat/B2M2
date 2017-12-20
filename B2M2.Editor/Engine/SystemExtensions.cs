@@ -7,7 +7,7 @@ using System.Drawing;
 
 using CharlieEngine;
 
-namespace Arch.Editor.Model
+namespace Arch.Editor.Engine
 {
     public static class SystemExtensions
     {

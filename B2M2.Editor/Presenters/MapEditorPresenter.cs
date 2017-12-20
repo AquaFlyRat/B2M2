@@ -1,4 +1,4 @@
-﻿using Arch.Editor.Model;
+﻿using Arch.Editor.Engine;
 using Arch.Editor.View.Interfaces;
 using CharlieEngine;
 using System;
@@ -14,10 +14,11 @@ namespace Arch.Editor.Presenters
     {
         private IMapEditorView _view;
         
-        private Font _viewportFont;
         private Vector2 _lastMousePosition;
+        private MapRenderer _renderer;
 
         private GameObject _currentGameObject = new GameObject(new Vector2(), string.Empty);
+        
         public GameObject CurrentGameObject
         {
             get
@@ -60,19 +61,31 @@ namespace Arch.Editor.Presenters
             View.Properties props = View.Editor.GetPropertiesWindow();
             props.Position.BindToVector2(CurrentGameObject.Position);
             props.ObjectScale.BindToVector2(CurrentGameObject.Scale);
-            
             props.ObjectName.TextChanged += ObjectName_TextChanged;
-            _viewportFont = new Font("Assets/WendyOne-Regular.ttf", 38);
+            props.txtAngle.TextChanged += TxtAngle_TextChanged;
+
+            _renderer = new MapRenderer(Scene.Current, CurrentGameObject);
 
             View.Layers layers = View.Editor.GetLayersWindow();
             layers.GetLayersList().CheckChanged += MapEditorPresenter_CheckChanged;
+        }
+
+        private void TxtAngle_TextChanged(object sender, EventArgs e)
+        {
+            View.Properties props = View.Editor.GetPropertiesWindow();
+
+            float newValue;
+            if(Single.TryParse(props.txtAngle.Text, out newValue))
+            {
+                CurrentGameObject.Rotation = newValue;
+            }
         }
 
         private void MapEditorPresenter_CheckChanged(object sender, Toolkit.ListItemChangedEventArgs e)
         {
             Layer layer = Scene.Current.Layers.Where(a => a.ID == ((Layer)(e.Affected.Tag)).ID).FirstOrDefault();
             layer.Visible = e.Affected.Checked;
-            CurrentGameObject = null;
+            ClearSelectedObject();
         }
 
         private void ObjectName_TextChanged(object sender, EventArgs e)
@@ -82,9 +95,6 @@ namespace Arch.Editor.Presenters
             if(_currentGameObject != null)
             {
                 _currentGameObject.Name = props.ObjectName.Text;
-                Vector2 stringSize = _viewportFont.MeasureString(_currentGameObject.Name);
-                _currentGameObject.Width = (int)stringSize.X;
-                _currentGameObject.Height = (int)stringSize.Y;
             }
         }
         
@@ -97,9 +107,9 @@ namespace Arch.Editor.Presenters
             {
                 foreach (GameObject obj in layer.Objects)
                 {
-                    if (Classes.Collisions.ABBCheckInside(worldPos.X, worldPos.Y, obj))
+                    if (Engine.Collisions.ABBCheckInside(worldPos.X, worldPos.Y, obj))
                     {
-                        CurrentGameObject = obj;
+                        AssignSelectedObject(obj);
                         found = true;
                     }
                 }
@@ -107,7 +117,7 @@ namespace Arch.Editor.Presenters
             
             if(!found)
             {
-                CurrentGameObject = null;
+                ClearSelectedObject();
             }
         }
 
@@ -134,37 +144,36 @@ namespace Arch.Editor.Presenters
             _lastMousePosition = args.NewCursorPosition;
         }
 
+        private void AssignSelectedObject(GameObject current)
+        {
+            _renderer.HighlightSelected = true;
+            _renderer.SelectedGameObject = current;
+            CurrentGameObject = current;
+        }
+
+        private void ClearSelectedObject()
+        {
+            _renderer.HighlightSelected = false;
+            _renderer.SelectedGameObject = null;
+            CurrentGameObject = null;
+        }
+
         private void OnViewportDraw(object sender, ViewportDrawArgs args)
         {
-            Renderer2D renderer = args.Renderer;
-            Color objColor = new Color(0.6f, 0.4f, 0.9f, 1.0f);
-
-            foreach (Layer layer in Scene.Current.GetVisible())
-            {
-                foreach (GameObject obj in layer.Objects)
-                {
-                    renderer.DrawString(obj.Name, _viewportFont, obj.Position, objColor, obj.Scale);
-                }
-            }
-
-            if(CurrentGameObject != null)
-                renderer.DrawRectangle(CurrentGameObject.Position, CurrentGameObject.Width, CurrentGameObject.Height, new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            _renderer.Render(args.Renderer);
         }
 
         private void OnObjectCreated(object sender, GameObjectCreatedArgs args)
         {
-            if (Scene.Current.CurrentLayer == null) return;
-
+            if (Scene.Current.CurrentLayer == null)
+                return;
             Renderer2D renderer = _view.Renderer;
+
             Vector2 worldCoordinates = renderer.UnProject(_view.ViewportWidth, _view.ViewportHeight, args.CreatedAt);
 
-            GameObject gameObject = new GameObject(worldCoordinates, "Alan!");
-
-            Vector2 stringSize = _viewportFont.MeasureString(gameObject.Name);
-            gameObject.Width  = (int)stringSize.X;
-            gameObject.Height = (int)stringSize.Y;
-            CurrentGameObject = gameObject;
-            Scene.Current.CurrentLayer.Objects.Add(gameObject);
+            GameObject obj = new ObjectFactory().CreateDefaultGameObject(worldCoordinates);
+            AssignSelectedObject(obj);
+            Scene.Current.CurrentLayer.Objects.Add(obj);
         }
     }
 }

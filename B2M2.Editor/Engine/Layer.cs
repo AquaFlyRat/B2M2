@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arch.Editor.Model
+namespace Arch.Editor.Engine
 {
     public class Layer
     {

@@ -75,15 +75,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Collisions.cs" />
-    <Compile Include="Classes\MatrixUtils.cs" />
-    <Compile Include="Model\GameObject.cs" />
-    <Compile Include="Model\Layer.cs" />
-    <Compile Include="Model\Scene.cs" />
-    <Compile Include="Model\SystemExtensions.cs" />
+    <Compile Include="Engine\Collisions.cs" />
+    <Compile Include="Engine\MapRenderer.cs" />
+    <Compile Include="Engine\MatrixUtils.cs" />
+    <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Engine\Layer.cs" />
+    <Compile Include="Engine\ObjectFactory.cs" />
+    <Compile Include="Engine\Scene.cs" />
+    <Compile Include="Engine\SystemExtensions.cs" />
     <Compile Include="Presenters\MapEditorPresenter.cs" />
     <Compile Include="Toolkit\DarkCollapseSection.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Toolkit\DarkComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Toolkit\DarkComboBox.Designer.cs">
+      <DependentUpon>DarkComboBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Toolkit\DarkUserControl.cs">
       <SubType>UserControl</SubType>
@@ -147,6 +155,18 @@
     <Compile Include="View\Editor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="View\SpriteChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SpriteChooser.Designer.cs">
+      <DependentUpon>SpriteChooser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpriteViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SpriteViewer.Designer.cs">
+      <DependentUpon>SpriteViewer.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Toolkit\DarkUserControl.resx">
       <DependentUpon>DarkUserControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -178,6 +198,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="View\SpriteChooser.resx">
+      <DependentUpon>SpriteChooser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SpriteViewer.resx">
+      <DependentUpon>SpriteViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -198,6 +224,8 @@
     <None Include="Data\create-new-pencil-button.png" />
     <None Include="Data\edit-tool.png" />
     <None Include="Data\rubbish-bin.png" />
+    <None Include="Data\cancel.png" />
+    <None Include="Data\checked.png" />
     <Content Include="Misc\Credits.html" />
   </ItemGroup>
   <ItemGroup>
